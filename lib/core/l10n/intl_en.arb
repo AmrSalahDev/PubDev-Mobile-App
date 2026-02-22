@@ -1,0 +1,18 @@
+{
+    "searchPackages": "Search packages",
+    "supportedByGoogle": "Supported by Google",
+    "flutterFavorites": "Flutter Favorites",
+    "flutterFavoritesSubtitle": "Some of the packages that demonstrate the highest levels of quality,\nselected by the Flutter Ecosystem Committee",
+    "trendingPackages": "Trending packages",
+    "trendingPackagesSubtitle": "Top trending packages in the last 30 days",
+    "topFlutterPackages": "Top Flutter packages",
+    "topFlutterPackagesSubtitle": "Some of the top packages that extend Flutter with new features",
+    "topDartPackages": "Top Dart packages",
+    "topDartPackagesSubtitle": "Some of the top packages for any Dart-based app or program",
+    "viewAll": "View all",
+    "officialPackageRepository": "The official package repository for ",
+    "and": " and ",
+    "apps": " apps.",
+    "flutter": "Flutter",
+    "dart": "Dart"
+}
