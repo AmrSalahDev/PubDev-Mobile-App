@@ -69,7 +69,7 @@ ThemeData lightTheme(BuildContext context) {
       style: TextButton.styleFrom(foregroundColor: LightColorScheme.primary),
     ),
     cardTheme: CardThemeData(
-      color: LightColorScheme.surface,
+      color: LightColorScheme.surfaceContainer,
       elevation: 1,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),

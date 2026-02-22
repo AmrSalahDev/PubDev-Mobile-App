@@ -23,8 +23,8 @@ class ColorName {
   /// Color: #FF0000
   static const Color errorContainer = Color(0xFFFF0000);
 
-  /// Color: #B0BEC5
-  static const Color onBackground = Color(0xFFB0BEC5);
+  /// Color: #DCDCDC
+  static const Color onBackground = Color(0xFFDCDCDC);
 
   /// Color: #FFFFFF
   static const Color onError = Color(0xFFFFFFFF);
@@ -35,8 +35,8 @@ class ColorName {
   /// Color: #FFFFFF
   static const Color onSecondary = Color(0xFFFFFFFF);
 
-  /// Color: #B0BEC5
-  static const Color onSurface = Color(0xFFB0BEC5);
+  /// Color: #DCDCDC
+  static const Color onSurface = Color(0xFFDCDCDC);
 
   /// Color: #B0BEC5
   static const Color onSurfaceVariant = Color(0xFFB0BEC5);
@@ -65,8 +65,8 @@ class ColorName {
   /// Color: #12202C
   static const Color surface = Color(0xFF12202C);
 
-  /// Color: #263545
-  static const Color surfaceContainer = Color(0xFF263545);
+  /// Color: #FF1C2834
+  static const Color surfaceContainer = Color(0xFFFF1C2834);
 
   /// Color: #4EAFF7
   static const Color tertiary = Color(0xFF4EAFF7);

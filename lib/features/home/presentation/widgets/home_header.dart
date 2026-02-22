@@ -30,18 +30,18 @@ class _HomeHeaderState extends State<HomeHeader> {
     final strings = AppLocalizations.of(context);
 
     return SafeArea(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            assets.headerImageBg.svg(
-              width: double.infinity,
-              height: 0.40.sh,
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter,
-            ),
-            Column(
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          assets.headerImageBg.svg(
+            width: double.infinity,
+            height: 0.40.sh,
+            fit: BoxFit.cover,
+            alignment: Alignment.topCenter,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Column(
               children: [
                 Assets.svgs.pubDevLogo.svg(width: 40.w, height: 40.h),
                 35.verticalSpace,
@@ -64,8 +64,8 @@ class _HomeHeaderState extends State<HomeHeader> {
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

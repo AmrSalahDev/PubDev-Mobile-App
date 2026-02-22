@@ -70,9 +70,9 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
       ]);
 
       final favoriteNames = results[0].take(8).toList();
-      final trendingNames = results[1].take(6).toList();
-      final topFlutterNames = results[2].take(6).toList();
-      final topDartNames = results[3].take(6).toList();
+      final trendingNames = results[1].take(4).toList();
+      final topFlutterNames = results[2].take(4).toList();
+      final topDartNames = results[3].take(4).toList();
 
       // Fetch package details for all sections concurrently
       final detailResults = await Future.wait([

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../core/api_client.dart';
 import 'package_detail_page.dart';
-
-const _kCardBg = Color(0xFF1C2834);
-const _kBlue = Color(0xFF5BB4F8);
-const _kTextGrey = Color(0xFFB0BEC5);
 
 class PackageTile extends StatelessWidget {
   final PubDevPackage package;
@@ -13,6 +10,9 @@ class PackageTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Material(
       color: Colors.transparent,
       child: InkWell(
@@ -27,42 +27,48 @@ class PackageTile extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
-            color: _kCardBg,
+            color: colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(8),
           ),
-          padding: const EdgeInsets.all(12),
+          padding: EdgeInsets.all(12.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 package.name,
-                style: const TextStyle(
-                  color: _kBlue,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
+                style: textTheme.titleMedium?.copyWith(
+                  color: colorScheme.primary,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 6),
+              8.verticalSpace,
               Expanded(
                 child: Text(
                   package.description,
-                  style: const TextStyle(color: _kTextGrey, fontSize: 12),
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
               if (package.publisher.isNotEmpty) ...[
-                const SizedBox(height: 8),
+                8.verticalSpace,
                 Row(
                   children: [
-                    const Icon(Icons.verified, color: _kBlue, size: 12),
-                    const SizedBox(width: 4),
+                    Icon(
+                      Icons.verified,
+                      color: colorScheme.primary,
+                      size: 12.sp,
+                    ),
+                    4.horizontalSpace,
                     Expanded(
                       child: Text(
                         package.publisher,
-                        style: const TextStyle(color: _kBlue, fontSize: 11),
+                        style: textTheme.bodySmall?.copyWith(
+                          color: colorScheme.primary,
+                        ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
