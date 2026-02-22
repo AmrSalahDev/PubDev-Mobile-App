@@ -29,44 +29,57 @@ class _HomeHeaderState extends State<HomeHeader> {
     final textTheme = Theme.of(context).textTheme;
     final strings = AppLocalizations.of(context);
 
-    return SafeArea(
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          assets.headerImageBg.svg(
-            width: double.infinity,
-            height: 0.40.sh,
-            fit: BoxFit.cover,
-            alignment: Alignment.topCenter,
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        assets.headerImageBg.svg(
+          width: double.infinity,
+          height: 0.45.sh,
+          fit: BoxFit.cover,
+          alignment: Alignment.topCenter,
+        ),
+        Padding(
+          padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top,
+            left: 16.w,
+            right: 16.w,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: Column(
-              children: [
-                Assets.svgs.pubDevLogo.svg(width: 40.w, height: 40.h),
-                35.verticalSpace,
-                _SearchBar(
-                  searchController: _searchController,
-                  textTheme: textTheme,
-                  colorScheme: colorScheme,
-                  strings: strings,
-                ),
-                24.verticalSpace,
-                _Subtitle(
-                  textTheme: textTheme,
-                  colorScheme: colorScheme,
-                  strings: strings,
-                ),
-                12.verticalSpace,
-                Assets.images.supportedByGoogle2x.image(
-                  width: 150.w,
-                  height: 40.h,
-                ),
-              ],
-            ),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Spacer(),
+                  IconButton(
+                    icon: const Icon(Icons.light_mode),
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              16.verticalSpace,
+              Assets.svgs.pubDevLogo.svg(width: 40.w, height: 40.h),
+              35.verticalSpace,
+              _SearchBar(
+                searchController: _searchController,
+                textTheme: textTheme,
+                colorScheme: colorScheme,
+                strings: strings,
+              ),
+              24.verticalSpace,
+              _Subtitle(
+                textTheme: textTheme,
+                colorScheme: colorScheme,
+                strings: strings,
+              ),
+              12.verticalSpace,
+              Assets.images.supportedByGoogle2x.image(
+                width: 150.w,
+                height: 40.h,
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

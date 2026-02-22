@@ -100,11 +100,7 @@ class PubDevApiClient {
   }
 
   Future<List<String>> getTrendingPackages({int page = 1}) async {
-    final results = await _client.search(
-      '',
-      sort: SearchOrder.popularity,
-      page: page,
-    );
+    final results = await _client.search('', sort: SearchOrder.top, page: page);
     return results.packages.map((p) => p.package).toList();
   }
 
@@ -268,7 +264,8 @@ class PubDevApiClient {
             .replaceAll('&gt;', '>')
             .replaceAll('&amp;', '&')
             .replaceAll('&quot;', '"')
-            .replaceAll('&#39;', "'");
+            .replaceAll('&#39;', "'")
+            .replaceAll('&#47;', '/');
       }
     }
 

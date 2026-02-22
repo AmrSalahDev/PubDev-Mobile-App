@@ -25,7 +25,7 @@ class GridSection extends StatelessWidget {
       ),
       itemCount: packages.length,
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: const NeverScrollableScrollPhysics() ,
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       itemBuilder: (context, index) {
         return PackageTile(package: packages[index]);

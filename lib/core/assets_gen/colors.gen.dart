@@ -15,7 +15,7 @@ class ColorName {
   ColorName._();
 
   /// Color: #12202C
-  static const Color background = Color(0xFF12202C);
+  static const Color background = Color(0xFF12202F);
 
   /// Color: #FF0000
   static const Color error = Color(0xFFFF0000);
@@ -63,7 +63,7 @@ class ColorName {
   static const Color shadow = Color(0xFF263545);
 
   /// Color: #12202C
-  static const Color surface = Color(0xFF12202C);
+  static const Color surface = Color(0xFF12202F);
 
   /// Color: #FF1C2834
   static const Color surfaceContainer = Color(0xFFFF1C2834);

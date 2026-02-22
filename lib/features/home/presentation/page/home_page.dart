@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_bloc.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_event.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_state.dart';
+import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/favorites_section.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/grid_section.dart';
-import 'package:pub_dev_packages_app/features/home/presentation/widgets/home_app_bar.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/home_header.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/section_header.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/view_all_button.dart';
-import '../../../../bloc/packages_bloc.dart';
-import '../../../../bloc/packages_event.dart';
-import '../../../../bloc/packages_state.dart';
-import '../../../../core/api_client.dart';
-import '../../../../ui/package_tile.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,31 +23,31 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    context.read<PackagesBloc>().add(LoadPackages());
+    context.read<PackagesBloc>().add(LoadFavoritesEvent());
   }
 
   @override
   Widget build(BuildContext context) {
+    final strings = AppLocalizations.of(context);
+
     return Scaffold(
-      appBar: HomeAppBar(),
       body: BlocBuilder<PackagesBloc, PackagesState>(
         builder: (context, state) {
           return CustomScrollView(
             clipBehavior: Clip.none,
             slivers: [
-              SliverToBoxAdapter(child: HomeHeader()),
-              if (state is PackagesLoading)
+              SliverToBoxAdapter(
+                child: Column(children: [HomeHeader(), 30.verticalSpace]),
+              ),
+              if (state.isFavoritesLoading)
                 const SliverFillRemaining(
                   child: Center(child: CircularProgressIndicator()),
                 )
-              else if (state is PackagesError)
-                SliverFillRemaining(child: _buildError(context, state.message))
-              else if (state is PackagesLoaded) ...[
+              else ...[
                 SliverToBoxAdapter(
                   child: SectionHeader(
-                    title: 'Flutter Favorites',
-                    subtitle:
-                        'Some of the packages that demonstrate the highest levels of quality, selected by the Flutter Ecosystem Committee',
+                    title: strings.flutterFavorites,
+                    subtitle: strings.flutterFavoritesSubtitle,
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -56,11 +55,20 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SliverToBoxAdapter(child: ViewAllButton(onTap: () {})),
 
-               
                 SliverToBoxAdapter(
-                  child: SectionHeader(
-                    title: 'Trending packages',
-                    subtitle: 'Top trending packages in the last 30 days',
+                  child: VisibilityDetector(
+                    key: const Key('trending-section'),
+                    onVisibilityChanged: (info) {
+                      final visiblePercentage = info.visibleFraction * 100;
+
+                      if (visiblePercentage > 70) {
+                        context.read<PackagesBloc>().add(LoadTrendingEvent());
+                      }
+                    },
+                    child: SectionHeader(
+                      title: strings.trendingPackages,
+                      subtitle: strings.trendingPackagesSubtitle,
+                    ),
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -68,12 +76,20 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SliverToBoxAdapter(child: ViewAllButton(onTap: () {})),
 
-                
                 SliverToBoxAdapter(
-                  child: SectionHeader(
-                    title: 'Top Flutter packages',
-                    subtitle:
-                        'Some of the top packages that extend Flutter with new features',
+                  child: VisibilityDetector(
+                    key: const Key('top-flutter-section'),
+                    onVisibilityChanged: (info) {
+                      final visiblePercentage = info.visibleFraction * 100;
+
+                      if (visiblePercentage > 70) {
+                        context.read<PackagesBloc>().add(LoadTopFlutterEvent());
+                      }
+                    },
+                    child: SectionHeader(
+                      title: strings.topFlutterPackages,
+                      subtitle: strings.topFlutterPackagesSubtitle,
+                    ),
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -81,48 +97,29 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SliverToBoxAdapter(child: ViewAllButton(onTap: () {})),
 
-               
                 SliverToBoxAdapter(
-                  child: SectionHeader(
-                    title: 'Top Dart packages',
-                    subtitle:
-                        'Some of the top packages for any Dart-based app or program',
+                  child: VisibilityDetector(
+                    key: const Key('top-dart-section'),
+                    onVisibilityChanged: (info) {
+                      final visiblePercentage = info.visibleFraction * 100;
+
+                      if (visiblePercentage > 70) {
+                        context.read<PackagesBloc>().add(LoadTopDartEvent());
+                      }
+                    },
+                    child: SectionHeader(
+                      title: strings.topDartPackages,
+                      subtitle: strings.topDartPackagesSubtitle,
+                    ),
                   ),
                 ),
                 SliverToBoxAdapter(child: GridSection(packages: state.topDart)),
                 SliverToBoxAdapter(child: ViewAllButton(onTap: () {})),
-
-               
-                SliverToBoxAdapter(child: SizedBox(height: 50.h)),
+                SliverToBoxAdapter(child: 50.verticalSpace),
               ],
             ],
           );
         },
-      ),
-    );
-  }
-
-  // ── Error widget ─────────────────────────────────────────────────────────────
-  Widget _buildError(BuildContext context, String message) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.error_outline, size: 48, color: Colors.redAccent),
-          const SizedBox(height: 16),
-          Text(
-            'Error: $message',
-            textAlign: TextAlign.center,
-            style: const TextStyle(),
-          ),
-          const SizedBox(height: 16),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(foregroundColor: Colors.black),
-            onPressed: () =>
-                context.read<PackagesBloc>().add(RefreshPackages()),
-            child: const Text('Retry'),
-          ),
-        ],
       ),
     );
   }
