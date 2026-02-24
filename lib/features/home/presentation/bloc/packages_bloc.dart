@@ -5,6 +5,7 @@ import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_i
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_dart_packages_usecase.dart';
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_flutter_packages_usecase.dart';
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_trending_packages_usecase.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_youtube_package_videos_usecase.dart';
 import 'packages_event.dart';
 import 'packages_state.dart';
 
@@ -15,6 +16,7 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
   final GetTopFlutterPackagesUsecase getTopFlutterPackagesUsecase;
   final GetTopDartPackagesUsecase getTopDartPackagesUsecase;
   final GetPackageInfoUsecase getPackageInfoUsecase;
+  final GetYoutubePackageVideosUsecase getYoutubeVideosUsecase;
 
   PackagesBloc({
     required this.getFavoritesPackagesUsecase,
@@ -22,6 +24,7 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
     required this.getTopFlutterPackagesUsecase,
     required this.getTopDartPackagesUsecase,
     required this.getPackageInfoUsecase,
+    required this.getYoutubeVideosUsecase,
   }) : super(const PackagesState()) {
     on<LoadFavoritesEvent>(_onLoadFavorites);
     on<LoadTrendingEvent>(_onLoadTrending);
@@ -29,6 +32,25 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
     on<LoadTopDartEvent>(_onLoadTopDart);
     on<RefreshPackagesEvent>(_onRefreshPackages);
     on<LoadPackageInfoEvent>(_onLoadPackageInfo);
+    on<LoadYoutubeVideosEvent>(_onLoadYoutubeVideos);
+  }
+
+  Future<void> _onLoadYoutubeVideos(
+    LoadYoutubeVideosEvent event,
+    Emitter<PackagesState> emit,
+  ) async {
+    emit(state.copyWith(isYoutubeVideosLoading: true));
+    try {
+      final youtubeVideos = await getYoutubeVideosUsecase.call();
+      emit(state.copyWith(youtubeVideos: youtubeVideos, isYoutubeVideosLoading: false));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          hasError: true,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
   }
 
   Future<void> _onLoadPackageInfo(

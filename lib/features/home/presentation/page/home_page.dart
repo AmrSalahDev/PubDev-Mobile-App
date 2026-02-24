@@ -10,6 +10,7 @@ import 'package:pub_dev_packages_app/features/home/presentation/widgets/grid_sec
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/home_header.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/section_header.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/view_all_button.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/widgets/youtube_video_card.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 class HomePage extends StatefulWidget {
@@ -115,6 +116,43 @@ class _HomePageState extends State<HomePage> {
                 ),
                 SliverToBoxAdapter(child: GridSection(packages: state.topDart)),
                 SliverToBoxAdapter(child: ViewAllButton(onTap: () {})),
+                SliverToBoxAdapter(
+                  child: SectionHeader(
+                    title: "Package of the week",
+                    subtitle:
+                        "Package of the Week is a series of quick, animated videos, each of which covers a particular package",
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: BlocBuilder<PackagesBloc, PackagesState>(
+                    builder: (context, state) {
+                      if (state.isYoutubeVideosLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (state.youtubeVideos.isNotEmpty) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: SizedBox(
+                            height: 250,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: state.youtubeVideos.length,
+                              itemBuilder: (context, index) {
+                                final video = state.youtubeVideos[index];
+                                return YoutubeVideoCard(
+                                  title: video.title,
+                                  // Use the high-res thumbnail from the video object
+                                  thumbnail: video.thumbnails.highResUrl,
+                                );
+                              },
+                            ),
+                          ),
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
+                  ),
+                ),
                 SliverToBoxAdapter(child: 50.verticalSpace),
               ],
             ],

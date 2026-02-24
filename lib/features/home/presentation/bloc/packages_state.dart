@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class PackagesState extends Equatable {
   final List<PackageEntity> favorites;
@@ -7,6 +8,7 @@ class PackagesState extends Equatable {
   final List<PackageEntity> topFlutter;
   final List<PackageEntity> topDart;
   final PackageEntity? packageInfo;
+  final List<Video> youtubeVideos;
   final bool hasError;
   final String errorMessage;
   final bool isPackageInfoLoading;
@@ -14,6 +16,7 @@ class PackagesState extends Equatable {
   final bool isTrendingLoading;
   final bool isTopFlutterLoading;
   final bool isTopDartLoading;
+  final bool isYoutubeVideosLoading;
 
   const PackagesState({
     this.favorites = const [],
@@ -28,6 +31,8 @@ class PackagesState extends Equatable {
     this.isTopDartLoading = false,
     this.packageInfo,
     this.isPackageInfoLoading = false,
+    this.youtubeVideos = const [],
+    this.isYoutubeVideosLoading = false,
   });
 
   PackagesState copyWith({
@@ -43,6 +48,8 @@ class PackagesState extends Equatable {
     bool? isTopDartLoading,
     PackageEntity? packageInfo,
     bool? isPackageInfoLoading,
+    List<Video>? youtubeVideos,
+    bool? isYoutubeVideosLoading,
   }) {
     return PackagesState(
       favorites: favorites ?? this.favorites,
@@ -57,6 +64,8 @@ class PackagesState extends Equatable {
       isTopDartLoading: isTopDartLoading ?? this.isTopDartLoading,
       packageInfo: packageInfo ?? this.packageInfo,
       isPackageInfoLoading: isPackageInfoLoading ?? this.isPackageInfoLoading,
+      youtubeVideos: youtubeVideos ?? this.youtubeVideos,
+      isYoutubeVideosLoading: isYoutubeVideosLoading ?? this.isYoutubeVideosLoading,
     );
   }
 
@@ -74,5 +83,7 @@ class PackagesState extends Equatable {
     isTopDartLoading,
     packageInfo,
     isPackageInfoLoading,
+    youtubeVideos,
+    isYoutubeVideosLoading,
   ];
 }

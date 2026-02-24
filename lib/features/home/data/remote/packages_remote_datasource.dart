@@ -8,6 +8,7 @@ import 'package:pub_dev_packages_app/features/home/data/models/package_model.dar
 import 'package:pub_dev_packages_app/features/home/data/models/score_model.dart';
 import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
 import 'package:talker/talker.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 abstract class PackagesRemoteDataSource {
   Future<List<PackageEntity>> getFavoritesPackages({required int page});
@@ -16,6 +17,7 @@ abstract class PackagesRemoteDataSource {
   Future<List<PackageEntity>> getTopDartPackages({required int page});
   Future<PackageModel> getPackageInfo(String packageName);
   Future<ScoreModel> getScore(String name);
+  Future<List<Video>> getYoutubePackageVideos();
 }
 
 @LazySingleton(as: PackagesRemoteDataSource)
@@ -195,6 +197,32 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
     } catch (e) {
       _talker.error('Error from getScore: $e');
       rethrow;
+    }
+  }
+
+  @override
+  Future<List<Video>> getYoutubePackageVideos() async {
+    var yt = YoutubeExplode();
+    try {
+      // Get playlist metadata
+      var playlist = await yt.playlists.get(playlistUrl);
+
+      // Get all videos in that playlist
+      List<Video> videoList = await yt.playlists
+          .getVideos(playlist.id)
+          .toList();
+
+      videoList.shuffle();
+
+     final videos = videoList.take(6).toList();
+     
+      _talker.info('Fetched ${videos.length} videos');
+      return videos;
+    } catch (e) {
+      _talker.error('Error fetching playlist: $e');
+      rethrow;
+    } finally {
+      yt.close();
     }
   }
 }

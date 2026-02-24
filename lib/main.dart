@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pub_api_client/pub_api_client.dart';
 import 'package:pub_dev_packages_app/core/di/di.dart';
 import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
 import 'package:pub_dev_packages_app/core/routes/app_router.dart';

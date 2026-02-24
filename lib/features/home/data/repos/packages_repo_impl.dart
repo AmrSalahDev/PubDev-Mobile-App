@@ -1,10 +1,9 @@
 import 'package:injectable/injectable.dart';
-import 'package:pub_dev_packages_app/features/home/data/models/package_model.dart';
-import 'package:pub_dev_packages_app/features/home/data/models/score_model.dart';
 import 'package:pub_dev_packages_app/features/home/data/remote/packages_remote_datasource.dart';
 import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
 import 'package:pub_dev_packages_app/features/home/domain/entities/score_entity.dart';
 import 'package:pub_dev_packages_app/features/home/domain/repos/packages_repo.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 @LazySingleton(as: PackagesRepo)
 class PackagesRepoImpl implements PackagesRepo {
@@ -56,5 +55,10 @@ class PackagesRepoImpl implements PackagesRepo {
   @override
   Future<ScoreEntity> getScore(String packageName) async {
     return await _remoteDataSource.getScore(packageName);
+  }
+
+  @override
+  Future<List<Video>> getYoutubePackageVideos() async {
+    return await _remoteDataSource.getYoutubePackageVideos();
   }
 }

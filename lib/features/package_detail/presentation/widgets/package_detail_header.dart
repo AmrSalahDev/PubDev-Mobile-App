@@ -124,9 +124,10 @@ class PackageInfoPart extends StatelessWidget {
               'Published ${_timeAgo(packageInfo.latest.published)} ',
               style: const TextStyle(color: Colors.grey, fontSize: 13),
             ),
+            if (packageInfo.score.publisher != null)...[
             const Icon(Icons.verified, color: Colors.blue, size: 14),
             const SizedBox(width: 4),
-            if (packageInfo.score.publisher != null) Text(
+             Text(
               packageInfo.score.publisher!,
               style: const TextStyle(
                 color: Colors.blue,
@@ -134,6 +135,7 @@ class PackageInfoPart extends StatelessWidget {
                 decoration: TextDecoration.underline,
               ),
             ),
+            ]
           ],
         ),
       ],
