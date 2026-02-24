@@ -126,8 +126,8 @@ class PackageInfoPart extends StatelessWidget {
             ),
             const Icon(Icons.verified, color: Colors.blue, size: 14),
             const SizedBox(width: 4),
-            Text(
-              packageInfo.score.tags[1],
+            if (packageInfo.score.publisher != null) Text(
+              packageInfo.score.publisher!,
               style: const TextStyle(
                 color: Colors.blue,
                 fontSize: 13,

@@ -19,7 +19,7 @@ class PackageTile extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         onTap: () {
-          context.push(AppPaths.packageDetail, extra: package.name);
+          context.push(AppPaths.packageDetail, extra: package);
         },
         child: Container(
           decoration: BoxDecoration(
