@@ -61,7 +61,7 @@ class _HomePageState extends State<HomePage> {
                     onVisibilityChanged: (info) {
                       final visiblePercentage = info.visibleFraction * 100;
 
-                      if (visiblePercentage > 70) {
+                      if (visiblePercentage > 70 && state.trending.isEmpty) {
                         context.read<PackagesBloc>().add(LoadTrendingEvent());
                       }
                     },
@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                     onVisibilityChanged: (info) {
                       final visiblePercentage = info.visibleFraction * 100;
 
-                      if (visiblePercentage > 70) {
+                      if (visiblePercentage > 70 && state.topFlutter.isEmpty) {
                         context.read<PackagesBloc>().add(LoadTopFlutterEvent());
                       }
                     },
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                     onVisibilityChanged: (info) {
                       final visiblePercentage = info.visibleFraction * 100;
 
-                      if (visiblePercentage > 70) {
+                      if (visiblePercentage > 70 && state.topDart.isEmpty) {
                         context.read<PackagesBloc>().add(LoadTopDartEvent());
                       }
                     },

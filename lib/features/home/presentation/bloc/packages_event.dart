@@ -16,3 +16,9 @@ class LoadTopFlutterEvent extends PackagesEvent {}
 class LoadTopDartEvent extends PackagesEvent {}
 
 class RefreshPackagesEvent extends PackagesEvent {}
+
+class LoadPackageInfoEvent extends PackagesEvent {
+  final String packageName;
+
+  const LoadPackageInfoEvent(this.packageName);
+}

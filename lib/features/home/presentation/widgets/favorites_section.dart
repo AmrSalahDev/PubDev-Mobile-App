@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pub_dev_packages_app/core/api_client.dart';
-import 'package:pub_dev_packages_app/ui/package_tile.dart';
+import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/widgets/package_tile.dart';
 
 class FavoritesSection extends StatelessWidget {
-  final List<PubDevPackage> packages;
+  final List<PackageEntity> packages;
   const FavoritesSection({super.key, required this.packages});
 
   @override

@@ -137,7 +137,7 @@ class _SearchPageState extends State<SearchPage> {
                           controller: _scrollController,
                           itemCount: state.hasReachedMax
                               ? state.packages.length
-                              : state.packages.length + 1,
+                              : state.packages.length + 1, 
                           itemBuilder: (context, index) {
                             if (index >= state.packages.length) {
                               return const Padding(
@@ -149,9 +149,10 @@ class _SearchPageState extends State<SearchPage> {
                                 ),
                               );
                             }
-                            return SearchPackageTile(
-                              package: state.packages[index],
-                            );
+                            // return SearchPackageTile(
+                            //   package: state.packages[index],
+                            // );
+                            return SizedBox.shrink();
                           },
                         ),
                       ),

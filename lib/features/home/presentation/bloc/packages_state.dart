@@ -1,13 +1,15 @@
 import 'package:equatable/equatable.dart';
-import '../../../../core/api_client.dart';
+import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
 
 class PackagesState extends Equatable {
-  final List<PubDevPackage> favorites;
-  final List<PubDevPackage> trending;
-  final List<PubDevPackage> topFlutter;
-  final List<PubDevPackage> topDart;
+  final List<PackageEntity> favorites;
+  final List<PackageEntity> trending;
+  final List<PackageEntity> topFlutter;
+  final List<PackageEntity> topDart;
+  final PackageEntity? packageInfo;
   final bool hasError;
   final String errorMessage;
+  final bool isPackageInfoLoading;
   final bool isFavoritesLoading;
   final bool isTrendingLoading;
   final bool isTopFlutterLoading;
@@ -24,19 +26,23 @@ class PackagesState extends Equatable {
     this.isTrendingLoading = false,
     this.isTopFlutterLoading = false,
     this.isTopDartLoading = false,
+    this.packageInfo,
+    this.isPackageInfoLoading = false,
   });
 
   PackagesState copyWith({
-    List<PubDevPackage>? favorites,
-    List<PubDevPackage>? trending,
-    List<PubDevPackage>? topFlutter,
-    List<PubDevPackage>? topDart,
+    List<PackageEntity>? favorites,
+    List<PackageEntity>? trending,
+    List<PackageEntity>? topFlutter,
+    List<PackageEntity>? topDart,
     bool? hasError,
     String? errorMessage,
     bool? isFavoritesLoading,
     bool? isTrendingLoading,
     bool? isTopFlutterLoading,
     bool? isTopDartLoading,
+    PackageEntity? packageInfo,
+    bool? isPackageInfoLoading,
   }) {
     return PackagesState(
       favorites: favorites ?? this.favorites,
@@ -49,6 +55,8 @@ class PackagesState extends Equatable {
       isTrendingLoading: isTrendingLoading ?? this.isTrendingLoading,
       isTopFlutterLoading: isTopFlutterLoading ?? this.isTopFlutterLoading,
       isTopDartLoading: isTopDartLoading ?? this.isTopDartLoading,
+      packageInfo: packageInfo ?? this.packageInfo,
+      isPackageInfoLoading: isPackageInfoLoading ?? this.isPackageInfoLoading,
     );
   }
 
@@ -64,5 +72,7 @@ class PackagesState extends Equatable {
     isTrendingLoading,
     isTopFlutterLoading,
     isTopDartLoading,
+    packageInfo,
+    isPackageInfoLoading,
   ];
 }

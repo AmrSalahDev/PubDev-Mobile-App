@@ -1,8 +1,11 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pub_dev_packages_app/core/di/di.dart';
+import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_bloc.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/page/home_page.dart';
 import 'package:pub_dev_packages_app/ui/search_page.dart';
-import 'package:pub_dev_packages_app/ui/package_detail_page.dart';
-import 'package:pub_dev_packages_app/core/api_client.dart';
+import 'package:pub_dev_packages_app/features/package_detail/presentation/page/package_detail_page.dart';
 import 'app_paths.dart';
 
 class AppRouter {
@@ -11,7 +14,10 @@ class AppRouter {
     routes: [
       GoRoute(
         path: AppPaths.home,
-        builder: (context, state) => const HomePage(),
+        builder: (context, state) => BlocProvider(
+          create: (context) => getIt<PackagesBloc>(),
+          child: const HomePage(),
+        ),
       ),
       GoRoute(
         path: AppPaths.search,
@@ -22,8 +28,9 @@ class AppRouter {
       ),
       GoRoute(
         path: AppPaths.packageDetail,
-        builder: (context, state) => PackageDetailPage(
-          package: state.extra as PubDevPackage,
+        builder: (context, state) => BlocProvider(
+          create: (context) => getIt<PackagesBloc>(),
+          child: PackageDetailPage(packageInfo: state.extra as PackageEntity),
         ),
       ),
     ],

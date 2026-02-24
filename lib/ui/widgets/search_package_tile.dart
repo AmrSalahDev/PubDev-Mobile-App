@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../core/api_client.dart';
-import '../package_detail_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pub_dev_packages_app/core/routes/app_paths.dart';
+import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
 
 class SearchPackageTile extends StatelessWidget {
-  final PubDevPackage package;
+  final PackageEntity packageInfo;
 
-  const SearchPackageTile({super.key, required this.package});
+  const SearchPackageTile({super.key, required this.packageInfo});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PackageDetailPage(package: package),
-          ),
-        );
+        context.push(AppPaths.packageDetail, extra: packageInfo.name);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 16),
@@ -30,7 +26,7 @@ class SearchPackageTile extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    package.name,
+                    packageInfo.name,
                     style: const TextStyle(
                       color: Color(0xFF4EAFF7),
                       fontSize: 18,
@@ -38,9 +34,9 @@ class SearchPackageTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                _scoreItem(package.likes.toString(), 'LIKES'),
+                _scoreItem(packageInfo.score.likeCount.toString(), 'LIKES'),
                 _scoreDivider(),
-                _scoreItem(package.points.toString(), 'POINTS'),
+                _scoreItem(packageInfo.score.maxPoints.toString(), 'POINTS'),
                 _scoreDivider(),
                 _scoreItem(
                   '--',
@@ -50,7 +46,7 @@ class SearchPackageTile extends StatelessWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              package.description,
+              packageInfo.latest.pubspec.description,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -66,7 +62,7 @@ class SearchPackageTile extends StatelessWidget {
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Text(
-                  'v ${package.latestVersion}',
+                  'v ${packageInfo.latest.version}',
                   style: const TextStyle(
                     color: Color(0xFF4EAFF7),
                     fontSize: 12,
@@ -74,20 +70,20 @@ class SearchPackageTile extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '(${_timeAgo(package.published)})',
+                  '(${_timeAgo(packageInfo.latest.published)})',
                   style: const TextStyle(
                     color: Color(0xFFB0BEC5),
                     fontSize: 12,
                   ),
                 ),
-                if (package.publisher.isNotEmpty) ...[
+                if (packageInfo.score.tags.isNotEmpty) ...[
                   const Icon(
                     Icons.verified,
                     size: 14,
                     color: Color(0xFF4EAFF7),
                   ),
                   Text(
-                    package.publisher,
+                    packageInfo.score.tags[1],
                     style: const TextStyle(
                       color: Color(0xFF4EAFF7),
                       fontSize: 12,

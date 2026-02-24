@@ -46,6 +46,7 @@ void callbackDispatcher() {
     }
     return Future.value(true);
   });
+  
 }
 
 class BackgroundTaskManager {
@@ -55,7 +56,7 @@ class BackgroundTaskManager {
     await Workmanager().registerPeriodicTask(
       "1",
       fetchBackgroundTask,
-      frequency: const Duration(minutes: 5),
+      frequency: const Duration(minutes: 15),
       constraints: Constraints(networkType: NetworkType.connected),
     );
   }

@@ -90,35 +90,8 @@ class PubDevApiClient {
   final PubClient _client = PubClient();
   final http.Client _http = http.Client();
 
-  Future<List<String>> getFlutterFavorites({int page = 1}) async {
-    final results = await _client.search(
-      'is:flutter-favorite',
-      sort: SearchOrder.popularity,
-      page: page,
-    );
-    return results.packages.map((p) => p.package).toList();
-  }
-
   Future<List<String>> getTrendingPackages({int page = 1}) async {
     final results = await _client.search('', sort: SearchOrder.top, page: page);
-    return results.packages.map((p) => p.package).toList();
-  }
-
-  Future<List<String>> getTopFlutterPackages({int page = 1}) async {
-    final results = await _client.search(
-      'sdk:flutter',
-      sort: SearchOrder.popularity,
-      page: page,
-    );
-    return results.packages.map((p) => p.package).toList();
-  }
-
-  Future<List<String>> getTopDartPackages({int page = 1}) async {
-    final results = await _client.search(
-      'sdk:dart',
-      sort: SearchOrder.popularity,
-      page: page,
-    );
     return results.packages.map((p) => p.package).toList();
   }
 

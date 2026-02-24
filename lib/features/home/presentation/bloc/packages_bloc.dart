@@ -1,17 +1,52 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../../../core/api_client.dart';
+import 'package:injectable/injectable.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_favorites_packages_usecase.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_info_usecase.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_dart_packages_usecase.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_flutter_packages_usecase.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_trending_packages_usecase.dart';
 import 'packages_event.dart';
 import 'packages_state.dart';
 
+@injectable
 class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
-  final PubDevApiClient apiClient;
+  final GetFavoritesPackagesUsecase getFavoritesPackagesUsecase;
+  final GetTrendingPackagesUsecase getTrendingPackagesUsecase;
+  final GetTopFlutterPackagesUsecase getTopFlutterPackagesUsecase;
+  final GetTopDartPackagesUsecase getTopDartPackagesUsecase;
+  final GetPackageInfoUsecase getPackageInfoUsecase;
 
-  PackagesBloc({required this.apiClient}) : super(const PackagesState()) {
+  PackagesBloc({
+    required this.getFavoritesPackagesUsecase,
+    required this.getTrendingPackagesUsecase,
+    required this.getTopFlutterPackagesUsecase,
+    required this.getTopDartPackagesUsecase,
+    required this.getPackageInfoUsecase,
+  }) : super(const PackagesState()) {
     on<LoadFavoritesEvent>(_onLoadFavorites);
     on<LoadTrendingEvent>(_onLoadTrending);
     on<LoadTopFlutterEvent>(_onLoadTopFlutter);
     on<LoadTopDartEvent>(_onLoadTopDart);
     on<RefreshPackagesEvent>(_onRefreshPackages);
+    on<LoadPackageInfoEvent>(_onLoadPackageInfo);
+  }
+
+  Future<void> _onLoadPackageInfo(
+    LoadPackageInfoEvent event,
+    Emitter<PackagesState> emit,
+  ) async {
+    emit(state.copyWith(isPackageInfoLoading: true));
+    try {
+      final packageInfo = await getPackageInfoUsecase.call(event.packageName);
+      emit(state.copyWith(packageInfo: packageInfo, isPackageInfoLoading: false));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          hasError: true,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
   }
 
   Future<void> _onLoadFavorites(
@@ -20,11 +55,16 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
   ) async {
     emit(state.copyWith(isFavoritesLoading: true));
     try {
-      final names = await apiClient.getFlutterFavorites();
-      final pkgs = await _fetchDetails(names.take(8).toList());
-      emit(state.copyWith(favorites: pkgs, isFavoritesLoading: false));
+      final favPackages = await getFavoritesPackagesUsecase.call(page: 1);
+      emit(state.copyWith(favorites: favPackages, isFavoritesLoading: false));
     } catch (e) {
-      emit(state.copyWith(hasError: true, errorMessage: e.toString(), isFavoritesLoading: false));
+      emit(
+        state.copyWith(
+          hasError: true,
+          errorMessage: e.toString(),
+          isFavoritesLoading: false,
+        ),
+      );
     }
   }
 
@@ -34,11 +74,19 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
   ) async {
     emit(state.copyWith(isTrendingLoading: true));
     try {
-      final names = await apiClient.getTrendingPackages();
-      final pkgs = await _fetchDetails(names.take(4).toList());
-      emit(state.copyWith(trending: pkgs, isTrendingLoading: false));
+      final trendingPackages = await getTrendingPackagesUsecase.call(page: 1);
+      
+      emit(
+        state.copyWith(trending: trendingPackages, isTrendingLoading: false),
+      );
     } catch (e) {
-      emit(state.copyWith(hasError: true, errorMessage: e.toString(), isTrendingLoading: false));
+      emit(
+        state.copyWith(
+          hasError: true,
+          errorMessage: e.toString(),
+          isTrendingLoading: false,
+        ),
+      );
     }
   }
 
@@ -48,11 +96,24 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
   ) async {
     emit(state.copyWith(isTopFlutterLoading: true));
     try {
-      final names = await apiClient.getTopFlutterPackages();
-      final pkgs = await _fetchDetails(names.take(4).toList());
-      emit(state.copyWith(topFlutter: pkgs, isTopFlutterLoading: false));
+      final topFlutterPackages = await getTopFlutterPackagesUsecase.call(
+        page: 1,
+      );
+      
+      emit(
+        state.copyWith(
+          topFlutter: topFlutterPackages,
+          isTopFlutterLoading: false,
+        ),
+      );
     } catch (e) {
-      emit(state.copyWith(hasError: true, errorMessage: e.toString(), isTopFlutterLoading: false));
+      emit(
+        state.copyWith(
+          hasError: true,
+          errorMessage: e.toString(),
+          isTopFlutterLoading: false,
+        ),
+      );
     }
   }
 
@@ -62,11 +123,17 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
   ) async {
     emit(state.copyWith(isTopDartLoading: true));
     try {
-      final names = await apiClient.getTopDartPackages();
-      final pkgs = await _fetchDetails(names.take(4).toList());
-      emit(state.copyWith(topDart: pkgs, isTopDartLoading: false));
+      final topDartPackages = await getTopDartPackagesUsecase.call(page: 1);
+      
+      emit(state.copyWith(topDart: topDartPackages, isTopDartLoading: false));
     } catch (e) {
-      emit(state.copyWith(hasError: true, errorMessage: e.toString(), isTopDartLoading: false));
+      emit(
+        state.copyWith(
+          hasError: true,
+          errorMessage: e.toString(),
+          isTopDartLoading: false,
+        ),
+      );
     }
   }
 
@@ -74,12 +141,14 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
     RefreshPackagesEvent event,
     Emitter<PackagesState> emit,
   ) async {
-    emit(state.copyWith(
-      isFavoritesLoading: true,
-      isTrendingLoading: true,
-      isTopFlutterLoading: true,
-      isTopDartLoading: true,
-    ));
+    emit(
+      state.copyWith(
+        isFavoritesLoading: true,
+        isTrendingLoading: true,
+        isTopFlutterLoading: true,
+        isTopDartLoading: true,
+      ),
+    );
 
     await Future.wait([
       _onLoadFavorites(LoadFavoritesEvent(), emit),
@@ -172,17 +241,17 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
   //   }
   // }
 
-  Future<List<PubDevPackage>> _fetchDetails(List<String> names) async {
-    final List<PubDevPackage> packages = [];
-    for (final name in names) {
-      try {
-        final details = await apiClient.getPackageDetails(name);
-        packages.add(details);
-      } catch (e) {
-        // ignore: avoid_print
-        print('Failed to load details for $name: $e');
-      }
-    }
-    return packages;
-  }
+  // Future<List<PubDevPackage>> _fetchDetails(List<String> names) async {
+  //   final List<PubDevPackage> packages = [];
+  //   for (final name in names) {
+  //     try {
+  //       final details = await apiClient.getPackageDetails(name);
+  //       packages.add(details);
+  //     } catch (e) {
+  //       // ignore: avoid_print
+  //       print('Failed to load details for $name: $e');
+  //     }
+  //   }
+  //   return packages;
+  // }
 }

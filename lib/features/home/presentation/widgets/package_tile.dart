@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../core/api_client.dart';
-import 'package_detail_page.dart';
+import 'package:go_router/go_router.dart';
+import 'package:pub_dev_packages_app/core/routes/app_paths.dart';
+import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
 
 class PackageTile extends StatelessWidget {
-  final PubDevPackage package;
+  final PackageEntity package;
 
   const PackageTile({super.key, required this.package});
 
@@ -18,12 +19,7 @@ class PackageTile extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(8),
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => PackageDetailPage(package: package),
-            ),
-          );
+          context.push(AppPaths.packageDetail, extra: package.name);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -45,7 +41,7 @@ class PackageTile extends StatelessWidget {
               8.verticalSpace,
               Expanded(
                 child: Text(
-                  package.description,
+                  package.latest.pubspec.description,
                   style: textTheme.bodyMedium?.copyWith(
                     color: colorScheme.onSurfaceVariant,
                   ),
@@ -53,7 +49,7 @@ class PackageTile extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-              if (package.publisher.isNotEmpty) ...[
+              if (package.score.publisher != null) ...[
                 8.verticalSpace,
                 Row(
                   children: [
@@ -65,7 +61,7 @@ class PackageTile extends StatelessWidget {
                     4.horizontalSpace,
                     Expanded(
                       child: Text(
-                        package.publisher,
+                        package.score.publisher!,
                         style: textTheme.bodySmall?.copyWith(
                           color: colorScheme.primary,
                         ),
