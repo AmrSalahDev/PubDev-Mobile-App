@@ -40,6 +40,8 @@ dependencies:
   flutter_highlighter: ^0.1.1
   dio: ^5.9.1
   youtube_explode_dart: ^3.0.5
+  cached_network_image: ^3.4.1
+  carousel_slider: ^5.1.2
 
 dev_dependencies:
   flutter_test:

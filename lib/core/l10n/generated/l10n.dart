@@ -188,6 +188,36 @@ class AppLocalizations {
   String get dart {
     return Intl.message('Dart', name: 'dart', desc: '', args: []);
   }
+
+  /// `Package of the week`
+  String get packageOfTheWeek {
+    return Intl.message(
+      'Package of the week',
+      name: 'packageOfTheWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package of the Week is a series of quick, animated videos, each of which covers a particular package`
+  String get packageOfTheWeekSubtitle {
+    return Intl.message(
+      'Package of the Week is a series of quick, animated videos, each of which covers a particular package',
+      name: 'packageOfTheWeekSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View Playlist`
+  String get viewPlaylist {
+    return Intl.message(
+      'View Playlist',
+      name: 'viewPlaylist',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

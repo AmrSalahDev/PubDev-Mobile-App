@@ -14,5 +14,8 @@
     "and": " and ",
     "apps": " apps.",
     "flutter": "Flutter",
-    "dart": "Dart"
+    "dart": "Dart",
+    "packageOfTheWeek": "Package of the week",
+    "packageOfTheWeekSubtitle": "Package of the Week is a series of quick, animated videos, each of which covers a particular package",
+    "viewPlaylist": "View Playlist"
 }

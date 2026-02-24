@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pub_dev_packages_app/core/assets_gen/assets.gen.dart';
@@ -16,50 +17,52 @@ class YoutubeVideoCard extends StatefulWidget {
 }
 
 class _YoutubeVideoCardState extends State<YoutubeVideoCard> {
-  bool _isHovered = false;
+  bool _isLongPressed = false;
 
   @override
   Widget build(BuildContext context) {
     final assets = Assets.icons;
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return GestureDetector(
       onLongPressStart: (_) {
         setState(() {
-          _isHovered = true;
+          _isLongPressed = true;
         });
       },
 
       onLongPressEnd: (_) {
         setState(() {
-          _isHovered = false;
+          _isLongPressed = false;
         });
       },
       // Keeps the UI safe if the gesture is canceled by the system
       onLongPressCancel: () {
         setState(() {
-          _isHovered = false;
+          _isLongPressed = false;
         });
       },
 
       child: Container(
-        width: 250,
-        margin: const EdgeInsets.only(right: 16),
+        margin: EdgeInsets.only(right: 16.w),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
               alignment: Alignment.center,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.network(
-                    widget.thumbnail,
-                    height: 150,
-                    width: 250,
+                  borderRadius: BorderRadius.circular(12.r),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.thumbnail,
+                    height: 200.h,
+                    width: 0.7.sw,
                     fit: BoxFit.cover,
                   ),
                 ),
                 Image.asset(
-                  _isHovered
+                  _isLongPressed
                       ? assets.youtubePlayRed.path
                       : assets.youtubePlayBlack.path,
                   width: 60.w,
@@ -67,12 +70,15 @@ class _YoutubeVideoCardState extends State<YoutubeVideoCard> {
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            10.verticalSpace,
             Text(
               widget.title,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
+              textAlign: TextAlign.start,
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurface,
+              ),
             ),
           ],
         ),

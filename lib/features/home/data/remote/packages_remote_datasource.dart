@@ -107,7 +107,6 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
     //   _talker.error('Error: $e');
     //   rethrow;
     // }
-    return [];
   }
 
   @override

@@ -35,6 +35,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "officialPackageRepository": MessageLookupByLibrary.simpleMessage(
       "The official package repository for ",
     ),
+    "packageOfTheWeek": MessageLookupByLibrary.simpleMessage(
+      "Package of the week",
+    ),
+    "packageOfTheWeekSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Package of the Week is a series of quick, animated videos, each of which covers a particular package",
+    ),
     "searchPackages": MessageLookupByLibrary.simpleMessage("Search packages"),
     "supportedByGoogle": MessageLookupByLibrary.simpleMessage(
       "Supported by Google",
@@ -58,5 +64,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Top trending packages in the last 30 days",
     ),
     "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
+    "viewPlaylist": MessageLookupByLibrary.simpleMessage("View Playlist"),
   };
 }

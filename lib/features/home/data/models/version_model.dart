@@ -6,8 +6,10 @@ class VersionModel extends VersionEntity {
   factory VersionModel.fromJson(Map<String, dynamic> json) {
     return VersionModel(
       version: json['version'] ?? '',
-     // Use current time as a fallback to prevent app crashes
-published: DateTime.parse(json['published'] ?? DateTime.now().toIso8601String()),
+      // Use current time as a fallback to prevent app crashes
+      published: DateTime.parse(
+        json['published'] ?? DateTime.now().toIso8601String(),
+      ),
     );
   }
 }
