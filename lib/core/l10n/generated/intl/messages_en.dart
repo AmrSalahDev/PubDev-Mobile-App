@@ -24,6 +24,9 @@ class MessageLookup extends MessageLookupByLibrary {
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "and": MessageLookupByLibrary.simpleMessage(" and "),
     "apps": MessageLookupByLibrary.simpleMessage(" apps."),
+    "couldNotLaunchVideo": MessageLookupByLibrary.simpleMessage(
+      "Could not launch video",
+    ),
     "dart": MessageLookupByLibrary.simpleMessage("Dart"),
     "flutter": MessageLookupByLibrary.simpleMessage("Flutter"),
     "flutterFavorites": MessageLookupByLibrary.simpleMessage(

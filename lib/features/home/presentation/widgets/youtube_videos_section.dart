@@ -7,23 +7,23 @@ import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class YoutubeVideosSection extends StatelessWidget {
   final List<Video> playlist;
-  final bool isLoading; // Add this
+  final bool isLoading;
 
   const YoutubeVideosSection({
-    super.key, 
-    required this.playlist, 
-    required this.isLoading, // Pass it here
+    super.key,
+    required this.playlist,
+    required this.isLoading,
   });
 
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return const ShimmerYoutubeVideos();
+      return const _ShimmerYoutubeVideos();
     } else if (playlist.isNotEmpty) {
       return Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: SizedBox(
-          height: 255.h,
+          height: 210.h,
           child: CarouselSlider.builder(
             itemCount: playlist.length,
             itemBuilder: (context, index, realIndex) {
@@ -31,13 +31,10 @@ class YoutubeVideosSection extends StatelessWidget {
               return YoutubeVideoCard(
                 title: video.title,
                 thumbnail: video.thumbnails.highResUrl,
+                videoUrl: video.url,
               );
             },
-            options: CarouselOptions(
-              height: 255.h,
-              autoPlay: true,
-              clipBehavior: Clip.none,
-            ),
+            options: CarouselOptions(autoPlay: true, clipBehavior: Clip.none),
           ),
         ),
       );
@@ -47,8 +44,8 @@ class YoutubeVideosSection extends StatelessWidget {
   }
 }
 
-class ShimmerYoutubeVideos extends StatelessWidget {
-  const ShimmerYoutubeVideos({super.key});
+class _ShimmerYoutubeVideos extends StatelessWidget {
+  const _ShimmerYoutubeVideos();
 
   @override
   Widget build(BuildContext context) {
@@ -57,27 +54,26 @@ class ShimmerYoutubeVideos extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: SizedBox(
-        height: 255.h,
+        height: 210.h,
         child: CarouselSlider.builder(
           itemCount: 4,
           itemBuilder: (context, index, realIndex) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ShimmerBox(height: 200.h, width: 0.7.sw),
-                12.verticalSpace,
-                ShimmerBox(
-                  height: 20.h,
-                  width: index < widths.length ? widths[index] : 0.60.sw,
-                ),
-              ],
+            return Padding(
+              padding: EdgeInsets.only(right: 16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ShimmerBox(height: 157.h, width: double.infinity),
+                  12.verticalSpace,
+                  ShimmerBox(
+                    height: 20.h,
+                    width: index < widths.length ? widths[index] : 0.60.sw,
+                  ),
+                ],
+              ),
             );
           },
-          options: CarouselOptions(
-            height: 255.h,
-            autoPlay: true,
-            clipBehavior: Clip.none,
-          ),
+          options: CarouselOptions(autoPlay: true, clipBehavior: Clip.none),
         ),
       ),
     );

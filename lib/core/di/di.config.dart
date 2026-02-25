@@ -15,6 +15,7 @@ import 'package:http/http.dart' as _i519;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:pub_api_client/pub_api_client.dart' as _i479;
 import 'package:pub_dev_packages_app/core/di/register_model.dart' as _i972;
+import 'package:pub_dev_packages_app/core/services/toast_service.dart' as _i844;
 import 'package:pub_dev_packages_app/features/home/data/remote/packages_remote_datasource.dart'
     as _i268;
 import 'package:pub_dev_packages_app/features/home/data/repos/packages_repo_impl.dart'
@@ -55,6 +56,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i479.PubClient>(() => registerModule.pubClient);
     gh.lazySingleton<_i519.Client>(() => registerModule.httpClient);
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
+    gh.lazySingleton<_i844.ToastService>(() => _i844.ToastService());
     gh.lazySingleton<_i268.PackagesRemoteDataSource>(
       () => _i268.PackagesRemoteDataSourceImpl(
         gh<_i479.PubClient>(),

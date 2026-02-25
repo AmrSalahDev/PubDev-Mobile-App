@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pub_dev_packages_app/core/const/constants.dart';
+import 'package:pub_dev_packages_app/core/di/di.dart';
+import 'package:pub_dev_packages_app/core/services/toast_service.dart';
+import 'package:pub_dev_packages_app/core/utils/app_utils.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_bloc.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_event.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_state.dart';
@@ -52,6 +56,7 @@ class _HomePageState extends State<HomePage> {
                 isEmpty: state.favorites.isEmpty,
                 content: FavoritesSection(packages: state.favorites),
                 buttonTitle: strings.viewAll,
+                showSection: false,
               ),
 
               // Trending packages section
@@ -65,6 +70,7 @@ class _HomePageState extends State<HomePage> {
                 isEmpty: state.trending.isEmpty,
                 content: GridSection(packages: state.trending),
                 buttonTitle: strings.viewAll,
+                showSection: false,
               ),
 
               // Top Flutter packages section
@@ -78,6 +84,7 @@ class _HomePageState extends State<HomePage> {
                 isEmpty: state.topFlutter.isEmpty,
                 content: GridSection(packages: state.topFlutter),
                 buttonTitle: strings.viewAll,
+                showSection: false,
               ),
 
               // Top Dart packages section
@@ -91,6 +98,7 @@ class _HomePageState extends State<HomePage> {
                 isEmpty: state.topDart.isEmpty,
                 content: GridSection(packages: state.topDart),
                 buttonTitle: strings.viewAll,
+                showSection: false,
               ),
 
               // Package of the week section
@@ -109,6 +117,12 @@ class _HomePageState extends State<HomePage> {
                   isLoading: state.isPackageOfTheWeekVideosLoading,
                 ),
                 buttonTitle: strings.viewPlaylist,
+                onButtonTap: () {
+                  launchUrlInBrowser(
+                    url: packageOfTheWeekPlaylistUrl,
+                    context: context,
+                  );
+                },
               ),
 
               // widget of the week section
@@ -128,6 +142,12 @@ class _HomePageState extends State<HomePage> {
                   isLoading: state.isWidgetOfTheWeekVideosLoading,
                 ),
                 buttonTitle: strings.viewPlaylist,
+                onButtonTap: () {
+                  launchUrlInBrowser(
+                    url: widgetOfTheWeekPlaylistUrl,
+                    context: context,
+                  );
+                },
               ),
 
               // observable flutter section
@@ -144,6 +164,12 @@ class _HomePageState extends State<HomePage> {
                   isLoading: state.isObservableVideosLoading,
                 ),
                 buttonTitle: strings.viewPlaylist,
+                onButtonTap: () {
+                  launchUrlInBrowser(
+                    url: observablePlaylistUrl,
+                    context: context,
+                  );
+                },
               ),
 
               SliverToBoxAdapter(child: 30.verticalSpace),
@@ -163,6 +189,8 @@ class _HomeSection extends StatelessWidget {
   final bool isEmpty;
   final Widget content;
   final String buttonTitle;
+  final bool showSection;
+  final VoidCallback? onButtonTap;
 
   const _HomeSection({
     required this.sectionKey,
@@ -172,34 +200,45 @@ class _HomeSection extends StatelessWidget {
     required this.isEmpty,
     required this.content,
     required this.buttonTitle,
+    this.onButtonTap,
+    this.showSection = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
-      padding: EdgeInsets.only(bottom: 16.h),
-      sliver: SliverMainAxisGroup(
-        slivers: [
-          SliverToBoxAdapter(
-            child: VisibilityDetector(
-              key: Key(sectionKey),
-              onVisibilityChanged: (info) {
-                if (info.visibleFraction > 0.1 && isEmpty) {
-                  onVisible();
-                }
-              },
-              child: SectionHeader(title: title, subtitle: subtitle),
+    return showSection
+        ? SliverPadding(
+            padding: EdgeInsets.only(bottom: 16.h),
+            sliver: SliverMainAxisGroup(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: VisibilityDetector(
+                    key: Key(sectionKey),
+                    onVisibilityChanged: (info) {
+                      if (info.visibleFraction > 0.7 && isEmpty) {
+                        onVisible();
+                      }
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 8.h),
+                      child: SectionHeader(title: title, subtitle: subtitle),
+                    ),
+                  ),
+                ),
+
+                SliverToBoxAdapter(child: content),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 4.h),
+                    child: ViewAllButton(
+                      title: buttonTitle,
+                      onTap: onButtonTap,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ),
-          SliverToBoxAdapter(child: content),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(top: 12.h),
-              child: ViewAllButton(title: buttonTitle, onTap: () {}),
-            ),
-          ),
-        ],
-      ),
-    );
+          )
+        : SliverToBoxAdapter();
   }
 }

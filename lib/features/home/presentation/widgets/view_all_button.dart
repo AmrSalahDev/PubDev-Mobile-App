@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
 
 class ViewAllButton extends StatelessWidget {
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final String? title;
-  const ViewAllButton({super.key, required this.onTap, this.title});
+  const ViewAllButton({super.key, this.onTap, this.title});
 
   @override
   Widget build(BuildContext context) {

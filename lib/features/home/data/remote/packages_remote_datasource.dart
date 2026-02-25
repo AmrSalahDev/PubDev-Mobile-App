@@ -215,7 +215,7 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
 
       videoList.shuffle();
 
-     final videos = videoList.take(6).toList();
+     final videos = videoList.toList();
      
       _talker.info('Fetched ${videos.length} videos');
       return videos;
@@ -241,7 +241,7 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
 
       videoList.shuffle();
 
-     final videos = videoList.take(6).toList();
+     final videos = videoList.toList();
      
       _talker.info('Fetched ${videos.length} videos');
       return videos;
@@ -268,7 +268,7 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
 
       videoList.shuffle();
 
-     final videos = videoList.take(6).toList();
+     final videos = videoList.toList();
      
       _talker.info('Fetched ${videos.length} videos');
       return videos;

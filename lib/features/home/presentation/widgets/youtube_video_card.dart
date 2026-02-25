@@ -1,16 +1,18 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pub_dev_packages_app/core/assets_gen/assets.gen.dart';
+import 'package:pub_dev_packages_app/core/utils/app_utils.dart';
 import 'package:pub_dev_packages_app/features/widgets/shimmer_image.dart';
 
 class YoutubeVideoCard extends StatefulWidget {
   final String title;
   final String thumbnail;
+  final String videoUrl;
   const YoutubeVideoCard({
     super.key,
     required this.title,
     required this.thumbnail,
+    required this.videoUrl,
   });
 
   @override
@@ -27,6 +29,7 @@ class _YoutubeVideoCardState extends State<YoutubeVideoCard> {
     final colorScheme = Theme.of(context).colorScheme;
 
     return GestureDetector(
+      onTap: () => launchUrlInBrowser(url: widget.videoUrl, context: context),
       onLongPressStart: (_) {
         setState(() {
           _isLongPressed = true;
@@ -38,6 +41,7 @@ class _YoutubeVideoCardState extends State<YoutubeVideoCard> {
           _isLongPressed = false;
         });
       },
+
       // Keeps the UI safe if the gesture is canceled by the system
       onLongPressCancel: () {
         setState(() {
@@ -55,8 +59,8 @@ class _YoutubeVideoCardState extends State<YoutubeVideoCard> {
               children: [
                 ShimmerImage(
                   imageUrl: widget.thumbnail,
-                  height: 200.h,
-                  width: 0.7.sw,
+                  height: 157.h,
+                  width: double.infinity,
                   borderRadius: 12.r,
                   fit: BoxFit.cover,
                 ),

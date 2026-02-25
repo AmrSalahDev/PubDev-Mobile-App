@@ -258,6 +258,16 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `Could not launch video`
+  String get couldNotLaunchVideo {
+    return Intl.message(
+      'Could not launch video',
+      name: 'couldNotLaunchVideo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
