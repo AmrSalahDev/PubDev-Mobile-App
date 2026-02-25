@@ -22,5 +22,8 @@
     "observableFlutterSubtitle": "Observable Flutter is a series of quick, animated videos, each of which covers a particular package",
     "widgetOfTheWeek": "Widget of the week",
     "widgetOfTheWeekSubtitle": "Widget of the week is a series of quick, animated videos, each of which covers a particular widget",
-    "couldNotLaunchVideo": "Could not launch video"
+    "couldNotLaunchVideo": "Could not launch video",
+    "likes": "LIKES",
+    "points": "POINTS",
+    "downloads": "DOWNLOADS"
 } 

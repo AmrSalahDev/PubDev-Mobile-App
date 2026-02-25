@@ -40,6 +40,16 @@ import 'package:pub_dev_packages_app/features/home/domain/usecases/get_widget_of
     as _i706;
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_bloc.dart'
     as _i921;
+import 'package:pub_dev_packages_app/features/search/data/remote/search_remote_datasource.dart'
+    as _i532;
+import 'package:pub_dev_packages_app/features/search/data/repos/search_repo_impl.dart'
+    as _i471;
+import 'package:pub_dev_packages_app/features/search/domain/repos/search_repo.dart'
+    as _i655;
+import 'package:pub_dev_packages_app/features/search/domain/usecases/search_packages_usecase.dart'
+    as _i502;
+import 'package:pub_dev_packages_app/features/search/presentation/bloc/search_bloc.dart'
+    as _i896;
 import 'package:retry/retry.dart' as _i689;
 import 'package:talker/talker.dart' as _i993;
 
@@ -57,12 +67,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i519.Client>(() => registerModule.httpClient);
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i844.ToastService>(() => _i844.ToastService());
+    gh.lazySingleton<_i532.SearchRemoteDataSource>(
+      () => _i532.SearchRemoteDataSourceImpl(gh<_i479.PubClient>()),
+    );
     gh.lazySingleton<_i268.PackagesRemoteDataSource>(
       () => _i268.PackagesRemoteDataSourceImpl(
         gh<_i479.PubClient>(),
         gh<_i993.Talker>(),
         gh<_i361.Dio>(),
       ),
+    );
+    gh.lazySingleton<_i655.SearchRepo>(
+      () => _i471.SearchRepoImpl(gh<_i532.SearchRemoteDataSource>()),
     );
     gh.lazySingleton<_i197.PackagesRepo>(
       () => _i588.PackagesRepoImpl(gh<_i268.PackagesRemoteDataSource>()),
@@ -91,6 +107,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i706.GetWidgetOfTheWeekVideosUsecase>(
       () => _i706.GetWidgetOfTheWeekVideosUsecase(gh<_i197.PackagesRepo>()),
     );
+    gh.lazySingleton<_i502.SearchPackagesUsecase>(
+      () => _i502.SearchPackagesUsecase(gh<_i655.SearchRepo>()),
+    );
     gh.factory<_i921.PackagesBloc>(
       () => _i921.PackagesBloc(
         getFavoritesPackagesUsecase: gh<_i717.GetFavoritesPackagesUsecase>(),
@@ -103,6 +122,12 @@ extension GetItInjectableX on _i174.GetIt {
         getObservableVideosUsecase: gh<_i369.GetObservableVideosUsecase>(),
         getWidgetOfTheWeekVideosUsecase:
             gh<_i706.GetWidgetOfTheWeekVideosUsecase>(),
+      ),
+    );
+    gh.factory<_i896.SearchBloc>(
+      () => _i896.SearchBloc(
+        gh<_i502.SearchPackagesUsecase>(),
+        gh<_i289.GetPackageInfoUsecase>(),
       ),
     );
     return this;

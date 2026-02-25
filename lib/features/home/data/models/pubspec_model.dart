@@ -10,6 +10,11 @@ class PubspecModel extends PubspecEntity {
     required super.dependencies,
     required super.devDependencies,
     required super.topics,
+    super.archiveUrl,
+    super.packageUrl,
+    super.repository,
+    super.issueTracker,
+    super.license,
   });
 
   factory PubspecModel.fromJson(Map<String, dynamic> json) {
@@ -21,8 +26,11 @@ class PubspecModel extends PubspecEntity {
     environment: json['environment'] ?? {},
     dependencies: json['dependencies'] ?? {},
     devDependencies: json['dev_dependencies'] ?? {},
-    // Fix: Convert the List<dynamic> to List<String> 
-    // and use [] as default instead of {}
+    archiveUrl: json['archive_url'] ?? '',
+    packageUrl: json['package_url'] ?? '',
+    repository: json['repository'] ?? '',
+    issueTracker: json['issue_tracker'] ?? '',
+    license: json['license'] ?? '',
     topics: List<String>.from(json['topics'] ?? []), 
   );
 }

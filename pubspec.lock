@@ -509,6 +509,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.2.1"
+  get_time_ago:
+    dependency: "direct main"
+    description:
+      name: get_time_ago
+      sha256: cd111914562ca2b938afbc73f715fab1f37795cc053924d08f6de59878781388
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.2"
   glob:
     dependency: transitive
     description:
@@ -765,6 +773,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  number_display:
+    dependency: "direct main"
+    description:
+      name: number_display
+      sha256: c465e6a3dd00f56532fa585c2085a593372279ecb3179fa86357c203f7c6bd59
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   oauth2:
     dependency: transitive
     description:

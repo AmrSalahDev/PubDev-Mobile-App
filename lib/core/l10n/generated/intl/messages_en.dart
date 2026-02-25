@@ -28,6 +28,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Could not launch video",
     ),
     "dart": MessageLookupByLibrary.simpleMessage("Dart"),
+    "downloads": MessageLookupByLibrary.simpleMessage("DOWNLOADS"),
     "flutter": MessageLookupByLibrary.simpleMessage("Flutter"),
     "flutterFavorites": MessageLookupByLibrary.simpleMessage(
       "Flutter Favorites",
@@ -35,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "flutterFavoritesSubtitle": MessageLookupByLibrary.simpleMessage(
       "Some of the packages that demonstrate the highest levels of quality,\nselected by the Flutter Ecosystem Committee",
     ),
+    "likes": MessageLookupByLibrary.simpleMessage("LIKES"),
     "observableFlutter": MessageLookupByLibrary.simpleMessage(
       "Observable Flutter",
     ),
@@ -50,6 +52,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "packageOfTheWeekSubtitle": MessageLookupByLibrary.simpleMessage(
       "Package of the week is a series of quick, animated videos, each of which covers a particular package",
     ),
+    "points": MessageLookupByLibrary.simpleMessage("POINTS"),
     "searchPackages": MessageLookupByLibrary.simpleMessage("Search packages"),
     "supportedByGoogle": MessageLookupByLibrary.simpleMessage(
       "Supported by Google",

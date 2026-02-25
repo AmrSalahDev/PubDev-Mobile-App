@@ -9,6 +9,7 @@ import 'package:pub_dev_packages_app/core/const/constants.dart';
 import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
 import 'package:pub_dev_packages_app/core/routes/app_paths.dart';
 import 'package:pub_dev_packages_app/core/utils/app_utils.dart';
+import 'package:pub_dev_packages_app/features/widgets/custom_search_bar.dart';
 
 class HomeHeader extends StatefulWidget {
   final AdvancedDrawerController advancedDrawerController;
@@ -87,11 +88,14 @@ class _HomeHeaderState extends State<HomeHeader> {
               16.verticalSpace,
               Assets.svgs.pubDevLogo.svg(width: 40.w, height: 40.h),
               35.verticalSpace,
-              _SearchBar(
+              CustomSearchBar(
                 searchController: _searchController,
                 textTheme: textTheme,
                 colorScheme: colorScheme,
                 strings: strings,
+                onSubmitted: (query) {
+                  context.push(AppPaths.search, extra: query);
+                },
               ),
               24.verticalSpace,
               _Subtitle(
@@ -168,85 +172,6 @@ class _Subtitle extends StatelessWidget {
             TextSpan(text: strings.apps),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _SearchBar extends StatefulWidget {
-  final TextEditingController searchController;
-  final TextTheme textTheme;
-  final ColorScheme colorScheme;
-  final AppLocalizations strings;
-
-  const _SearchBar({
-    required this.searchController,
-    required this.textTheme,
-    required this.colorScheme,
-    required this.strings,
-  });
-
-  @override
-  State<_SearchBar> createState() => _SearchBarState();
-}
-
-class _SearchBarState extends State<_SearchBar> {
-  bool _isFocused = false;
-
-  @override
-  void initState() {
-    super.initState();
-    widget.searchController.addListener(_onSearchChanged);
-  }
-
-  @override
-  void dispose() {
-    widget.searchController.removeListener(_onSearchChanged);
-    super.dispose();
-  }
-
-  void _onSearchChanged() {
-    setState(() {
-      _isFocused = widget.searchController.text.isNotEmpty;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: widget.searchController,
-      onSubmitted: (query) {
-        context.push(AppPaths.search, extra: query);
-      },
-      style: widget.textTheme.titleMedium?.copyWith(
-        fontWeight: FontWeight.w400,
-        color: widget.colorScheme.onPrimary,
-      ),
-      decoration: InputDecoration(
-        hintText: widget.strings.searchPackages,
-        hintStyle: widget.textTheme.titleMedium?.copyWith(
-          fontWeight: FontWeight.w400,
-          color: widget.colorScheme.onSurfaceVariant,
-        ),
-        prefixIcon: Icon(
-          Icons.search,
-          size: 24.sp,
-          color: _isFocused
-              ? widget.colorScheme.onPrimary
-              : widget.colorScheme.onSurfaceVariant,
-        ),
-        suffixIcon: _isFocused
-            ? IconButton(
-                icon: Icon(
-                  Icons.close,
-                  color: widget.colorScheme.onPrimary,
-                  size: 24.sp,
-                ),
-                onPressed: () {
-                  widget.searchController.clear();
-                },
-              )
-            : null,
       ),
     );
   }

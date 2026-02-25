@@ -268,6 +268,21 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `LIKES`
+  String get likes {
+    return Intl.message('LIKES', name: 'likes', desc: '', args: []);
+  }
+
+  /// `POINTS`
+  String get points {
+    return Intl.message('POINTS', name: 'points', desc: '', args: []);
+  }
+
+  /// `DOWNLOADS`
+  String get downloads {
+    return Intl.message('DOWNLOADS', name: 'downloads', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

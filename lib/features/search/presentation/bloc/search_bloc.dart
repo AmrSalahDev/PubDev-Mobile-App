@@ -1,13 +1,17 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pub_api_client/pub_api_client.dart';
-import '../core/api_client.dart';
+import 'package:injectable/injectable.dart';
+import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_info_usecase.dart';
+import 'package:pub_dev_packages_app/features/search/domain/usecases/search_packages_usecase.dart';
 import 'search_event.dart';
 import 'search_state.dart';
 
+@injectable
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  final PubDevApiClient apiClient;
+  final SearchPackagesUsecase searchPackagesUsecase;
+  final GetPackageInfoUsecase getPackageInfoUsecase;
 
-  SearchBloc(this.apiClient) : super(SearchInitial()) {
+  SearchBloc(this.searchPackagesUsecase, this.getPackageInfoUsecase) : super(SearchInitial()) {
     on<PerformSearch>(_onPerformSearch);
     on<LoadMoreResults>(_onLoadMoreResults);
   }
@@ -18,15 +22,15 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   ) async {
     emit(SearchLoading());
     try {
-      final packageNames = await apiClient.searchPackages(
-        event.query,
+      final packageNames = await searchPackagesUsecase.call(
+        query: event.query,
         page: 1,
         sort: event.sort,
       );
 
-      final List<PubDevPackage> packages = [];
+      final List<PackageEntity> packages = [];
       for (final name in packageNames) {
-        final details = await apiClient.getPackageDetails(name);
+        final details = await getPackageInfoUsecase.call(name);
         packages.add(details);
       }
 
@@ -36,6 +40,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           query: event.query,
           hasReachedMax: packages.length < 10, // Assuming 10 per page
           currentPage: 1,
+          sort: event.sort,
         ),
       );
     } catch (e) {
@@ -53,9 +58,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
 
     try {
       final nextPage = currentState.currentPage + 1;
-      final packageNames = await apiClient.searchPackages(
-        currentState.query,
+      final packageNames = await searchPackagesUsecase.call(
+        query: currentState.query,
         page: nextPage,
+        sort: currentState.sort,
       );
 
       if (packageNames.isEmpty) {
@@ -63,9 +69,9 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         return;
       }
 
-      final List<PubDevPackage> newPackages = [];
+      final List<PackageEntity> newPackages = [];
       for (final name in packageNames) {
-        final details = await apiClient.getPackageDetails(name);
+        final details = await getPackageInfoUsecase.call(name);
         newPackages.add(details);
       }
 

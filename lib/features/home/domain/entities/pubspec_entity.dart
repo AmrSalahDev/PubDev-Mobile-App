@@ -5,6 +5,11 @@ class PubspecEntity extends Equatable {
   final String description;
   final String version;
   final String homepage;
+  final String? repository;
+  final String? archiveUrl;
+  final String? packageUrl;
+  final String? issueTracker;
+  final String? license;
   final List<String> topics;
   final Map<String, dynamic>? environment;
   final Map<String, dynamic>? dependencies;
@@ -19,6 +24,11 @@ class PubspecEntity extends Equatable {
     required this.dependencies,
     required this.devDependencies,
     required this.topics,
+    this.archiveUrl,
+    this.packageUrl,
+    this.repository,
+    this.issueTracker,
+    this.license,
   });
   
   @override
@@ -31,5 +41,10 @@ class PubspecEntity extends Equatable {
     dependencies,
     devDependencies,
     topics,
+    archiveUrl,
+    packageUrl,
+    repository,
+    issueTracker,
+    license,
   ];
 } 

@@ -7,6 +7,9 @@ class ScoreEntity extends Equatable {
   final int downloadCount30Days;
   final List<String> tags;
   final String? publisher;
+  final List<String>? platforms;
+  final List<String>? sdks;
+  final List<String>? licenses;
 
   const ScoreEntity({
     required this.grantedPoints,
@@ -15,6 +18,9 @@ class ScoreEntity extends Equatable {
     required this.downloadCount30Days,
     required this.tags,
     this.publisher,
+    this.platforms,
+    this.sdks,
+    this.licenses,
   });
 
   @override
@@ -25,5 +31,8 @@ class ScoreEntity extends Equatable {
     downloadCount30Days,
     tags,
     publisher,
+    platforms,
+    sdks,
+    licenses,
   ];
 }
