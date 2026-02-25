@@ -6,15 +6,14 @@ import 'package:pub_api_client/pub_api_client.dart';
 import 'package:pub_dev_packages_app/core/const/constants.dart';
 import 'package:pub_dev_packages_app/features/home/data/models/package_model.dart';
 import 'package:pub_dev_packages_app/features/home/data/models/score_model.dart';
-import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
 import 'package:talker/talker.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 abstract class PackagesRemoteDataSource {
-  Future<List<PackageEntity>> getFavoritesPackages({required int page});
-  Future<List<PackageEntity>> getTrendingPackages({required int page});
-  Future<List<PackageEntity>> getTopFlutterPackages({required int page});
-  Future<List<PackageEntity>> getTopDartPackages({required int page});
+  Future<List<PackageModel>> getFavoritesPackages({required int page});
+  Future<List<PackageModel>> getTrendingPackages({required int page});
+  Future<List<PackageModel>> getTopFlutterPackages({required int page});
+  Future<List<PackageModel>> getTopDartPackages({required int page});
   Future<PackageModel> getPackageInfo(String packageName);
   Future<ScoreModel> getScore(String name);
   Future<List<Video>> getPackageOfTheWeekVideos();
@@ -31,7 +30,7 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
   PackagesRemoteDataSourceImpl(this._client, this._talker, this._dio);
 
   @override
-  Future<List<PackageEntity>> getFavoritesPackages({required int page}) async {
+  Future<List<PackageModel>> getFavoritesPackages({required int page}) async {
     try {
       // Pick a random page between 1 and 5 to get different packages
       int randomPage = Random().nextInt(5) + 1;
@@ -55,7 +54,7 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
   }
 
  @override
-Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
+Future<List<PackageModel>> getTrendingPackages({required int page}) async {
   try {
     final response = await _dio.get(trendingPackages);
     final data = response.data;
@@ -112,7 +111,7 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
   }
 
   @override
-  Future<List<PackageEntity>> getTopFlutterPackages({required int page}) async {
+  Future<List<PackageModel>> getTopFlutterPackages({required int page}) async {
     try {
       int randomPage = Random().nextInt(5) + 1;
 
@@ -123,6 +122,7 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
       );
       final packageNames = results.packages.map((p) => p.package).toList();
       packageNames.shuffle(); // Mix them up!
+
       return await Future.wait(
         packageNames.map((p) => getPackageInfo(p)).take(6).toList(),
       );
@@ -133,7 +133,7 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
   }
 
   @override
-  Future<List<PackageEntity>> getTopDartPackages({required int page}) async {
+  Future<List<PackageModel>> getTopDartPackages({required int page}) async {
     try {
       int randomPage = Random().nextInt(5) + 1;
       final results = await _client.search(
@@ -143,6 +143,7 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
       );
       final packageNames = results.packages.map((p) => p.package).toList();
       packageNames.shuffle(); // Mix them up!
+
       return await Future.wait(
         packageNames.map((p) => getPackageInfo(p)).take(6).toList(),
       );
@@ -211,6 +212,7 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
       // Get all videos in that playlist
       List<Video> videoList = await yt.playlists
           .getVideos(playlist.id)
+          .take(10)
           .toList();
 
       videoList.shuffle();
@@ -237,6 +239,7 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
       // Get all videos in that playlist
       List<Video> videoList = await yt.playlists
           .getVideos(playlist.id)
+          .take(10)
           .toList();
 
       videoList.shuffle();
@@ -263,7 +266,7 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
 
       // Get all videos in that playlist
       List<Video> videoList = await yt.playlists
-          .getVideos(playlist.id)
+          .getVideos(playlist.id).take(10)
           .toList();
 
       videoList.shuffle();

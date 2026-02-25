@@ -1,5 +1,6 @@
 import 'package:workmanager/workmanager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pub_api_client/pub_api_client.dart';
 import '../api_client.dart';
 import 'notification_service.dart';
 
@@ -16,7 +17,10 @@ void callbackDispatcher() {
           final notificationService = NotificationService();
           await notificationService.init();
 
-          final recentPackages = await apiClient.getTrendingPackages();
+          final recentPackages = await apiClient.searchPackages(
+            '',
+            sort: SearchOrder.created,
+          );
 
           if (recentPackages.isNotEmpty) {
             final firstPackage = recentPackages.first;
@@ -46,7 +50,6 @@ void callbackDispatcher() {
     }
     return Future.value(true);
   });
-  
 }
 
 class BackgroundTaskManager {
