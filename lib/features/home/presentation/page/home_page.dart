@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pub_dev_packages_app/core/const/constants.dart';
-import 'package:pub_dev_packages_app/core/di/di.dart';
-import 'package:pub_dev_packages_app/core/services/toast_service.dart';
 import 'package:pub_dev_packages_app/core/utils/app_utils.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_bloc.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_event.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_state.dart';
 import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/widgets/drawer_body.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/favorites_section.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/grid_section.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/home_header.dart';
@@ -25,6 +25,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final _advancedDrawerController = AdvancedDrawerController();
+  
   @override
   void initState() {
     super.initState();
@@ -32,150 +34,179 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void dispose() {
+    _advancedDrawerController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final strings = AppLocalizations.of(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
-    return Scaffold(
-      body: BlocBuilder<PackagesBloc, PackagesState>(
-        builder: (context, state) {
-          return CustomScrollView(
-            clipBehavior: Clip.none,
-            slivers: [
-              SliverToBoxAdapter(
-                child: Column(children: [HomeHeader(), 30.verticalSpace]),
-              ),
-
-              // Flutter Favorites section
-              _HomeSection(
-                sectionKey: 'flutter-favorites-section',
-                title: strings.flutterFavorites,
-                subtitle: strings.flutterFavoritesSubtitle,
-                onVisible: () {
-                  context.read<PackagesBloc>().add(LoadFavoritesEvent());
-                },
-                isEmpty: state.favorites.isEmpty,
-                content: FavoritesSection(packages: state.favorites),
-                buttonTitle: strings.viewAll,
-                showSection: false,
-              ),
-
-              // Trending packages section
-              _HomeSection(
-                sectionKey: 'trending-section',
-                title: strings.trendingPackages,
-                subtitle: strings.trendingPackagesSubtitle,
-                onVisible: () {
-                  context.read<PackagesBloc>().add(LoadTrendingEvent());
-                },
-                isEmpty: state.trending.isEmpty,
-                content: GridSection(packages: state.trending),
-                buttonTitle: strings.viewAll,
-                showSection: false,
-              ),
-
-              // Top Flutter packages section
-              _HomeSection(
-                sectionKey: 'top-flutter-section',
-                title: strings.topFlutterPackages,
-                subtitle: strings.topFlutterPackagesSubtitle,
-                onVisible: () {
-                  context.read<PackagesBloc>().add(LoadTopFlutterEvent());
-                },
-                isEmpty: state.topFlutter.isEmpty,
-                content: GridSection(packages: state.topFlutter),
-                buttonTitle: strings.viewAll,
-                showSection: false,
-              ),
-
-              // Top Dart packages section
-              _HomeSection(
-                sectionKey: 'top-dart-section',
-                title: strings.topDartPackages,
-                subtitle: strings.topDartPackagesSubtitle,
-                onVisible: () {
-                  context.read<PackagesBloc>().add(LoadTopDartEvent());
-                },
-                isEmpty: state.topDart.isEmpty,
-                content: GridSection(packages: state.topDart),
-                buttonTitle: strings.viewAll,
-                showSection: false,
-              ),
-
-              // Package of the week section
-              _HomeSection(
-                sectionKey: 'package-of-the-week-section',
-                title: strings.packageOfTheWeek,
-                subtitle: strings.packageOfTheWeekSubtitle,
-                onVisible: () {
-                  context.read<PackagesBloc>().add(
-                    LoadPackageOfTheWeekVideosEvent(),
-                  );
-                },
-                isEmpty: state.packageOfTheWeekVideos.isEmpty,
-                content: YoutubeVideosSection(
-                  playlist: state.packageOfTheWeekVideos,
-                  isLoading: state.isPackageOfTheWeekVideosLoading,
+    return AdvancedDrawer(
+      backdrop: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(color: colorScheme.surface),
+      ),
+      controller: _advancedDrawerController,
+      animationCurve: Curves.easeInOut,
+      animationDuration: const Duration(milliseconds: 300),
+      animateChildDecoration: true,
+      rtlOpening: false,
+      // openScale: 1.0,
+      disabledGestures: false,
+      childDecoration: BoxDecoration(
+        boxShadow: <BoxShadow>[
+          BoxShadow(color: Colors.black12, spreadRadius: 2, blurRadius: 2),
+        ],
+        borderRadius: BorderRadius.all(Radius.circular(16.r)),
+      ),
+      drawer: DrawerBody(textTheme: textTheme, colorScheme: colorScheme),
+      child: Scaffold(
+        body: BlocBuilder<PackagesBloc, PackagesState>(
+          builder: (context, state) {
+            return CustomScrollView(
+              clipBehavior: Clip.none,
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Column(children: [HomeHeader(advancedDrawerController: _advancedDrawerController), 30.verticalSpace]),
                 ),
-                buttonTitle: strings.viewPlaylist,
-                onButtonTap: () {
-                  launchUrlInBrowser(
-                    url: packageOfTheWeekPlaylistUrl,
-                    context: context,
-                  );
-                },
-              ),
-
-              // widget of the week section
-              _HomeSection(
-                sectionKey: 'widget-of-the-week-section',
-                title: strings.widgetOfTheWeek,
-                subtitle: strings.widgetOfTheWeekSubtitle,
-                onVisible: () {
-                  context.read<PackagesBloc>().add(
-                    LoadWidgetOfTheWeekVideosEvent(),
-                  );
-                },
-                isEmpty: state.widgetOfTheWeekVideos.isEmpty,
-
-                content: YoutubeVideosSection(
-                  playlist: state.widgetOfTheWeekVideos,
-                  isLoading: state.isWidgetOfTheWeekVideosLoading,
+      
+                // Flutter Favorites section
+                _HomeSection(
+                  sectionKey: 'flutter-favorites-section',
+                  title: strings.flutterFavorites,
+                  subtitle: strings.flutterFavoritesSubtitle,
+                  onVisible: () {
+                    context.read<PackagesBloc>().add(LoadFavoritesEvent());
+                  },
+                  isEmpty: state.favorites.isEmpty,
+                  content: FavoritesSection(packages: state.favorites),
+                  buttonTitle: strings.viewAll,
+                 
                 ),
-                buttonTitle: strings.viewPlaylist,
-                onButtonTap: () {
-                  launchUrlInBrowser(
-                    url: widgetOfTheWeekPlaylistUrl,
-                    context: context,
-                  );
-                },
-              ),
-
-              // observable flutter section
-              _HomeSection(
-                sectionKey: 'observable-flutter-section',
-                title: strings.observableFlutter,
-                subtitle: strings.observableFlutterSubtitle,
-                onVisible: () {
-                  context.read<PackagesBloc>().add(LoadObservableVideosEvent());
-                },
-                isEmpty: state.observableVideos.isEmpty,
-                content: YoutubeVideosSection(
-                  playlist: state.observableVideos,
-                  isLoading: state.isObservableVideosLoading,
+      
+                // Trending packages section
+                _HomeSection(
+                  sectionKey: 'trending-section',
+                  title: strings.trendingPackages,
+                  subtitle: strings.trendingPackagesSubtitle,
+                  onVisible: () {
+                    context.read<PackagesBloc>().add(LoadTrendingEvent());
+                  },
+                  isEmpty: state.trending.isEmpty,
+                  content: GridSection(packages: state.trending),
+                  buttonTitle: strings.viewAll,
+                 
                 ),
-                buttonTitle: strings.viewPlaylist,
-                onButtonTap: () {
-                  launchUrlInBrowser(
-                    url: observablePlaylistUrl,
-                    context: context,
-                  );
-                },
-              ),
-
-              SliverToBoxAdapter(child: 30.verticalSpace),
-            ],
-          );
-        },
+      
+                // Top Flutter packages section
+                _HomeSection(
+                  sectionKey: 'top-flutter-section',
+                  title: strings.topFlutterPackages,
+                  subtitle: strings.topFlutterPackagesSubtitle,
+                  onVisible: () {
+                    context.read<PackagesBloc>().add(LoadTopFlutterEvent());
+                  },
+                  isEmpty: state.topFlutter.isEmpty,
+                  content: GridSection(packages: state.topFlutter),
+                  buttonTitle: strings.viewAll,
+                
+                ),
+      
+                // Top Dart packages section
+                _HomeSection(
+                  sectionKey: 'top-dart-section',
+                  title: strings.topDartPackages,
+                  subtitle: strings.topDartPackagesSubtitle,
+                  onVisible: () {
+                    context.read<PackagesBloc>().add(LoadTopDartEvent());
+                  },
+                  isEmpty: state.topDart.isEmpty,
+                  content: GridSection(packages: state.topDart),
+                  buttonTitle: strings.viewAll,
+                  
+                ),
+      
+                // Package of the week section
+                _HomeSection(
+                  sectionKey: 'package-of-the-week-section',
+                  title: strings.packageOfTheWeek,
+                  subtitle: strings.packageOfTheWeekSubtitle,
+                  onVisible: () {
+                    context.read<PackagesBloc>().add(
+                      LoadPackageOfTheWeekVideosEvent(),
+                    );
+                  },
+                  isEmpty: state.packageOfTheWeekVideos.isEmpty,
+                  content: YoutubeVideosSection(
+                    playlist: state.packageOfTheWeekVideos,
+                    isLoading: state.isPackageOfTheWeekVideosLoading,
+                  ),
+                  buttonTitle: strings.viewPlaylist,
+                  onButtonTap: () {
+                    launchUrlInBrowser(
+                      url: packageOfTheWeekPlaylistUrl,
+                      context: context,
+                    );
+                  },
+                ),
+      
+                // widget of the week section
+                _HomeSection(
+                  sectionKey: 'widget-of-the-week-section',
+                  title: strings.widgetOfTheWeek,
+                  subtitle: strings.widgetOfTheWeekSubtitle,
+                  onVisible: () {
+                    context.read<PackagesBloc>().add(
+                      LoadWidgetOfTheWeekVideosEvent(),
+                    );
+                  },
+                  isEmpty: state.widgetOfTheWeekVideos.isEmpty,
+      
+                  content: YoutubeVideosSection(
+                    playlist: state.widgetOfTheWeekVideos,
+                    isLoading: state.isWidgetOfTheWeekVideosLoading,
+                  ),
+                  buttonTitle: strings.viewPlaylist,
+                  onButtonTap: () {
+                    launchUrlInBrowser(
+                      url: widgetOfTheWeekPlaylistUrl,
+                      context: context,
+                    );
+                  },
+                ),
+      
+                // observable flutter section
+                _HomeSection(
+                  sectionKey: 'observable-flutter-section',
+                  title: strings.observableFlutter,
+                  subtitle: strings.observableFlutterSubtitle,
+                  onVisible: () {
+                    context.read<PackagesBloc>().add(LoadObservableVideosEvent());
+                  },
+                  isEmpty: state.observableVideos.isEmpty,
+                  content: YoutubeVideosSection(
+                    playlist: state.observableVideos,
+                    isLoading: state.isObservableVideosLoading,
+                  ),
+                  buttonTitle: strings.viewPlaylist,
+                  onButtonTap: () {
+                    launchUrlInBrowser(
+                      url: observablePlaylistUrl,
+                      context: context,
+                    );
+                  },
+                ),
+      
+                SliverToBoxAdapter(child: 30.verticalSpace),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

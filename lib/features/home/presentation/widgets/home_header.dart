@@ -1,13 +1,18 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pub_dev_packages_app/core/assets_gen/assets.gen.dart';
 import 'package:pub_dev_packages_app/core/assets_gen/colors.gen.dart';
+import 'package:pub_dev_packages_app/core/const/constants.dart';
 import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
 import 'package:pub_dev_packages_app/core/routes/app_paths.dart';
+import 'package:pub_dev_packages_app/core/utils/app_utils.dart';
 
 class HomeHeader extends StatefulWidget {
-  const HomeHeader({super.key});
+  final AdvancedDrawerController advancedDrawerController;
+  const HomeHeader({super.key, required this.advancedDrawerController});
 
   @override
   State<HomeHeader> createState() => _HomeHeaderState();
@@ -47,11 +52,38 @@ class _HomeHeaderState extends State<HomeHeader> {
           child: Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Spacer(),
                   IconButton(
-                    icon: const Icon(Icons.light_mode),
+                    onPressed: _handleMenuButtonPressed,
+                    visualDensity: VisualDensity.compact,
+                    icon: ValueListenableBuilder<AdvancedDrawerValue>(
+                      valueListenable: widget.advancedDrawerController,
+                      builder: (_, value, __) {
+                        return AnimatedSwitcher(
+                          duration: Duration(milliseconds: 250),
+                          child: Semantics(
+                            label: 'Menu',
+                            onTapHint: 'expand drawer',
+                            child: Icon(
+                              value.visible ? Icons.clear : Icons.menu,
+                              color: colorScheme.onPrimary,
+                              size: 24.sp,
+                              key: ValueKey<bool>(value.visible),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+
+                  IconButton(
+                    visualDensity: VisualDensity.compact,
+                    icon: Icon(
+                      Icons.light_mode,
+                      color: colorScheme.onPrimary,
+                      size: 24.sp,
+                    ),
                     onPressed: () {},
                   ),
                 ],
@@ -82,6 +114,12 @@ class _HomeHeaderState extends State<HomeHeader> {
       ],
     );
   }
+
+  void _handleMenuButtonPressed() {
+    // NOTICE: Manage Advanced Drawer state through the Controller.
+    // _advancedDrawerController.value = AdvancedDrawerValue.visible();
+    widget.advancedDrawerController.showDrawer();
+  }
 }
 
 class _Subtitle extends StatelessWidget {
@@ -106,11 +144,16 @@ class _Subtitle extends StatelessWidget {
             TextSpan(text: strings.officialPackageRepository),
             TextSpan(
               text: strings.dart,
+
               style: textTheme.bodyMedium?.copyWith(
                 color: ColorName.linkColor,
                 decoration: TextDecoration.underline,
                 decorationColor: ColorName.linkColor,
               ),
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launchUrlInBrowser(url: dartUrl, context: context);
+                },
             ),
             TextSpan(text: strings.and),
             TextSpan(
@@ -120,6 +163,11 @@ class _Subtitle extends StatelessWidget {
                 decoration: TextDecoration.underline,
                 decorationColor: ColorName.linkColor,
               ),
+
+              recognizer: TapGestureRecognizer()
+                ..onTap = () {
+                  launchUrlInBrowser(url: flutterUrl, context: context);
+                },
             ),
             TextSpan(text: strings.apps),
           ],

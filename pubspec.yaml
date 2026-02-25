@@ -44,6 +44,7 @@ dependencies:
   carousel_slider: ^5.1.2
   shimmer: ^3.0.0
   toastification: ^3.0.3
+  flutter_advanced_drawer: ^1.5.0
 
 dev_dependencies:
   flutter_test:
