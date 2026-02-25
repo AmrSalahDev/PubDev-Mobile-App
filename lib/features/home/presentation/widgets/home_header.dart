@@ -220,7 +220,7 @@ class _SearchBarState extends State<_SearchBar> {
       },
       style: widget.textTheme.titleMedium?.copyWith(
         fontWeight: FontWeight.w400,
-        color: widget.colorScheme.scrim,
+        color: widget.colorScheme.onPrimary,
       ),
       decoration: InputDecoration(
         hintText: widget.strings.searchPackages,
@@ -232,14 +232,14 @@ class _SearchBarState extends State<_SearchBar> {
           Icons.search,
           size: 24.sp,
           color: _isFocused
-              ? widget.colorScheme.scrim
+              ? widget.colorScheme.onPrimary
               : widget.colorScheme.onSurfaceVariant,
         ),
         suffixIcon: _isFocused
             ? IconButton(
                 icon: Icon(
                   Icons.close,
-                  color: widget.colorScheme.scrim,
+                  color: widget.colorScheme.onPrimary,
                   size: 24.sp,
                 ),
                 onPressed: () {
