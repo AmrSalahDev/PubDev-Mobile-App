@@ -59,18 +59,14 @@ class _HomeHeaderState extends State<HomeHeader> {
                     visualDensity: VisualDensity.compact,
                     icon: ValueListenableBuilder<AdvancedDrawerValue>(
                       valueListenable: widget.advancedDrawerController,
-                      builder: (_, value, __) {
+                      builder: (_, value, _) {
                         return AnimatedSwitcher(
-                          duration: Duration(milliseconds: 250),
-                          child: Semantics(
-                            label: 'Menu',
-                            onTapHint: 'expand drawer',
-                            child: Icon(
-                              value.visible ? Icons.clear : Icons.menu,
-                              color: colorScheme.onPrimary,
-                              size: 24.sp,
-                              key: ValueKey<bool>(value.visible),
-                            ),
+                          duration: const Duration(milliseconds: 250),
+                          child: Icon(
+                            value.visible ? Icons.clear : Icons.menu,
+                            color: colorScheme.onPrimary,
+                            size: 24.sp,
+                            key: ValueKey<bool>(value.visible),
                           ),
                         );
                       },

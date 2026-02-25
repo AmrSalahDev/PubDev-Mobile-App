@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pub_dev_packages_app/core/assets_gen/assets.gen.dart';
 
 class DrawerHeader extends StatelessWidget {
   const DrawerHeader({
@@ -13,30 +14,33 @@ class DrawerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+    final assets = Assets.svgs;
+    return Stack(
       children: [
-        24.verticalSpace,
-        // ShimmerAvater(
-        //   size: 128.w,
-        //   onTap: () {
-        //     context.push(AppPaths.profile);
-        //     //_advancedDrawerController.toggleDrawer();
-        //   },
-        //   imageUrl: profile?.avatarUrl ?? '',
-        // ),
-        16.verticalSpace,
-        Text(
-          'Pub Dev',
-          style: textTheme.headlineLarge?.copyWith(
-            fontWeight: FontWeight.bold,
-            color: colorScheme.onPrimary,
-          ),
+        assets.headerImageBg.svg(
+          width: double.infinity,
+          height: 0.25.sh,
+          fit: BoxFit.cover,
+          alignment: Alignment.center,
         ),
-        4.verticalSpace,
-        Text(
-          'Pub Dev',
-          style: textTheme.bodyMedium?.copyWith(color: colorScheme.onPrimary),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              40.verticalSpace,
+              assets.pubDevLogo.svg(),
+              16.verticalSpace,
+              Text(
+                'Version 1.0.0',
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onSurface,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _advancedDrawerController = AdvancedDrawerController();
-  
+
   @override
   void initState() {
     super.initState();
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
       animationDuration: const Duration(milliseconds: 300),
       animateChildDecoration: true,
       rtlOpening: false,
-      // openScale: 1.0,
+      openScale: 0.9,
       disabledGestures: false,
       childDecoration: BoxDecoration(
         boxShadow: <BoxShadow>[
@@ -72,9 +72,16 @@ class _HomePageState extends State<HomePage> {
               clipBehavior: Clip.none,
               slivers: [
                 SliverToBoxAdapter(
-                  child: Column(children: [HomeHeader(advancedDrawerController: _advancedDrawerController), 30.verticalSpace]),
+                  child: Column(
+                    children: [
+                      HomeHeader(
+                        advancedDrawerController: _advancedDrawerController,
+                      ),
+                      30.verticalSpace,
+                    ],
+                  ),
                 ),
-      
+
                 // Flutter Favorites section
                 _HomeSection(
                   sectionKey: 'flutter-favorites-section',
@@ -86,9 +93,8 @@ class _HomePageState extends State<HomePage> {
                   isEmpty: state.favorites.isEmpty,
                   content: FavoritesSection(packages: state.favorites),
                   buttonTitle: strings.viewAll,
-                 
                 ),
-      
+
                 // Trending packages section
                 _HomeSection(
                   sectionKey: 'trending-section',
@@ -100,9 +106,8 @@ class _HomePageState extends State<HomePage> {
                   isEmpty: state.trending.isEmpty,
                   content: GridSection(packages: state.trending),
                   buttonTitle: strings.viewAll,
-                 
                 ),
-      
+
                 // Top Flutter packages section
                 _HomeSection(
                   sectionKey: 'top-flutter-section',
@@ -114,9 +119,8 @@ class _HomePageState extends State<HomePage> {
                   isEmpty: state.topFlutter.isEmpty,
                   content: GridSection(packages: state.topFlutter),
                   buttonTitle: strings.viewAll,
-                
                 ),
-      
+
                 // Top Dart packages section
                 _HomeSection(
                   sectionKey: 'top-dart-section',
@@ -128,9 +132,8 @@ class _HomePageState extends State<HomePage> {
                   isEmpty: state.topDart.isEmpty,
                   content: GridSection(packages: state.topDart),
                   buttonTitle: strings.viewAll,
-                  
                 ),
-      
+
                 // Package of the week section
                 _HomeSection(
                   sectionKey: 'package-of-the-week-section',
@@ -154,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
-      
+
                 // widget of the week section
                 _HomeSection(
                   sectionKey: 'widget-of-the-week-section',
@@ -166,7 +169,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                   isEmpty: state.widgetOfTheWeekVideos.isEmpty,
-      
+
                   content: YoutubeVideosSection(
                     playlist: state.widgetOfTheWeekVideos,
                     isLoading: state.isWidgetOfTheWeekVideosLoading,
@@ -179,14 +182,16 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
-      
+
                 // observable flutter section
                 _HomeSection(
                   sectionKey: 'observable-flutter-section',
                   title: strings.observableFlutter,
                   subtitle: strings.observableFlutterSubtitle,
                   onVisible: () {
-                    context.read<PackagesBloc>().add(LoadObservableVideosEvent());
+                    context.read<PackagesBloc>().add(
+                      LoadObservableVideosEvent(),
+                    );
                   },
                   isEmpty: state.observableVideos.isEmpty,
                   content: YoutubeVideosSection(
@@ -201,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
-      
+
                 SliverToBoxAdapter(child: 30.verticalSpace),
               ],
             );
