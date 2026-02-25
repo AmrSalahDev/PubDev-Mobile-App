@@ -32,6 +32,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "flutterFavoritesSubtitle": MessageLookupByLibrary.simpleMessage(
       "Some of the packages that demonstrate the highest levels of quality,\nselected by the Flutter Ecosystem Committee",
     ),
+    "observableFlutter": MessageLookupByLibrary.simpleMessage(
+      "Observable Flutter",
+    ),
+    "observableFlutterSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Observable Flutter is a series of quick, animated videos, each of which covers a particular package",
+    ),
     "officialPackageRepository": MessageLookupByLibrary.simpleMessage(
       "The official package repository for ",
     ),
@@ -39,7 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Package of the week",
     ),
     "packageOfTheWeekSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Package of the Week is a series of quick, animated videos, each of which covers a particular package",
+      "Package of the week is a series of quick, animated videos, each of which covers a particular package",
     ),
     "searchPackages": MessageLookupByLibrary.simpleMessage("Search packages"),
     "supportedByGoogle": MessageLookupByLibrary.simpleMessage(
@@ -65,5 +71,11 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
     "viewPlaylist": MessageLookupByLibrary.simpleMessage("View Playlist"),
+    "widgetOfTheWeek": MessageLookupByLibrary.simpleMessage(
+      "Widget of the week",
+    ),
+    "widgetOfTheWeekSubtitle": MessageLookupByLibrary.simpleMessage(
+      "Widget of the week is a series of quick, animated videos, each of which covers a particular widget",
+    ),
   };
 }

@@ -179,7 +179,6 @@ class _SearchBarState extends State<_SearchBar> {
         color: widget.colorScheme.scrim,
       ),
       decoration: InputDecoration(
-        fillColor: Color(0xFF35404d),
         hintText: widget.strings.searchPackages,
         hintStyle: widget.textTheme.titleMedium?.copyWith(
           fontWeight: FontWeight.w400,

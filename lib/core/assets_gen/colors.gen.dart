@@ -17,11 +17,23 @@ class ColorName {
   /// Color: #12202F
   static const Color background = Color(0xFF12202F);
 
+  /// Color: #1C2B3B
+  static const Color darkBaseShimmerColor = Color(0xFF1C2B3B);
+
+  /// Color: #2D3F52
+  static const Color darkHighlightShimmerColor = Color(0xFF2D3F52);
+
   /// Color: #FF0000
   static const Color error = Color(0xFFFF0000);
 
   /// Color: #FF0000
   static const Color errorContainer = Color(0xFFFF0000);
+
+  /// Color: #E0E0E0
+  static const Color lightBaseShimmerColor = Color(0xFFE0E0E0);
+
+  /// Color: #F5F5F5
+  static const Color lightHighlightShimmerColor = Color(0xFFF5F5F5);
 
   /// Color: #5BB4F8
   static const Color linkColor = Color(0xFF5BB4F8);
@@ -71,8 +83,8 @@ class ColorName {
   /// Color: #FF1C2834
   static const Color surfaceContainer = Color(0xFF1C2834);
 
-  /// Color: #FFFFFF
-  static const Color surfaceContainerHigh = Color(0xFFFFFFFF);
+  /// Color: #35404d
+  static const Color surfaceContainerHigh = Color(0xFF35404D);
 
   /// Color: #4EAFF7
   static const Color tertiary = Color(0xFF4EAFF7);

@@ -41,114 +41,164 @@ class _HomePageState extends State<HomePage> {
                 child: Column(children: [HomeHeader(), 30.verticalSpace]),
               ),
 
-              SliverToBoxAdapter(
-                child: SectionHeader(
-                  title: strings.flutterFavorites,
-                  subtitle: strings.flutterFavoritesSubtitle,
+              // Flutter Favorites section
+              _HomeSection(
+                sectionKey: 'flutter-favorites-section',
+                title: strings.flutterFavorites,
+                subtitle: strings.flutterFavoritesSubtitle,
+                onVisible: () {
+                  context.read<PackagesBloc>().add(LoadFavoritesEvent());
+                },
+                isEmpty: state.favorites.isEmpty,
+                content: FavoritesSection(packages: state.favorites),
+                buttonTitle: strings.viewAll,
+              ),
+
+              // Trending packages section
+              _HomeSection(
+                sectionKey: 'trending-section',
+                title: strings.trendingPackages,
+                subtitle: strings.trendingPackagesSubtitle,
+                onVisible: () {
+                  context.read<PackagesBloc>().add(LoadTrendingEvent());
+                },
+                isEmpty: state.trending.isEmpty,
+                content: GridSection(packages: state.trending),
+                buttonTitle: strings.viewAll,
+              ),
+
+              // Top Flutter packages section
+              _HomeSection(
+                sectionKey: 'top-flutter-section',
+                title: strings.topFlutterPackages,
+                subtitle: strings.topFlutterPackagesSubtitle,
+                onVisible: () {
+                  context.read<PackagesBloc>().add(LoadTopFlutterEvent());
+                },
+                isEmpty: state.topFlutter.isEmpty,
+                content: GridSection(packages: state.topFlutter),
+                buttonTitle: strings.viewAll,
+              ),
+
+              // Top Dart packages section
+              _HomeSection(
+                sectionKey: 'top-dart-section',
+                title: strings.topDartPackages,
+                subtitle: strings.topDartPackagesSubtitle,
+                onVisible: () {
+                  context.read<PackagesBloc>().add(LoadTopDartEvent());
+                },
+                isEmpty: state.topDart.isEmpty,
+                content: GridSection(packages: state.topDart),
+                buttonTitle: strings.viewAll,
+              ),
+
+              // Package of the week section
+              _HomeSection(
+                sectionKey: 'package-of-the-week-section',
+                title: strings.packageOfTheWeek,
+                subtitle: strings.packageOfTheWeekSubtitle,
+                onVisible: () {
+                  context.read<PackagesBloc>().add(
+                    LoadPackageOfTheWeekVideosEvent(),
+                  );
+                },
+                isEmpty: state.packageOfTheWeekVideos.isEmpty,
+                content: YoutubeVideosSection(
+                  playlist: state.packageOfTheWeekVideos,
+                  isLoading: state.isPackageOfTheWeekVideosLoading,
                 ),
+                buttonTitle: strings.viewPlaylist,
               ),
-              SliverToBoxAdapter(
-                child: FavoritesSection(packages: state.favorites),
-              ),
-              SliverToBoxAdapter(child: ViewAllButton(onTap: () {})),
 
-              SliverToBoxAdapter(child: 24.verticalSpace),
+              // widget of the week section
+              _HomeSection(
+                sectionKey: 'widget-of-the-week-section',
+                title: strings.widgetOfTheWeek,
+                subtitle: strings.widgetOfTheWeekSubtitle,
+                onVisible: () {
+                  context.read<PackagesBloc>().add(
+                    LoadWidgetOfTheWeekVideosEvent(),
+                  );
+                },
+                isEmpty: state.widgetOfTheWeekVideos.isEmpty,
 
-              // trending packages section
-              SliverToBoxAdapter(
-                child: VisibilityDetector(
-                  key: const Key('trending-section'),
-                  onVisibilityChanged: (info) {
-                    final visiblePercentage = info.visibleFraction * 100;
-
-                    if (visiblePercentage > 70 && state.trending.isEmpty) {
-                      context.read<PackagesBloc>().add(LoadTrendingEvent());
-                    }
-                  },
-                  child: SectionHeader(
-                    title: strings.trendingPackages,
-                    subtitle: strings.trendingPackagesSubtitle,
-                  ),
+                content: YoutubeVideosSection(
+                  playlist: state.widgetOfTheWeekVideos,
+                  isLoading: state.isWidgetOfTheWeekVideosLoading,
                 ),
+                buttonTitle: strings.viewPlaylist,
               ),
-              SliverToBoxAdapter(child: GridSection(packages: state.trending)),
-              SliverToBoxAdapter(child: ViewAllButton(onTap: () {})),
 
-              SliverToBoxAdapter(child: 24.verticalSpace),
-
-              // top flutter packages section
-              SliverToBoxAdapter(
-                child: VisibilityDetector(
-                  key: const Key('top-flutter-section'),
-                  onVisibilityChanged: (info) {
-                    final visiblePercentage = info.visibleFraction * 100;
-
-                    if (visiblePercentage > 70 && state.topFlutter.isEmpty) {
-                      context.read<PackagesBloc>().add(LoadTopFlutterEvent());
-                    }
-                  },
-                  child: SectionHeader(
-                    title: strings.topFlutterPackages,
-                    subtitle: strings.topFlutterPackagesSubtitle,
-                  ),
+              // observable flutter section
+              _HomeSection(
+                sectionKey: 'observable-flutter-section',
+                title: strings.observableFlutter,
+                subtitle: strings.observableFlutterSubtitle,
+                onVisible: () {
+                  context.read<PackagesBloc>().add(LoadObservableVideosEvent());
+                },
+                isEmpty: state.observableVideos.isEmpty,
+                content: YoutubeVideosSection(
+                  playlist: state.observableVideos,
+                  isLoading: state.isObservableVideosLoading,
                 ),
+                buttonTitle: strings.viewPlaylist,
               ),
-              SliverToBoxAdapter(
-                child: GridSection(packages: state.topFlutter),
-              ),
-              SliverToBoxAdapter(child: ViewAllButton(onTap: () {})),
 
-              SliverToBoxAdapter(child: 24.verticalSpace),
-
-              // top dart packages section
-              SliverToBoxAdapter(
-                child: VisibilityDetector(
-                  key: const Key('top-dart-section'),
-                  onVisibilityChanged: (info) {
-                    final visiblePercentage = info.visibleFraction * 100;
-
-                    if (visiblePercentage > 70 && state.topDart.isEmpty) {
-                      context.read<PackagesBloc>().add(LoadTopDartEvent());
-                    }
-                  },
-                  child: SectionHeader(
-                    title: strings.topDartPackages,
-                    subtitle: strings.topDartPackagesSubtitle,
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(child: GridSection(packages: state.topDart)),
-              SliverToBoxAdapter(child: ViewAllButton(onTap: () {})),
-
-              SliverToBoxAdapter(child: 24.verticalSpace),
-
-              // package of the week section
-              SliverToBoxAdapter(
-                child: VisibilityDetector(
-                  key: const Key('package-of-the-week-section'),
-                  onVisibilityChanged: (info) {
-                    final visiblePercentage = info.visibleFraction * 100;
-
-                    if (visiblePercentage > 50 && state.youtubeVideos.isEmpty) {
-                      context.read<PackagesBloc>().add(
-                        LoadYoutubeVideosEvent(),
-                      );
-                    }
-                  },
-                  child: SectionHeader(
-                    title: strings.packageOfTheWeek,
-                    subtitle: strings.packageOfTheWeekSubtitle,
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(child: YoutubeVideosSection()),
-              SliverToBoxAdapter(
-                child: ViewAllButton(title: strings.viewPlaylist, onTap: () {}),
-              ),
-              SliverToBoxAdapter(child: 50.verticalSpace),
+              SliverToBoxAdapter(child: 30.verticalSpace),
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class _HomeSection extends StatelessWidget {
+  final String sectionKey;
+  final String title;
+  final String subtitle;
+  final VoidCallback onVisible;
+  final bool isEmpty;
+  final Widget content;
+  final String buttonTitle;
+
+  const _HomeSection({
+    required this.sectionKey,
+    required this.title,
+    required this.subtitle,
+    required this.onVisible,
+    required this.isEmpty,
+    required this.content,
+    required this.buttonTitle,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverPadding(
+      padding: EdgeInsets.only(bottom: 16.h),
+      sliver: SliverMainAxisGroup(
+        slivers: [
+          SliverToBoxAdapter(
+            child: VisibilityDetector(
+              key: Key(sectionKey),
+              onVisibilityChanged: (info) {
+                if (info.visibleFraction > 0.1 && isEmpty) {
+                  onVisible();
+                }
+              },
+              child: SectionHeader(title: title, subtitle: subtitle),
+            ),
+          ),
+          SliverToBoxAdapter(child: content),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.only(top: 12.h),
+              child: ViewAllButton(title: buttonTitle, onTap: () {}),
+            ),
+          ),
+        ],
       ),
     );
   }

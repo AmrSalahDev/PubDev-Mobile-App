@@ -58,7 +58,17 @@ class PackagesRepoImpl implements PackagesRepo {
   }
 
   @override
-  Future<List<Video>> getYoutubePackageVideos() async {
-    return await _remoteDataSource.getYoutubePackageVideos();
+  Future<List<Video>> getPackageOfTheWeekVideos() async {
+    return await _remoteDataSource.getPackageOfTheWeekVideos();
+  }
+
+  @override
+  Future<List<Video>> getObservableVideos() async {
+    return await _remoteDataSource.getObservableVideos();
+  }
+
+  @override
+  Future<List<Video>> getWidgetOfTheWeekVideos() async {
+    return await _remoteDataSource.getWidgetOfTheWeekVideos();
   }
 }

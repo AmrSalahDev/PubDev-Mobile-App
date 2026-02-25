@@ -1,11 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_favorites_packages_usecase.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_observable_videos_usecase.dart';
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_info_usecase.dart';
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_dart_packages_usecase.dart';
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_flutter_packages_usecase.dart';
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_trending_packages_usecase.dart';
-import 'package:pub_dev_packages_app/features/home/domain/usecases/get_youtube_package_videos_usecase.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_of_the_week_videos_usecase.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_widget_of_the_week_usecase.dart';
 import 'packages_event.dart';
 import 'packages_state.dart';
 
@@ -16,7 +18,9 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
   final GetTopFlutterPackagesUsecase getTopFlutterPackagesUsecase;
   final GetTopDartPackagesUsecase getTopDartPackagesUsecase;
   final GetPackageInfoUsecase getPackageInfoUsecase;
-  final GetYoutubePackageVideosUsecase getYoutubeVideosUsecase;
+  final GetPackageOfTheWeekVideosUsecase getPackageOfTheWeekVideosUsecase;
+  final GetObservableVideosUsecase getObservableVideosUsecase;
+  final GetWidgetOfTheWeekVideosUsecase getWidgetOfTheWeekVideosUsecase;
 
   PackagesBloc({
     required this.getFavoritesPackagesUsecase,
@@ -24,7 +28,10 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
     required this.getTopFlutterPackagesUsecase,
     required this.getTopDartPackagesUsecase,
     required this.getPackageInfoUsecase,
-    required this.getYoutubeVideosUsecase,
+    required this.getPackageOfTheWeekVideosUsecase,
+    required this.getObservableVideosUsecase,
+    required this.getWidgetOfTheWeekVideosUsecase,
+
   }) : super(const PackagesState()) {
     on<LoadFavoritesEvent>(_onLoadFavorites);
     on<LoadTrendingEvent>(_onLoadTrending);
@@ -32,17 +39,55 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
     on<LoadTopDartEvent>(_onLoadTopDart);
     on<RefreshPackagesEvent>(_onRefreshPackages);
     on<LoadPackageInfoEvent>(_onLoadPackageInfo);
-    on<LoadYoutubeVideosEvent>(_onLoadYoutubeVideos);
+    on<LoadPackageOfTheWeekVideosEvent>(_onLoadPackageOfTheWeekVideos);
+    on<LoadObservableVideosEvent>(_onLoadObservableVideos);
+    on<LoadWidgetOfTheWeekVideosEvent>(_onLoadWidgetOfTheWeekVideos);
   }
 
-  Future<void> _onLoadYoutubeVideos(
-    LoadYoutubeVideosEvent event,
+  Future<void> _onLoadWidgetOfTheWeekVideos(
+    LoadWidgetOfTheWeekVideosEvent event,
     Emitter<PackagesState> emit,
   ) async {
-    emit(state.copyWith(isYoutubeVideosLoading: true));
+    emit(state.copyWith(isWidgetOfTheWeekVideosLoading: true));
     try {
-      final youtubeVideos = await getYoutubeVideosUsecase.call();
-      emit(state.copyWith(youtubeVideos: youtubeVideos, isYoutubeVideosLoading: false));
+      final youtubeVideos = await getWidgetOfTheWeekVideosUsecase.call();
+      emit(state.copyWith(widgetOfTheWeekVideos: youtubeVideos, isWidgetOfTheWeekVideosLoading: false));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          hasError: true,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onLoadObservableVideos(
+    LoadObservableVideosEvent event,
+    Emitter<PackagesState> emit,
+  ) async {
+    emit(state.copyWith(isObservableVideosLoading: true));
+    try {
+      final youtubeVideos = await getObservableVideosUsecase.call();
+      emit(state.copyWith(observableVideos: youtubeVideos, isObservableVideosLoading: false));
+    } catch (e) {
+      emit(
+        state.copyWith(
+          hasError: true,
+          errorMessage: e.toString(),
+        ),
+      );
+    }
+  }
+
+  Future<void> _onLoadPackageOfTheWeekVideos(
+    LoadPackageOfTheWeekVideosEvent event,
+    Emitter<PackagesState> emit,
+  ) async {
+    emit(state.copyWith(isPackageOfTheWeekVideosLoading: true));
+    try {
+      final youtubeVideos = await getPackageOfTheWeekVideosUsecase.call();
+      emit(state.copyWith(packageOfTheWeekVideos: youtubeVideos, isPackageOfTheWeekVideosLoading: false));
     } catch (e) {
       emit(
         state.copyWith(

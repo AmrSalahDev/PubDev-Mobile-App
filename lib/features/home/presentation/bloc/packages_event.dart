@@ -23,4 +23,8 @@ class LoadPackageInfoEvent extends PackagesEvent {
   const LoadPackageInfoEvent(this.packageName);
 }
 
-class LoadYoutubeVideosEvent extends PackagesEvent {}
+class LoadPackageOfTheWeekVideosEvent extends PackagesEvent {}
+
+class LoadObservableVideosEvent extends PackagesEvent {}
+
+class LoadWidgetOfTheWeekVideosEvent extends PackagesEvent {}

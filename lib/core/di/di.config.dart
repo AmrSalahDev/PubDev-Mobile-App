@@ -23,16 +23,20 @@ import 'package:pub_dev_packages_app/features/home/domain/repos/packages_repo.da
     as _i197;
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_favorites_packages_usecase.dart'
     as _i717;
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_observable_videos_usecase.dart'
+    as _i369;
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_info_usecase.dart'
     as _i289;
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_of_the_week_videos_usecase.dart'
+    as _i652;
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_dart_packages_usecase.dart'
     as _i151;
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_flutter_packages_usecase.dart'
     as _i666;
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_trending_packages_usecase.dart'
     as _i763;
-import 'package:pub_dev_packages_app/features/home/domain/usecases/get_youtube_package_videos_usecase.dart'
-    as _i811;
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_widget_of_the_week_usecase.dart'
+    as _i706;
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_bloc.dart'
     as _i921;
 import 'package:retry/retry.dart' as _i689;
@@ -67,6 +71,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i289.GetPackageInfoUsecase>(
       () => _i289.GetPackageInfoUsecase(gh<_i197.PackagesRepo>()),
     );
+    gh.lazySingleton<_i652.GetPackageOfTheWeekVideosUsecase>(
+      () => _i652.GetPackageOfTheWeekVideosUsecase(gh<_i197.PackagesRepo>()),
+    );
     gh.lazySingleton<_i151.GetTopDartPackagesUsecase>(
       () => _i151.GetTopDartPackagesUsecase(gh<_i197.PackagesRepo>()),
     );
@@ -76,8 +83,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i763.GetTrendingPackagesUsecase>(
       () => _i763.GetTrendingPackagesUsecase(gh<_i197.PackagesRepo>()),
     );
-    gh.lazySingleton<_i811.GetYoutubePackageVideosUsecase>(
-      () => _i811.GetYoutubePackageVideosUsecase(gh<_i197.PackagesRepo>()),
+    gh.lazySingleton<_i369.GetObservableVideosUsecase>(
+      () => _i369.GetObservableVideosUsecase(gh<_i197.PackagesRepo>()),
+    );
+    gh.lazySingleton<_i706.GetWidgetOfTheWeekVideosUsecase>(
+      () => _i706.GetWidgetOfTheWeekVideosUsecase(gh<_i197.PackagesRepo>()),
     );
     gh.factory<_i921.PackagesBloc>(
       () => _i921.PackagesBloc(
@@ -86,7 +96,11 @@ extension GetItInjectableX on _i174.GetIt {
         getTopFlutterPackagesUsecase: gh<_i666.GetTopFlutterPackagesUsecase>(),
         getTopDartPackagesUsecase: gh<_i151.GetTopDartPackagesUsecase>(),
         getPackageInfoUsecase: gh<_i289.GetPackageInfoUsecase>(),
-        getYoutubeVideosUsecase: gh<_i811.GetYoutubePackageVideosUsecase>(),
+        getPackageOfTheWeekVideosUsecase:
+            gh<_i652.GetPackageOfTheWeekVideosUsecase>(),
+        getObservableVideosUsecase: gh<_i369.GetObservableVideosUsecase>(),
+        getWidgetOfTheWeekVideosUsecase:
+            gh<_i706.GetWidgetOfTheWeekVideosUsecase>(),
       ),
     );
     return this;

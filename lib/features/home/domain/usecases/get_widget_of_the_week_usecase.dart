@@ -3,12 +3,12 @@ import 'package:pub_dev_packages_app/features/home/domain/repos/packages_repo.da
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 @lazySingleton
-class GetYoutubePackageVideosUsecase {
-  final PackagesRepo _repo;
+class GetWidgetOfTheWeekVideosUsecase {
+  final PackagesRepo repo;
 
-  GetYoutubePackageVideosUsecase(this._repo);
+  GetWidgetOfTheWeekVideosUsecase(this.repo);
 
   Future<List<Video>> call() async {
-    return await _repo.getYoutubePackageVideos();
+    return await repo.getWidgetOfTheWeekVideos();
   }
 }

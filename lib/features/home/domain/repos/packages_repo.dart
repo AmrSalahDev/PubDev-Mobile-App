@@ -9,5 +9,7 @@ abstract class PackagesRepo {
   Future<List<PackageEntity>> getTopDartPackages({int page});
   Future<PackageEntity> getPackageInfo(String packageName);
   Future<ScoreEntity> getScore(String packageName);
-  Future<List<Video>> getYoutubePackageVideos();
+  Future<List<Video>> getPackageOfTheWeekVideos();
+  Future<List<Video>> getObservableVideos();
+  Future<List<Video>> getWidgetOfTheWeekVideos();
 }

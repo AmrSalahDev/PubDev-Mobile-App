@@ -17,7 +17,9 @@ abstract class PackagesRemoteDataSource {
   Future<List<PackageEntity>> getTopDartPackages({required int page});
   Future<PackageModel> getPackageInfo(String packageName);
   Future<ScoreModel> getScore(String name);
-  Future<List<Video>> getYoutubePackageVideos();
+  Future<List<Video>> getPackageOfTheWeekVideos();
+  Future<List<Video>> getObservableVideos();
+  Future<List<Video>> getWidgetOfTheWeekVideos();
 }
 
 @LazySingleton(as: PackagesRemoteDataSource)
@@ -200,11 +202,64 @@ Future<List<PackageEntity>> getTrendingPackages({required int page}) async {
   }
 
   @override
-  Future<List<Video>> getYoutubePackageVideos() async {
+  Future<List<Video>> getPackageOfTheWeekVideos() async {
     var yt = YoutubeExplode();
     try {
       // Get playlist metadata
-      var playlist = await yt.playlists.get(playlistUrl);
+      var playlist = await yt.playlists.get(packageOfTheWeekPlaylistUrl);
+
+      // Get all videos in that playlist
+      List<Video> videoList = await yt.playlists
+          .getVideos(playlist.id)
+          .toList();
+
+      videoList.shuffle();
+
+     final videos = videoList.take(6).toList();
+     
+      _talker.info('Fetched ${videos.length} videos');
+      return videos;
+    } catch (e) {
+      _talker.error('Error fetching playlist: $e');
+      rethrow;
+    } finally {
+      yt.close();
+    }
+  }
+  
+  @override
+  Future<List<Video>> getObservableVideos() async {
+    var yt = YoutubeExplode();
+    try {
+      // Get playlist metadata
+      var playlist = await yt.playlists.get(observablePlaylistUrl);
+
+      // Get all videos in that playlist
+      List<Video> videoList = await yt.playlists
+          .getVideos(playlist.id)
+          .toList();
+
+      videoList.shuffle();
+
+     final videos = videoList.take(6).toList();
+     
+      _talker.info('Fetched ${videos.length} videos');
+      return videos;
+    } catch (e) {
+      _talker.error('Error fetching playlist: $e');
+      rethrow;
+    } finally {
+      yt.close();
+    }
+  }
+
+  
+  @override
+  Future<List<Video>> getWidgetOfTheWeekVideos() async {
+    var yt = YoutubeExplode();
+    try {
+      // Get playlist metadata
+      var playlist = await yt.playlists.get(widgetOfTheWeekPlaylistUrl);
 
       // Get all videos in that playlist
       List<Video> videoList = await yt.playlists

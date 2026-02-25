@@ -199,10 +199,10 @@ class AppLocalizations {
     );
   }
 
-  /// `Package of the Week is a series of quick, animated videos, each of which covers a particular package`
+  /// `Package of the week is a series of quick, animated videos, each of which covers a particular package`
   String get packageOfTheWeekSubtitle {
     return Intl.message(
-      'Package of the Week is a series of quick, animated videos, each of which covers a particular package',
+      'Package of the week is a series of quick, animated videos, each of which covers a particular package',
       name: 'packageOfTheWeekSubtitle',
       desc: '',
       args: [],
@@ -214,6 +214,46 @@ class AppLocalizations {
     return Intl.message(
       'View Playlist',
       name: 'viewPlaylist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Observable Flutter`
+  String get observableFlutter {
+    return Intl.message(
+      'Observable Flutter',
+      name: 'observableFlutter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Observable Flutter is a series of quick, animated videos, each of which covers a particular package`
+  String get observableFlutterSubtitle {
+    return Intl.message(
+      'Observable Flutter is a series of quick, animated videos, each of which covers a particular package',
+      name: 'observableFlutterSubtitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Widget of the week`
+  String get widgetOfTheWeek {
+    return Intl.message(
+      'Widget of the week',
+      name: 'widgetOfTheWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Widget of the week is a series of quick, animated videos, each of which covers a particular widget`
+  String get widgetOfTheWeekSubtitle {
+    return Intl.message(
+      'Widget of the week is a series of quick, animated videos, each of which covers a particular widget',
+      name: 'widgetOfTheWeekSubtitle',
       desc: '',
       args: [],
     );

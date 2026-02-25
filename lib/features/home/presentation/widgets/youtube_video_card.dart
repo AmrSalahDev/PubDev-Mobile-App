@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pub_dev_packages_app/core/assets_gen/assets.gen.dart';
+import 'package:pub_dev_packages_app/features/widgets/shimmer_image.dart';
 
 class YoutubeVideoCard extends StatefulWidget {
   final String title;
@@ -52,14 +53,12 @@ class _YoutubeVideoCardState extends State<YoutubeVideoCard> {
             Stack(
               alignment: Alignment.center,
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(12.r),
-                  child: CachedNetworkImage(
-                    imageUrl: widget.thumbnail,
-                    height: 200.h,
-                    width: 0.7.sw,
-                    fit: BoxFit.cover,
-                  ),
+                ShimmerImage(
+                  imageUrl: widget.thumbnail,
+                  height: 200.h,
+                  width: 0.7.sw,
+                  borderRadius: 12.r,
+                  fit: BoxFit.cover,
                 ),
                 Image.asset(
                   _isLongPressed
