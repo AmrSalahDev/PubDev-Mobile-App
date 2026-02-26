@@ -28,12 +28,6 @@ class _HomePageState extends State<HomePage> {
   final _advancedDrawerController = AdvancedDrawerController();
 
   @override
-  void initState() {
-    super.initState();
-    context.read<PackagesBloc>().add(LoadFavoritesEvent());
-  }
-
-  @override
   void dispose() {
     _advancedDrawerController.dispose();
     super.dispose();
@@ -91,7 +85,10 @@ class _HomePageState extends State<HomePage> {
                     context.read<PackagesBloc>().add(LoadFavoritesEvent());
                   },
                   isEmpty: state.favorites.isEmpty,
-                  content: FavoritesSection(packages: state.favorites, isLoading: state.isFavoritesLoading),
+                  content: FavoritesSection(
+                    packages: state.favorites,
+                    isLoading: state.isFavoritesLoading,
+                  ),
                   buttonTitle: strings.viewAll,
                 ),
 
@@ -104,7 +101,10 @@ class _HomePageState extends State<HomePage> {
                     context.read<PackagesBloc>().add(LoadTrendingEvent());
                   },
                   isEmpty: state.trending.isEmpty,
-                  content: GridSection(packages: state.trending, isLoading: state.isTrendingLoading),
+                  content: GridSection(
+                    packages: state.trending,
+                    isLoading: state.isTrendingLoading,
+                  ),
                   buttonTitle: strings.viewAll,
                 ),
 
@@ -117,7 +117,10 @@ class _HomePageState extends State<HomePage> {
                     context.read<PackagesBloc>().add(LoadTopFlutterEvent());
                   },
                   isEmpty: state.topFlutter.isEmpty,
-                  content: GridSection(packages: state.topFlutter, isLoading: state.isTopFlutterLoading),
+                  content: GridSection(
+                    packages: state.topFlutter,
+                    isLoading: state.isTopFlutterLoading,
+                  ),
                   buttonTitle: strings.viewAll,
                 ),
 
@@ -130,7 +133,10 @@ class _HomePageState extends State<HomePage> {
                     context.read<PackagesBloc>().add(LoadTopDartEvent());
                   },
                   isEmpty: state.topDart.isEmpty,
-                  content: GridSection(packages: state.topDart, isLoading: state.isTopDartLoading),
+                  content: GridSection(
+                    packages: state.topDart,
+                    isLoading: state.isTopDartLoading,
+                  ),
                   buttonTitle: strings.viewAll,
                 ),
 

@@ -1,7 +1,6 @@
 import 'package:workmanager/workmanager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pub_api_client/pub_api_client.dart';
-import '../api_client.dart';
 import 'notification_service.dart';
 
 const fetchBackgroundTask = "fetch_new_packages";
@@ -13,32 +12,32 @@ void callbackDispatcher() {
       case fetchBackgroundTask:
         try {
           final prefs = await SharedPreferences.getInstance();
-          final apiClient = PubDevApiClient();
+          final apiClient = PubClient();
           final notificationService = NotificationService();
           await notificationService.init();
 
-          final recentPackages = await apiClient.searchPackages(
+          final recentPackages = await apiClient.search(
             '',
             sort: SearchOrder.created,
           );
 
-          if (recentPackages.isNotEmpty) {
-            final firstPackage = recentPackages.first;
+          if (recentPackages.packages.isNotEmpty) {
+            final firstPackage = recentPackages.packages.first;
             final lastSeenPackage = prefs.getString('last_seen_package');
 
-            if (firstPackage != lastSeenPackage) {
-              final packageDetails = await apiClient.getPackageDetails(
-                firstPackage,
+            if (firstPackage.package != lastSeenPackage) {
+              final packageDetails = await apiClient.packageInfo(
+                firstPackage.package,
               );
 
               await notificationService.showNotification(
                 id: 0,
                 title: 'New Package Published!',
                 body:
-                    '${packageDetails.name} version ${packageDetails.latestVersion} has been published.',
+                    '${packageDetails.name} version ${packageDetails.latest.version} has been published.',
               );
 
-              await prefs.setString('last_seen_package', firstPackage);
+              await prefs.setString('last_seen_package', firstPackage.package);
             }
           }
         } catch (err) {

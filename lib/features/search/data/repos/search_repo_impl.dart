@@ -15,6 +15,10 @@ class SearchRepoImpl implements SearchRepo {
     required int page,
     required SearchOrder sort,
   }) {
-    return remoteDataSource.searchPackages(query: query, page: page, sort: sort);
+    return remoteDataSource.searchPackages(
+      query: query,
+      page: page,
+      sort: sort,
+    );
   }
 }
