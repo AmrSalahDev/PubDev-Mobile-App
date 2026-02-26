@@ -25,5 +25,22 @@
     "couldNotLaunchVideo": "Could not launch video",
     "likes": "LIKES",
     "points": "POINTS",
-    "downloads": "DOWNLOADS"
+    "downloads": "DOWNLOADS",
+    "defaultt": "DEFAULT",
+    "popularity": "POPULARITY",
+    "updated": "UPDATED",
+    "created": "CREATED",
+    "newestPackage": "NEWEST PACKAGE",
+    "results": "RESULTS",
+    "packages": "packages",
+    "searchForFirebaseAuth": "Search for \"firebase_auth\"",
+    "searchForFlutterSvg": "Search for \"flutter_svg\"",
+    "searchForHttp": "Search for \"http\"",
+    "searchForProvider": "Search for \"provider\"",
+    "searchForGetIt": "Search for \"get_it\"",
+    "searchForDio": "Search for \"dio\"",
+    "searchForSharedPreferences": "Search for \"shared_preferences\"",
+    "searchForUrlLauncher": "Search for \"url_launcher\"",
+    "searchForPathProvider": "Search for \"path_provider\"",
+    "searchForImagePicker": "Search for \"image_picker\""
 } 

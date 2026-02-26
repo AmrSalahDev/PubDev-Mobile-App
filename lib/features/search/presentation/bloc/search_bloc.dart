@@ -61,7 +61,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       final packageNames = await searchPackagesUsecase.call(
         query: currentState.query,
         page: nextPage,
-        sort: currentState.sort,
+        sort: event.sort,
       );
 
       if (packageNames.isEmpty) {

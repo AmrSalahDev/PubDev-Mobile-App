@@ -79,12 +79,24 @@ class $AssetsSvgsGen {
   SvgGenImage get headerImageBg =>
       const SvgGenImage('assets/svgs/header_image_bg.svg');
 
+  /// File path: assets/svgs/licence.svg
+  SvgGenImage get licence => const SvgGenImage('assets/svgs/licence.svg');
+
   /// File path: assets/svgs/pub-dev-logo.svg
   SvgGenImage get pubDevLogo =>
       const SvgGenImage('assets/svgs/pub-dev-logo.svg');
 
+  /// File path: assets/svgs/search-filters.svg
+  SvgGenImage get searchFilters =>
+      const SvgGenImage('assets/svgs/search-filters.svg');
+
   /// List of all assets
-  List<SvgGenImage> get values => [headerImageBg, pubDevLogo];
+  List<SvgGenImage> get values => [
+    headerImageBg,
+    licence,
+    pubDevLogo,
+    searchFilters,
+  ];
 }
 
 class Assets {

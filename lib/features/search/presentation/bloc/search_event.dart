@@ -14,4 +14,8 @@ class PerformSearch extends SearchEvent {
   });
 }
 
-class LoadMoreResults extends SearchEvent {}
+class LoadMoreResults extends SearchEvent {
+  final SearchOrder sort;
+
+  LoadMoreResults({required this.sort});
+}

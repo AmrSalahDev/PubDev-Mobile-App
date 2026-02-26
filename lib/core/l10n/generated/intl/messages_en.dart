@@ -27,7 +27,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "couldNotLaunchVideo": MessageLookupByLibrary.simpleMessage(
       "Could not launch video",
     ),
+    "created": MessageLookupByLibrary.simpleMessage("CREATED"),
     "dart": MessageLookupByLibrary.simpleMessage("Dart"),
+    "defaultt": MessageLookupByLibrary.simpleMessage("DEFAULT"),
     "downloads": MessageLookupByLibrary.simpleMessage("DOWNLOADS"),
     "flutter": MessageLookupByLibrary.simpleMessage("Flutter"),
     "flutterFavorites": MessageLookupByLibrary.simpleMessage(
@@ -37,6 +39,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Some of the packages that demonstrate the highest levels of quality,\nselected by the Flutter Ecosystem Committee",
     ),
     "likes": MessageLookupByLibrary.simpleMessage("LIKES"),
+    "newestPackage": MessageLookupByLibrary.simpleMessage("NEWEST PACKAGE"),
     "observableFlutter": MessageLookupByLibrary.simpleMessage(
       "Observable Flutter",
     ),
@@ -52,7 +55,38 @@ class MessageLookup extends MessageLookupByLibrary {
     "packageOfTheWeekSubtitle": MessageLookupByLibrary.simpleMessage(
       "Package of the week is a series of quick, animated videos, each of which covers a particular package",
     ),
+    "packages": MessageLookupByLibrary.simpleMessage("packages"),
     "points": MessageLookupByLibrary.simpleMessage("POINTS"),
+    "popularity": MessageLookupByLibrary.simpleMessage("POPULARITY"),
+    "results": MessageLookupByLibrary.simpleMessage("RESULTS"),
+    "searchForDio": MessageLookupByLibrary.simpleMessage("Search for \"dio\""),
+    "searchForFirebaseAuth": MessageLookupByLibrary.simpleMessage(
+      "Search for \"firebase_auth\"",
+    ),
+    "searchForFlutterSvg": MessageLookupByLibrary.simpleMessage(
+      "Search for \"flutter_svg\"",
+    ),
+    "searchForGetIt": MessageLookupByLibrary.simpleMessage(
+      "Search for \"get_it\"",
+    ),
+    "searchForHttp": MessageLookupByLibrary.simpleMessage(
+      "Search for \"http\"",
+    ),
+    "searchForImagePicker": MessageLookupByLibrary.simpleMessage(
+      "Search for \"image_picker\"",
+    ),
+    "searchForPathProvider": MessageLookupByLibrary.simpleMessage(
+      "Search for \"path_provider\"",
+    ),
+    "searchForProvider": MessageLookupByLibrary.simpleMessage(
+      "Search for \"provider\"",
+    ),
+    "searchForSharedPreferences": MessageLookupByLibrary.simpleMessage(
+      "Search for \"shared_preferences\"",
+    ),
+    "searchForUrlLauncher": MessageLookupByLibrary.simpleMessage(
+      "Search for \"url_launcher\"",
+    ),
     "searchPackages": MessageLookupByLibrary.simpleMessage("Search packages"),
     "supportedByGoogle": MessageLookupByLibrary.simpleMessage(
       "Supported by Google",
@@ -75,6 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "trendingPackagesSubtitle": MessageLookupByLibrary.simpleMessage(
       "Top trending packages in the last 30 days",
     ),
+    "updated": MessageLookupByLibrary.simpleMessage("UPDATED"),
     "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
     "viewPlaylist": MessageLookupByLibrary.simpleMessage("View Playlist"),
     "widgetOfTheWeek": MessageLookupByLibrary.simpleMessage(

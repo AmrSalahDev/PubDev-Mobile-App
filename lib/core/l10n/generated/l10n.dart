@@ -283,6 +283,146 @@ class AppLocalizations {
   String get downloads {
     return Intl.message('DOWNLOADS', name: 'downloads', desc: '', args: []);
   }
+
+  /// `DEFAULT`
+  String get defaultt {
+    return Intl.message('DEFAULT', name: 'defaultt', desc: '', args: []);
+  }
+
+  /// `POPULARITY`
+  String get popularity {
+    return Intl.message('POPULARITY', name: 'popularity', desc: '', args: []);
+  }
+
+  /// `UPDATED`
+  String get updated {
+    return Intl.message('UPDATED', name: 'updated', desc: '', args: []);
+  }
+
+  /// `CREATED`
+  String get created {
+    return Intl.message('CREATED', name: 'created', desc: '', args: []);
+  }
+
+  /// `NEWEST PACKAGE`
+  String get newestPackage {
+    return Intl.message(
+      'NEWEST PACKAGE',
+      name: 'newestPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `RESULTS`
+  String get results {
+    return Intl.message('RESULTS', name: 'results', desc: '', args: []);
+  }
+
+  /// `packages`
+  String get packages {
+    return Intl.message('packages', name: 'packages', desc: '', args: []);
+  }
+
+  /// `Search for "firebase_auth"`
+  String get searchForFirebaseAuth {
+    return Intl.message(
+      'Search for "firebase_auth"',
+      name: 'searchForFirebaseAuth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for "flutter_svg"`
+  String get searchForFlutterSvg {
+    return Intl.message(
+      'Search for "flutter_svg"',
+      name: 'searchForFlutterSvg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for "http"`
+  String get searchForHttp {
+    return Intl.message(
+      'Search for "http"',
+      name: 'searchForHttp',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for "provider"`
+  String get searchForProvider {
+    return Intl.message(
+      'Search for "provider"',
+      name: 'searchForProvider',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for "get_it"`
+  String get searchForGetIt {
+    return Intl.message(
+      'Search for "get_it"',
+      name: 'searchForGetIt',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for "dio"`
+  String get searchForDio {
+    return Intl.message(
+      'Search for "dio"',
+      name: 'searchForDio',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for "shared_preferences"`
+  String get searchForSharedPreferences {
+    return Intl.message(
+      'Search for "shared_preferences"',
+      name: 'searchForSharedPreferences',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for "url_launcher"`
+  String get searchForUrlLauncher {
+    return Intl.message(
+      'Search for "url_launcher"',
+      name: 'searchForUrlLauncher',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for "path_provider"`
+  String get searchForPathProvider {
+    return Intl.message(
+      'Search for "path_provider"',
+      name: 'searchForPathProvider',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Search for "image_picker"`
+  String get searchForImagePicker {
+    return Intl.message(
+      'Search for "image_picker"',
+      name: 'searchForImagePicker',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

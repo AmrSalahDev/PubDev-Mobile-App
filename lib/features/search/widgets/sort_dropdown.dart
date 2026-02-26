@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pub_api_client/pub_api_client.dart';
+import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
 
 class SortDropdown extends StatelessWidget {
   final SearchOrder currentSort;
@@ -13,49 +14,37 @@ class SortDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text(
-          'SORT BY ',
-          style: TextStyle(
-            color: Color(0xFFB0BEC5),
-            fontSize: 11,
-            fontWeight: FontWeight.bold,
-          ),
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final strings = AppLocalizations.of(context);
+
+    return DropdownButton<SearchOrder>(
+      value: currentSort,
+      alignment: Alignment.centerRight,
+      underline: const SizedBox(),
+      icon: Icon(Icons.arrow_drop_down, color: colorScheme.onPrimary),
+      style: textTheme.bodySmall?.copyWith(
+        color: colorScheme.onPrimary,
+        fontWeight: FontWeight.bold,
+      ),
+      onChanged: onSortChanged,
+      items: [
+        DropdownMenuItem(value: SearchOrder.top, child: Text(strings.defaultt)),
+        DropdownMenuItem(
+          value: SearchOrder.popularity,
+          child: Text(strings.popularity),
         ),
-        Theme(
-          data: ThemeData.dark().copyWith(canvasColor: const Color(0xFF1C2834)),
-          child: DropdownButton<SearchOrder>(
-            value: currentSort,
-            underline: const SizedBox(),
-            icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF4EAFF7)),
-            style: const TextStyle(
-              color: Color(0xFF4EAFF7),
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-            onChanged: onSortChanged,
-            items: const [
-              DropdownMenuItem(value: SearchOrder.top, child: Text('DEFAULT')),
-              DropdownMenuItem(
-                value: SearchOrder.popularity,
-                child: Text('POPULARITY'),
-              ),
-              DropdownMenuItem(
-                value: SearchOrder.points,
-                child: Text('POINTS'),
-              ),
-              DropdownMenuItem(
-                value: SearchOrder.updated,
-                child: Text('RECENTLY UPDATED'),
-              ),
-              DropdownMenuItem(
-                value: SearchOrder.created,
-                child: Text('NEWEST PACKAGE'),
-              ),
-            ],
-          ),
+        DropdownMenuItem(
+          value: SearchOrder.points,
+          child: Text(strings.points),
+        ),
+        DropdownMenuItem(
+          value: SearchOrder.updated,
+          child: Text(strings.updated),
+        ),
+        DropdownMenuItem(
+          value: SearchOrder.created,
+          child: Text(strings.newestPackage),
         ),
       ],
     );

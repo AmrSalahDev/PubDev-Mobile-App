@@ -93,6 +93,18 @@ class _HomeHeaderState extends State<HomeHeader> {
                 textTheme: textTheme,
                 colorScheme: colorScheme,
                 strings: strings,
+                hintTexts: [
+                  strings.searchForFirebaseAuth,
+                  strings.searchForFlutterSvg,
+                  strings.searchForHttp,
+                  strings.searchForProvider,
+                  strings.searchForGetIt,
+                  strings.searchForDio,
+                  strings.searchForSharedPreferences,
+                  strings.searchForUrlLauncher,
+                  strings.searchForPathProvider,
+                  strings.searchForImagePicker,
+                ],
                 onSubmitted: (query) {
                   context.push(AppPaths.search, extra: query);
                 },

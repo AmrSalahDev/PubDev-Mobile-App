@@ -1,3 +1,4 @@
+import 'package:animated_hint_textfield/animated_hint_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
@@ -8,6 +9,7 @@ class CustomSearchBar extends StatefulWidget {
   final ColorScheme colorScheme;
   final AppLocalizations strings;
   final ValueChanged<String> onSubmitted;
+  final List<String>? hintTexts;
 
   const CustomSearchBar({
     super.key,
@@ -16,6 +18,7 @@ class CustomSearchBar extends StatefulWidget {
     required this.colorScheme,
     required this.strings,
     required this.onSubmitted,
+    this.hintTexts,
   });
 
   @override
@@ -45,7 +48,8 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return AnimatedTextField(
+      animationType: Animationtype.typer,
       controller: widget.searchController,
       onSubmitted: (query) {
         widget.onSubmitted(query);
@@ -54,6 +58,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
         fontWeight: FontWeight.w400,
         color: widget.colorScheme.onPrimary,
       ),
+      hintTexts: widget.hintTexts ?? [],
       decoration: InputDecoration(
         hintText: widget.strings.searchPackages,
         hintStyle: widget.textTheme.titleMedium?.copyWith(

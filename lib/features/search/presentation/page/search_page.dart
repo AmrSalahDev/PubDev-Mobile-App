@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pub_api_client/pub_api_client.dart';
+import 'package:pub_dev_packages_app/core/assets_gen/assets.gen.dart';
 import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
 import 'package:pub_dev_packages_app/features/search/widgets/search_header.dart';
 import 'package:pub_dev_packages_app/features/widgets/custom_search_bar.dart';
+import 'package:pub_dev_packages_app/features/widgets/svg_icon.dart';
 import '../bloc/search_bloc.dart';
 import '../bloc/search_event.dart';
 import '../bloc/search_state.dart';
@@ -51,7 +54,7 @@ class _SearchPageState extends State<SearchPage> {
 
   void _onScroll() {
     if (_isBottom) {
-      context.read<SearchBloc>().add(LoadMoreResults());
+      context.read<SearchBloc>().add(LoadMoreResults(sort: _currentSort));
     }
   }
 
@@ -86,12 +89,31 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: CustomSearchBar(
-          searchController: _searchController,
-          textTheme: textTheme,
-          colorScheme: colorScheme,
-          strings: strings,
-          onSubmitted: _onSearch,
+        toolbarHeight: 90.h,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 0.72.sw,
+              child: CustomSearchBar(
+                searchController: _searchController,
+                textTheme: textTheme,
+                colorScheme: colorScheme,
+                strings: strings,
+                onSubmitted: _onSearch,
+              ),
+            ),
+            12.horizontalSpace,
+            IconButton.outlined(
+              onPressed: () {},
+              padding: EdgeInsets.all(16.w),
+              icon: SvgIcon(
+                path: Assets.svgs.searchFilters.path,
+                size: 24.sp,
+                color: colorScheme.onPrimary,
+              ),
+            ),
+          ],
         ),
       ),
       body: Row(
