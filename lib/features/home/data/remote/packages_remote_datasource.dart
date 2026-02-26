@@ -19,6 +19,7 @@ abstract class PackagesRemoteDataSource {
   Future<List<Video>> getPackageOfTheWeekVideos();
   Future<List<Video>> getObservableVideos();
   Future<List<Video>> getWidgetOfTheWeekVideos();
+  List<String> getPackageSuggestions();
 }
 
 @LazySingleton(as: PackagesRemoteDataSource)
@@ -28,6 +29,8 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
   final Dio _dio;
 
   PackagesRemoteDataSourceImpl(this._client, this._talker, this._dio);
+
+  List<String> _packageSuggestions = [];
 
   @override
   Future<List<PackageModel>> getFavoritesPackages({required int page}) async {
@@ -42,6 +45,7 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
       );
 
       final packageNames = results.packages.map((p) => p.package).toList();
+      _packageSuggestions = packageNames;
       packageNames.shuffle(); // Mix them up!
 
       return await Future.wait(
@@ -53,31 +57,41 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
     }
   }
 
- @override
-Future<List<PackageModel>> getTrendingPackages({required int page}) async {
-  try {
-    final response = await _dio.get(trendingPackages);
-    final data = response.data;
-    
-    // 1. Get the list of packages from the trending response
-    final List<dynamic> packageData = data['packages'] ?? [];
-
-    // 2. Extract the package names
-    final packageNames = packageData
-        .map((e) => e['name'] as String) // Get the name string
-        .take(6) // Take only the first 4
-        .toList();
-
-    // 3. Call getPackageInfo for each name to get FULL data (including tags)
-    // Future.wait runs these requests in parallel for speed
-    return await Future.wait(
-      packageNames.map((name) => getPackageInfo(name)).toList(),
-    );
-    
-  } catch (e) {
-    _talker.error('Error: $e');
-    rethrow;
+  @override
+  List<String> getPackageSuggestions() {
+    try {
+      _talker.info('Package suggestions: $_packageSuggestions');
+     return _packageSuggestions;
+    } catch (e) {
+      _talker.error('Error: $e');
+      rethrow;
+    }
   }
+
+  @override
+  Future<List<PackageModel>> getTrendingPackages({required int page}) async {
+    try {
+      final response = await _dio.get(trendingPackages);
+      final data = response.data;
+
+      // 1. Get the list of packages from the trending response
+      final List<dynamic> packageData = data['packages'] ?? [];
+
+      // 2. Extract the package names
+      final packageNames = packageData
+          .map((e) => e['name'] as String) // Get the name string
+          .take(6) // Take only the first 4
+          .toList();
+
+      // 3. Call getPackageInfo for each name to get FULL data (including tags)
+      // Future.wait runs these requests in parallel for speed
+      return await Future.wait(
+        packageNames.map((name) => getPackageInfo(name)).toList(),
+      );
+    } catch (e) {
+      _talker.error('Error: $e');
+      rethrow;
+    }
 
     // final url = Uri.parse(trendingPackages);
 
@@ -217,8 +231,8 @@ Future<List<PackageModel>> getTrendingPackages({required int page}) async {
 
       videoList.shuffle();
 
-     final videos = videoList.toList();
-     
+      final videos = videoList.toList();
+
       _talker.info('Fetched ${videos.length} videos');
       return videos;
     } catch (e) {
@@ -228,7 +242,7 @@ Future<List<PackageModel>> getTrendingPackages({required int page}) async {
       yt.close();
     }
   }
-  
+
   @override
   Future<List<Video>> getObservableVideos() async {
     var yt = YoutubeExplode();
@@ -244,8 +258,8 @@ Future<List<PackageModel>> getTrendingPackages({required int page}) async {
 
       videoList.shuffle();
 
-     final videos = videoList.toList();
-     
+      final videos = videoList.toList();
+
       _talker.info('Fetched ${videos.length} videos');
       return videos;
     } catch (e) {
@@ -256,7 +270,6 @@ Future<List<PackageModel>> getTrendingPackages({required int page}) async {
     }
   }
 
-  
   @override
   Future<List<Video>> getWidgetOfTheWeekVideos() async {
     var yt = YoutubeExplode();
@@ -266,13 +279,14 @@ Future<List<PackageModel>> getTrendingPackages({required int page}) async {
 
       // Get all videos in that playlist
       List<Video> videoList = await yt.playlists
-          .getVideos(playlist.id).take(10)
+          .getVideos(playlist.id)
+          .take(10)
           .toList();
 
       videoList.shuffle();
 
-     final videos = videoList.toList();
-     
+      final videos = videoList.toList();
+
       _talker.info('Fetched ${videos.length} videos');
       return videos;
     } catch (e) {

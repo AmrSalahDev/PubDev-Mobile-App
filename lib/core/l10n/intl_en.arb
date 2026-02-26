@@ -42,5 +42,15 @@
     "searchForSharedPreferences": "Search for \"shared_preferences\"",
     "searchForUrlLauncher": "Search for \"url_launcher\"",
     "searchForPathProvider": "Search for \"path_provider\"",
-    "searchForImagePicker": "Search for \"image_picker\""
-} 
+    "searchForImagePicker": "Search for \"image_picker\"",
+    "sortBy": "SORT BY ",
+    "sortDefaultRanking": "default ranking",
+    "sortOverallScore": "overall score",
+    "sortRecentlyUpdated": "recently updated",
+    "sortNewestPackage": "newest package",
+    "sortMostLikes": "most likes",
+    "sortMostPubPoints": "most pub points",
+    "sortDownloads": "downloads",
+    "sortTrending": "trending",
+    "searchFor": "Search for"
+}

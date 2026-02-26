@@ -28,3 +28,5 @@ class LoadPackageOfTheWeekVideosEvent extends PackagesEvent {}
 class LoadObservableVideosEvent extends PackagesEvent {}
 
 class LoadWidgetOfTheWeekVideosEvent extends PackagesEvent {}
+
+

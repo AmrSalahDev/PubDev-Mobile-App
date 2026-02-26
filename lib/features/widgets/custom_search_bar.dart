@@ -48,7 +48,8 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedTextField(
+    return AnimatedTextField
+    ( 
       animationType: Animationtype.typer,
       controller: widget.searchController,
       onSubmitted: (query) {
@@ -61,6 +62,7 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
       hintTexts: widget.hintTexts ?? [],
       decoration: InputDecoration(
         hintText: widget.strings.searchPackages,
+        hintMaxLines: 2,
         hintStyle: widget.textTheme.titleMedium?.copyWith(
           fontWeight: FontWeight.w400,
           color: widget.colorScheme.onSurfaceVariant,

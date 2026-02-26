@@ -49,7 +49,7 @@ class PackagesRepoImpl implements PackagesRepo {
     //   versions: packageModel.versions,
     //   score: scoreModel,
     // );
-    return await _remoteDataSource.getPackageInfo(name);
+    return await _remoteDataSource.getPackageInfo(name);  
   }
 
   @override
@@ -70,5 +70,10 @@ class PackagesRepoImpl implements PackagesRepo {
   @override
   Future<List<Video>> getWidgetOfTheWeekVideos() async {
     return await _remoteDataSource.getWidgetOfTheWeekVideos();
+  }
+
+  @override
+  List<String> getPackageSuggestions() {
+    return _remoteDataSource.getPackageSuggestions();
   }
 }

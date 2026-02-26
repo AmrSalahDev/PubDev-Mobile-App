@@ -11,7 +11,8 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchPackagesUsecase searchPackagesUsecase;
   final GetPackageInfoUsecase getPackageInfoUsecase;
 
-  SearchBloc(this.searchPackagesUsecase, this.getPackageInfoUsecase) : super(SearchInitial()) {
+  SearchBloc(this.searchPackagesUsecase, this.getPackageInfoUsecase)
+    : super(SearchInitial()) {
     on<PerformSearch>(_onPerformSearch);
     on<LoadMoreResults>(_onLoadMoreResults);
   }
@@ -81,6 +82,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
           query: currentState.query,
           hasReachedMax: newPackages.length < 10,
           currentPage: nextPage,
+          sort: event.sort,
         ),
       );
     } catch (e) {

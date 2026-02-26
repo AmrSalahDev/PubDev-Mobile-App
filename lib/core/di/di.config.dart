@@ -30,6 +30,8 @@ import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_i
     as _i289;
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_of_the_week_videos_usecase.dart'
     as _i652;
+import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_suggestions_usecase.dart'
+    as _i591;
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_dart_packages_usecase.dart'
     as _i151;
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_flutter_packages_usecase.dart'
@@ -92,6 +94,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i652.GetPackageOfTheWeekVideosUsecase>(
       () => _i652.GetPackageOfTheWeekVideosUsecase(gh<_i197.PackagesRepo>()),
     );
+    gh.lazySingleton<_i591.GetPackageSuggestionsUseCase>(
+      () => _i591.GetPackageSuggestionsUseCase(gh<_i197.PackagesRepo>()),
+    );
     gh.lazySingleton<_i151.GetTopDartPackagesUsecase>(
       () => _i151.GetTopDartPackagesUsecase(gh<_i197.PackagesRepo>()),
     );
@@ -122,6 +127,7 @@ extension GetItInjectableX on _i174.GetIt {
         getObservableVideosUsecase: gh<_i369.GetObservableVideosUsecase>(),
         getWidgetOfTheWeekVideosUsecase:
             gh<_i706.GetWidgetOfTheWeekVideosUsecase>(),
+        getPackageSuggestionsUseCase: gh<_i591.GetPackageSuggestionsUseCase>(),
       ),
     );
     gh.factory<_i896.SearchBloc>(

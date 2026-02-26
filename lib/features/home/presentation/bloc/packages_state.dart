@@ -11,6 +11,7 @@ class PackagesState extends Equatable {
   final List<Video> packageOfTheWeekVideos;
   final List<Video> observableVideos;
   final List<Video> widgetOfTheWeekVideos;
+  final List<String> packageSuggestions;
   final bool hasError;
   final String errorMessage;
   final bool isPackageInfoLoading;
@@ -38,6 +39,7 @@ class PackagesState extends Equatable {
     this.packageOfTheWeekVideos = const [],
     this.observableVideos = const [],
     this.widgetOfTheWeekVideos = const [],
+    this.packageSuggestions = const [],
     this.isPackageOfTheWeekVideosLoading = false,
     this.isObservableVideosLoading = false,
     this.isWidgetOfTheWeekVideosLoading = false,
@@ -62,6 +64,7 @@ class PackagesState extends Equatable {
     bool? isPackageOfTheWeekVideosLoading,
     bool? isObservableVideosLoading,
     bool? isWidgetOfTheWeekVideosLoading,
+    List<String>? packageSuggestions,
   }) {
     return PackagesState(
       favorites: favorites ?? this.favorites,
@@ -82,6 +85,7 @@ class PackagesState extends Equatable {
       isPackageOfTheWeekVideosLoading: isPackageOfTheWeekVideosLoading ?? this.isPackageOfTheWeekVideosLoading,
       isObservableVideosLoading: isObservableVideosLoading ?? this.isObservableVideosLoading,
       isWidgetOfTheWeekVideosLoading: isWidgetOfTheWeekVideosLoading ?? this.isWidgetOfTheWeekVideosLoading,
+      packageSuggestions: packageSuggestions ?? this.packageSuggestions,
     );
   }
 
@@ -105,5 +109,6 @@ class PackagesState extends Equatable {
     isPackageOfTheWeekVideosLoading,
     isObservableVideosLoading,
     isWidgetOfTheWeekVideosLoading,
+    packageSuggestions,
   ];
 }

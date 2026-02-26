@@ -423,6 +423,86 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `SORT BY `
+  String get sortBy {
+    return Intl.message('SORT BY ', name: 'sortBy', desc: '', args: []);
+  }
+
+  /// `default ranking`
+  String get sortDefaultRanking {
+    return Intl.message(
+      'default ranking',
+      name: 'sortDefaultRanking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `overall score`
+  String get sortOverallScore {
+    return Intl.message(
+      'overall score',
+      name: 'sortOverallScore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `recently updated`
+  String get sortRecentlyUpdated {
+    return Intl.message(
+      'recently updated',
+      name: 'sortRecentlyUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `newest package`
+  String get sortNewestPackage {
+    return Intl.message(
+      'newest package',
+      name: 'sortNewestPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `most likes`
+  String get sortMostLikes {
+    return Intl.message(
+      'most likes',
+      name: 'sortMostLikes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `most pub points`
+  String get sortMostPubPoints {
+    return Intl.message(
+      'most pub points',
+      name: 'sortMostPubPoints',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `downloads`
+  String get sortDownloads {
+    return Intl.message('downloads', name: 'sortDownloads', desc: '', args: []);
+  }
+
+  /// `trending`
+  String get sortTrending {
+    return Intl.message('trending', name: 'sortTrending', desc: '', args: []);
+  }
+
+  /// `Search for`
+  String get searchFor {
+    return Intl.message('Search for', name: 'searchFor', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

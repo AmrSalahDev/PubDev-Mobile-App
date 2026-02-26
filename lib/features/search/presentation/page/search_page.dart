@@ -30,7 +30,7 @@ class _SearchPageState extends State<SearchPage> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _searchController = TextEditingController();
 
-  SearchOrder _currentSort = SearchOrder.top;
+  SearchOrder _currentSort = SearchOrder.text;
 
   @override
   void initState() {

@@ -22,7 +22,6 @@ class SearchRemoteDataSourceImpl implements SearchRemoteDataSource {
     required SearchOrder sort,
   }) async {
     final result = await pubClient.search(query, page: page, sort: sort);
-    print(result.packages.map((p) => p.package).toList());
     return result.packages.map((p) => p.package).toList();
   }
 }

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pub_dev_packages_app/core/const/constants.dart';
+import 'package:pub_dev_packages_app/core/routes/app_paths.dart';
 import 'package:pub_dev_packages_app/core/utils/app_utils.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_bloc.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_event.dart';
@@ -24,7 +26,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> { 
   final _advancedDrawerController = AdvancedDrawerController();
 
   @override
@@ -90,6 +92,9 @@ class _HomePageState extends State<HomePage> {
                     isLoading: state.isFavoritesLoading,
                   ),
                   buttonTitle: strings.viewAll,
+                  onButtonTap: () {
+                    context.push(AppPaths.search, extra: flutterFavoriteQuery);
+                  },
                 ),
 
                 // Trending packages section
@@ -122,6 +127,9 @@ class _HomePageState extends State<HomePage> {
                     isLoading: state.isTopFlutterLoading,
                   ),
                   buttonTitle: strings.viewAll,
+                  onButtonTap: () {
+                    context.push(AppPaths.search, extra: flutterTopQuery);
+                  },
                 ),
 
                 // Top Dart packages section
@@ -138,6 +146,9 @@ class _HomePageState extends State<HomePage> {
                     isLoading: state.isTopDartLoading,
                   ),
                   buttonTitle: strings.viewAll,
+                  onButtonTap: () {
+                    context.push(AppPaths.search, extra: dartTopQuery);
+                  },
                 ),
 
                 // Package of the week section

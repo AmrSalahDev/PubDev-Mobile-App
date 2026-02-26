@@ -18,35 +18,76 @@ class SortDropdown extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final strings = AppLocalizations.of(context);
 
+    final searchOrders = [
+      SearchOrder.text,
+      SearchOrder.top,
+      SearchOrder.updated,
+      SearchOrder.created,
+      SearchOrder.like,
+      SearchOrder.points,
+      SearchOrder.downloads,
+      SearchOrder.popularity,
+    ];
+
+    String getDropdownText(SearchOrder order) {
+      switch (order) {
+        case SearchOrder.text:
+          return strings.sortDefaultRanking;
+        case SearchOrder.top:
+          return strings.sortOverallScore;
+        case SearchOrder.updated:
+          return strings.sortRecentlyUpdated;
+        case SearchOrder.created:
+          return strings.sortNewestPackage;
+        case SearchOrder.like:
+          return strings.sortMostLikes;
+        case SearchOrder.points:
+          return strings.sortMostPubPoints;
+        case SearchOrder.downloads:
+          return strings.sortDownloads;
+        case SearchOrder.popularity:
+          return strings.sortTrending;
+      }
+    }
+
     return DropdownButton<SearchOrder>(
       value: currentSort,
       alignment: Alignment.centerRight,
+      dropdownColor: colorScheme.surfaceContainer,
       underline: const SizedBox(),
-      icon: Icon(Icons.arrow_drop_down, color: colorScheme.onPrimary),
-      style: textTheme.bodySmall?.copyWith(
-        color: colorScheme.onPrimary,
-        fontWeight: FontWeight.bold,
-      ),
+      icon: Icon(Icons.keyboard_arrow_down, color: colorScheme.onPrimary),
+      style: textTheme.bodyMedium?.copyWith(color: colorScheme.onPrimary),
+      selectedItemBuilder: (BuildContext context) {
+        return searchOrders.map((SearchOrder order) {
+          return Center(
+            child: Text.rich(
+              TextSpan(
+                text: strings.sortBy,
+                style: textTheme.bodyMedium?.copyWith(
+                  color: colorScheme.onPrimary,
+                  fontWeight: FontWeight.bold,
+                ),
+                children: [
+                  TextSpan(
+                    text: getDropdownText(order).toUpperCase(),
+                    style: textTheme.bodyMedium?.copyWith(
+                      color: const Color(0xFF4EAFF7),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).toList();
+      },
       onChanged: onSortChanged,
-      items: [
-        DropdownMenuItem(value: SearchOrder.top, child: Text(strings.defaultt)),
-        DropdownMenuItem(
-          value: SearchOrder.popularity,
-          child: Text(strings.popularity),
-        ),
-        DropdownMenuItem(
-          value: SearchOrder.points,
-          child: Text(strings.points),
-        ),
-        DropdownMenuItem(
-          value: SearchOrder.updated,
-          child: Text(strings.updated),
-        ),
-        DropdownMenuItem(
-          value: SearchOrder.created,
-          child: Text(strings.newestPackage),
-        ),
-      ],
+      items: searchOrders.map((SearchOrder order) {
+        return DropdownMenuItem(
+          value: order,
+          child: Text(getDropdownText(order)),
+        );
+      }).toList(),
     );
   }
 }

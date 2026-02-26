@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pub_dev_packages_app/core/assets_gen/assets.gen.dart';
@@ -9,6 +10,8 @@ import 'package:pub_dev_packages_app/core/const/constants.dart';
 import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
 import 'package:pub_dev_packages_app/core/routes/app_paths.dart';
 import 'package:pub_dev_packages_app/core/utils/app_utils.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_bloc.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_state.dart';
 import 'package:pub_dev_packages_app/features/widgets/custom_search_bar.dart';
 
 class HomeHeader extends StatefulWidget {
@@ -34,6 +37,18 @@ class _HomeHeaderState extends State<HomeHeader> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     final strings = AppLocalizations.of(context);
+    final defaultSearchHints = [
+      strings.searchForFirebaseAuth,
+      strings.searchForFlutterSvg,
+      strings.searchForHttp,
+      strings.searchForProvider,
+      strings.searchForGetIt,
+      strings.searchForDio,
+      strings.searchForSharedPreferences,
+      strings.searchForUrlLauncher,
+      strings.searchForPathProvider,
+      strings.searchForImagePicker,
+    ];
 
     return Stack(
       alignment: Alignment.center,
@@ -88,25 +103,26 @@ class _HomeHeaderState extends State<HomeHeader> {
               16.verticalSpace,
               Assets.svgs.pubDevLogo.svg(width: 40.w, height: 40.h),
               35.verticalSpace,
-              CustomSearchBar(
-                searchController: _searchController,
-                textTheme: textTheme,
-                colorScheme: colorScheme,
-                strings: strings,
-                hintTexts: [
-                  strings.searchForFirebaseAuth,
-                  strings.searchForFlutterSvg,
-                  strings.searchForHttp,
-                  strings.searchForProvider,
-                  strings.searchForGetIt,
-                  strings.searchForDio,
-                  strings.searchForSharedPreferences,
-                  strings.searchForUrlLauncher,
-                  strings.searchForPathProvider,
-                  strings.searchForImagePicker,
-                ],
-                onSubmitted: (query) {
-                  context.push(AppPaths.search, extra: query);
+              BlocSelector<PackagesBloc, PackagesState, List<String>>(
+                selector: (state) {
+                  return state.packageSuggestions;
+                },
+                builder: (context, packageSuggestions) {
+                  final searchHints = packageSuggestions
+                      .map((p) => '${strings.searchFor} "$p"')
+                      .toList();
+                  return CustomSearchBar(
+                    searchController: _searchController,
+                    textTheme: textTheme,
+                    colorScheme: colorScheme,
+                    strings: strings,
+                    hintTexts: searchHints.isNotEmpty
+                        ? searchHints
+                        : defaultSearchHints,
+                    onSubmitted: (query) {
+                      context.push(AppPaths.search, extra: query);
+                    },
+                  );
                 },
               ),
               24.verticalSpace,

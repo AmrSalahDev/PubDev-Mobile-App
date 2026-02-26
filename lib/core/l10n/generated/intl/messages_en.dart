@@ -59,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "points": MessageLookupByLibrary.simpleMessage("POINTS"),
     "popularity": MessageLookupByLibrary.simpleMessage("POPULARITY"),
     "results": MessageLookupByLibrary.simpleMessage("RESULTS"),
+    "searchFor": MessageLookupByLibrary.simpleMessage("Search for"),
     "searchForDio": MessageLookupByLibrary.simpleMessage("Search for \"dio\""),
     "searchForFirebaseAuth": MessageLookupByLibrary.simpleMessage(
       "Search for \"firebase_auth\"",
@@ -88,6 +89,21 @@ class MessageLookup extends MessageLookupByLibrary {
       "Search for \"url_launcher\"",
     ),
     "searchPackages": MessageLookupByLibrary.simpleMessage("Search packages"),
+    "sortBy": MessageLookupByLibrary.simpleMessage("SORT BY "),
+    "sortDefaultRanking": MessageLookupByLibrary.simpleMessage(
+      "default ranking",
+    ),
+    "sortDownloads": MessageLookupByLibrary.simpleMessage("downloads"),
+    "sortMostLikes": MessageLookupByLibrary.simpleMessage("most likes"),
+    "sortMostPubPoints": MessageLookupByLibrary.simpleMessage(
+      "most pub points",
+    ),
+    "sortNewestPackage": MessageLookupByLibrary.simpleMessage("newest package"),
+    "sortOverallScore": MessageLookupByLibrary.simpleMessage("overall score"),
+    "sortRecentlyUpdated": MessageLookupByLibrary.simpleMessage(
+      "recently updated",
+    ),
+    "sortTrending": MessageLookupByLibrary.simpleMessage("trending"),
     "supportedByGoogle": MessageLookupByLibrary.simpleMessage(
       "Supported by Google",
     ),
