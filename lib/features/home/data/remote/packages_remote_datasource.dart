@@ -1,3 +1,4 @@
+import 'dart:isolate';
 import 'dart:math';
 
 import 'package:dio/dio.dart';
@@ -61,7 +62,7 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
   List<String> getPackageSuggestions() {
     try {
       _talker.info('Package suggestions: $_packageSuggestions');
-     return _packageSuggestions;
+      return _packageSuggestions;
     } catch (e) {
       _talker.error('Error: $e');
       rethrow;
@@ -218,82 +219,58 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
 
   @override
   Future<List<Video>> getPackageOfTheWeekVideos() async {
-    var yt = YoutubeExplode();
     try {
-      // Get playlist metadata
-      var playlist = await yt.playlists.get(packageOfTheWeekPlaylistUrl);
-
-      // Get all videos in that playlist
-      List<Video> videoList = await yt.playlists
-          .getVideos(playlist.id)
-          .take(10)
-          .toList();
-
-      videoList.shuffle();
-
-      final videos = videoList.toList();
-
+      final videos = await Isolate.run(
+        () => _fetchPlaylistVideos(packageOfTheWeekPlaylistUrl),
+      );
       _talker.info('Fetched ${videos.length} videos');
       return videos;
     } catch (e) {
       _talker.error('Error fetching playlist: $e');
       rethrow;
-    } finally {
-      yt.close();
     }
   }
 
   @override
   Future<List<Video>> getObservableVideos() async {
-    var yt = YoutubeExplode();
     try {
-      // Get playlist metadata
-      var playlist = await yt.playlists.get(observablePlaylistUrl);
-
-      // Get all videos in that playlist
-      List<Video> videoList = await yt.playlists
-          .getVideos(playlist.id)
-          .take(10)
-          .toList();
-
-      videoList.shuffle();
-
-      final videos = videoList.toList();
-
+      final videos = await Isolate.run(
+        () => _fetchPlaylistVideos(observablePlaylistUrl),
+      );
       _talker.info('Fetched ${videos.length} videos');
       return videos;
     } catch (e) {
       _talker.error('Error fetching playlist: $e');
       rethrow;
-    } finally {
-      yt.close();
     }
   }
 
   @override
   Future<List<Video>> getWidgetOfTheWeekVideos() async {
-    var yt = YoutubeExplode();
     try {
-      // Get playlist metadata
-      var playlist = await yt.playlists.get(widgetOfTheWeekPlaylistUrl);
-
-      // Get all videos in that playlist
-      List<Video> videoList = await yt.playlists
-          .getVideos(playlist.id)
-          .take(10)
-          .toList();
-
-      videoList.shuffle();
-
-      final videos = videoList.toList();
-
+      final videos = await Isolate.run(
+        () => _fetchPlaylistVideos(widgetOfTheWeekPlaylistUrl),
+      );
       _talker.info('Fetched ${videos.length} videos');
       return videos;
     } catch (e) {
       _talker.error('Error fetching playlist: $e');
       rethrow;
-    } finally {
-      yt.close();
     }
+  }
+}
+
+Future<List<Video>> _fetchPlaylistVideos(String url) async {
+  var yt = YoutubeExplode();
+  try {
+    var playlist = await yt.playlists.get(url);
+    List<Video> videoList = await yt.playlists
+        .getVideos(playlist.id)
+        .take(10)
+        .toList();
+    videoList.shuffle();
+    return videoList;
+  } finally {
+    yt.close();
   }
 }
