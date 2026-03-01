@@ -8,20 +8,18 @@ class PackageEntity extends Equatable {
   final LatestEntity latest;
   final ScoreEntity score;
   final List<VersionEntity> versions;
+  final String readme;
+  final String? readmeUrl;
 
   const PackageEntity({
     required this.name,
     required this.latest,
     required this.score,
     required this.versions,
+    required this.readme,
+    this.readmeUrl,
   });
 
   @override
-  List<Object?> get props => [
-    name,
-    latest,
-    score,
-    versions,
-  ];
- 
+  List<Object?> get props => [name, latest, score, versions, readme, readmeUrl];
 }

@@ -186,7 +186,6 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                   isEmpty: state.widgetOfTheWeekVideos.isEmpty,
-
                   content: YoutubeVideosSection(
                     playlist: state.widgetOfTheWeekVideos,
                     isLoading: state.isWidgetOfTheWeekVideosLoading,
@@ -223,7 +222,6 @@ class _HomePageState extends State<HomePage> {
                     );
                   },
                 ),
-
                 SliverToBoxAdapter(child: 30.verticalSpace),
               ],
             );

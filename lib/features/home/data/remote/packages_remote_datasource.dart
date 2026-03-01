@@ -184,7 +184,6 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
   @override
   Future<PackageModel> getPackageInfo(String packageName) async {
     try {
-      // Run both calls at once in the Data Source
       final responses = await Future.wait([
         _dio.get('https://pub.dev/api/packages/$packageName'),
         _dio.get('https://pub.dev/api/packages/$packageName/score'),
@@ -193,13 +192,48 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
       final packageData = responses[0].data as Map<String, dynamic>;
       final scoreData = responses[1].data as Map<String, dynamic>;
 
-      // Put the score into the package data map
       packageData['score'] = scoreData;
 
-      // Now fromJson will automatically find the score and tags!
-      return PackageModel.fromJson(packageData);
+      // Extract repository/homepage to find README
+      final pubspec = packageData['latest']['pubspec'];
+      final repoUrl = pubspec['repository'] ?? pubspec['homepage'] ?? '';
+
+      String readmeContent = '';
+      String? readmeUrl;
+
+      if (repoUrl.toString().contains('github.com')) {
+        readmeUrl = _resolveReadmeUrl(repoUrl.toString());
+
+        if (readmeUrl != null) {
+          try {
+            // Try fetching from main first
+            final readmeResponse = await _dio.get(readmeUrl);
+            if (readmeResponse.statusCode == 200) {
+              readmeContent = readmeResponse.data.toString();
+            }
+          } catch (_) {
+            // Fallback: try master if main fails
+            try {
+              final fallbackUrl = readmeUrl.replaceFirst('/main/', '/master/');
+              final readmeResponse = await _dio.get(fallbackUrl);
+              if (readmeResponse.statusCode == 200) {
+                readmeContent = readmeResponse.data.toString();
+                readmeUrl = fallbackUrl;
+              }
+            } catch (__) {
+              _talker.error('Could not fetch README from $repoUrl');
+            }
+          }
+        }
+      }
+
+      return PackageModel.fromJson(
+        packageData,
+        readme: readmeContent,
+        readmeUrl: readmeUrl,
+      );
     } catch (e) {
-      _talker.error('Error: $e');
+      _talker.error('Error in getPackageInfo: $e');
       rethrow;
     }
   }
@@ -258,6 +292,25 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
       rethrow;
     }
   }
+}
+
+String? _resolveReadmeUrl(String repoUrl) {
+  final uri = Uri.tryParse(repoUrl);
+  if (uri == null || uri.host != 'github.com' || uri.pathSegments.length < 2) {
+    return null;
+  }
+
+  final user = uri.pathSegments[0];
+  final repo = uri.pathSegments[1];
+
+  if (uri.pathSegments.length > 3 && uri.pathSegments[2] == 'tree') {
+    final branch = uri.pathSegments[3];
+    final path = uri.pathSegments.sublist(4).join('/');
+    return 'https://raw.githubusercontent.com/$user/$repo/$branch/${path.isNotEmpty ? "$path/" : ""}README.md';
+  }
+
+  // Default to main branch
+  return 'https://raw.githubusercontent.com/$user/$repo/main/README.md';
 }
 
 Future<List<Video>> _fetchPlaylistVideos(String url) async {

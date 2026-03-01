@@ -14,6 +14,7 @@ class PubspecEntity extends Equatable {
   final Map<String, dynamic>? environment;
   final Map<String, dynamic>? dependencies;
   final Map<String, dynamic>? devDependencies;
+ 
   
   const PubspecEntity({
     required this.name,
@@ -29,6 +30,7 @@ class PubspecEntity extends Equatable {
     this.repository,
     this.issueTracker,
     this.license,
+    
   });
   
   @override
@@ -46,5 +48,6 @@ class PubspecEntity extends Equatable {
     repository,
     issueTracker,
     license,
+   
   ];
 } 

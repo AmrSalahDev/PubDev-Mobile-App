@@ -9,17 +9,24 @@ class PackageModel extends PackageEntity {
     required super.latest,
     required super.versions,
     required super.score,
+    required super.readme,
+    super.readmeUrl,
   });
 
-  factory PackageModel.fromJson(Map<String, dynamic> json) {
-  return PackageModel(
-    name: json['name'] ?? '',
-    latest: LatestModel.fromJson(json['latest'] ?? {}),
-    // Fix: json['versions'] is a List of objects, not a Map
-    versions: (json['versions'] as List? ?? [])
-        .map((v) => VersionModel.fromJson(v as Map<String, dynamic>))
-        .toList(),
-    score: ScoreModel.fromJson(json['score'] ?? {}),
-  );
-}
+  factory PackageModel.fromJson(
+    Map<String, dynamic> json, {
+    String readme = '',
+    String? readmeUrl,
+  }) {
+    return PackageModel(
+      name: json['name'] ?? '',
+      latest: LatestModel.fromJson(json['latest'] ?? {}),
+      versions: (json['versions'] as List? ?? [])
+          .map((v) => VersionModel.fromJson(v as Map<String, dynamic>))
+          .toList(),
+      score: ScoreModel.fromJson(json['score'] ?? {}),
+      readme: readme,
+      readmeUrl: readmeUrl,
+    );
+  }
 }

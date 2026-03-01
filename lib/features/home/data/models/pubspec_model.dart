@@ -15,6 +15,7 @@ class PubspecModel extends PubspecEntity {
     super.repository,
     super.issueTracker,
     super.license,
+    
   });
 
   factory PubspecModel.fromJson(Map<String, dynamic> json) {
