@@ -64,7 +64,7 @@ class _VideosTabState extends State<VideosTab> {
                 Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: 10.w,
-                    vertical: 4.h,
+                    vertical: 6.h,
                   ),
                   decoration: BoxDecoration(
                     color: Theme.of(
@@ -104,6 +104,7 @@ class _YoutubeTutorialCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final display = createDisplay(length: 3, decimal: 1, separator: ',');
     final uploadDate = TimeAgoHelper.format(video.uploadDate!);
+    final duration = formatVideoDuration(video.duration);
 
     return Column(
       children: [
@@ -128,7 +129,7 @@ class _YoutubeTutorialCard extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                     Container(
-                      width: 50.w,
+                      width: 50.h,
                       height: 50.h,
                       decoration: BoxDecoration(
                         color: Theme.of(context).colorScheme.primary,
@@ -153,12 +154,12 @@ class _YoutubeTutorialCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4.r),
                         ),
                         child: Text(
-                          formatVideoDuration(video.duration),
-                          style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                            color: Colors
-                                .white, // Duration is usually white on black overlay
-                            fontWeight: FontWeight.bold,
-                          ),
+                          duration,
+                          style: Theme.of(context).textTheme.labelSmall
+                              ?.copyWith(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
                       ),
                     ),
@@ -205,9 +206,11 @@ class _YoutubeTutorialCard extends StatelessWidget {
                         icon: Icon(
                           Icons.more_vert,
                           color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          size: 24.sp,
                         ),
                         padding: EdgeInsets.zero,
                         constraints: const BoxConstraints(),
+                        visualDensity: VisualDensity.compact,
                       ),
                     ],
                   ),
