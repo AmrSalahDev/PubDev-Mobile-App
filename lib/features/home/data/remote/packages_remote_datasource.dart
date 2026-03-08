@@ -20,6 +20,7 @@ abstract class PackagesRemoteDataSource {
   Future<List<Video>> getPackageOfTheWeekVideos();
   Future<List<Video>> getObservableVideos();
   Future<List<Video>> getWidgetOfTheWeekVideos();
+  Future<List<Video>> searchVideos(String query);
   List<String> getPackageSuggestions();
 }
 
@@ -75,16 +76,16 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
       final response = await _dio.get(trendingPackages);
       final data = response.data;
 
-      // 1. Get the list of packages from the trending response
+      // Get the list of packages from the trending response
       final List<dynamic> packageData = data['packages'] ?? [];
 
-      // 2. Extract the package names
+      // Extract the package names
       final packageNames = packageData
           .map((e) => e['name'] as String) // Get the name string
-          .take(6) // Take only the first 4
+          .take(6) // Take only the first 6
           .toList();
 
-      // 3. Call getPackageInfo for each name to get FULL data (including tags)
+      // Call getPackageInfo for each name to get FULL data (including tags)
       // Future.wait runs these requests in parallel for speed
       return await Future.wait(
         packageNames.map((name) => getPackageInfo(name)).toList(),
@@ -93,36 +94,6 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
       _talker.error('Error: $e');
       rethrow;
     }
-
-    // final url = Uri.parse(trendingPackages);
-
-    // try {
-    //   final response = await _httpClient.get(url);
-
-    //   if (response.statusCode == 200) {
-    //     final data = jsonDecode(response.body);
-    //     // Change this part in your getTrendingPackages function:
-
-    //     final List<dynamic> packageData = data['packages'] ?? [];
-
-    //     _talker.info('Fetching details for ${packageData.length} packages');
-
-    //     final futures = packageData
-    //         .map((item) {
-    //           // Extract the name from the Map.
-    //           // Adjust 'package' to 'name' or whatever key your API uses.
-    //           final String name = item['package'] ?? '';
-    //           return getPackageInfo(name);
-    //         })
-    //         .take(4)
-    //         .toList();
-
-    //     return await Future.wait(futures);
-    //   }
-    // } catch (e) {
-    //   _talker.error('Error: $e');
-    //   rethrow;
-    // }
   }
 
   @override
@@ -194,38 +165,8 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
 
       packageData['score'] = scoreData;
 
-      // Extract repository/homepage to find README
-      final pubspec = packageData['latest']['pubspec'];
-      final repoUrl = pubspec['repository'] ?? pubspec['homepage'] ?? '';
-
       String readmeContent = '';
       String? readmeUrl;
-
-      if (repoUrl.toString().contains('github.com')) {
-        readmeUrl = _resolveReadmeUrl(repoUrl.toString());
-
-        if (readmeUrl != null) {
-          try {
-            // Try fetching from main first
-            final readmeResponse = await _dio.get(readmeUrl);
-            if (readmeResponse.statusCode == 200) {
-              readmeContent = readmeResponse.data.toString();
-            }
-          } catch (_) {
-            // Fallback: try master if main fails
-            try {
-              final fallbackUrl = readmeUrl.replaceFirst('/main/', '/master/');
-              final readmeResponse = await _dio.get(fallbackUrl);
-              if (readmeResponse.statusCode == 200) {
-                readmeContent = readmeResponse.data.toString();
-                readmeUrl = fallbackUrl;
-              }
-            } catch (__) {
-              _talker.error('Could not fetch README from $repoUrl');
-            }
-          }
-        }
-      }
 
       return PackageModel.fromJson(
         packageData,
@@ -292,25 +233,28 @@ class PackagesRemoteDataSourceImpl implements PackagesRemoteDataSource {
       rethrow;
     }
   }
+
+  @override
+  Future<List<Video>> searchVideos(String query) async {
+    try {
+      final videos = await Isolate.run(() => _fetchSearchVideos(query));
+      _talker.info('Fetched ${videos.length} videos for search: $query');
+      return videos;
+    } catch (e) {
+      _talker.error('Error searching videos: $e');
+      rethrow;
+    }
+  }
 }
 
-String? _resolveReadmeUrl(String repoUrl) {
-  final uri = Uri.tryParse(repoUrl);
-  if (uri == null || uri.host != 'github.com' || uri.pathSegments.length < 2) {
-    return null;
+Future<List<Video>> _fetchSearchVideos(String query) async {
+  final yt = YoutubeExplode();
+  try {
+    final results = await yt.search.search(query);
+    return results.toList();
+  } finally {
+    yt.close();
   }
-
-  final user = uri.pathSegments[0];
-  final repo = uri.pathSegments[1];
-
-  if (uri.pathSegments.length > 3 && uri.pathSegments[2] == 'tree') {
-    final branch = uri.pathSegments[3];
-    final path = uri.pathSegments.sublist(4).join('/');
-    return 'https://raw.githubusercontent.com/$user/$repo/$branch/${path.isNotEmpty ? "$path/" : ""}README.md';
-  }
-
-  // Default to main branch
-  return 'https://raw.githubusercontent.com/$user/$repo/main/README.md';
 }
 
 Future<List<Video>> _fetchPlaylistVideos(String url) async {

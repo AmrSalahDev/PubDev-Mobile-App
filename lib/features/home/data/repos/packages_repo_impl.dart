@@ -9,7 +9,6 @@ import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 class PackagesRepoImpl implements PackagesRepo {
   final PackagesRemoteDataSource _remoteDataSource;
   PackagesRepoImpl(this._remoteDataSource);
-  
 
   @override
   Future<List<PackageEntity>> getFavoritesPackages({page = 1}) async {
@@ -31,9 +30,8 @@ class PackagesRepoImpl implements PackagesRepo {
     return await _remoteDataSource.getTrendingPackages(page: page);
   }
 
-   @override
+  @override
   Future<PackageEntity> getPackageInfo(String name) async {
-
     // // PARALLEL API CALLS
     // final results = await Future.wait([
     //   _remoteDataSource.getPackageInfo(name),
@@ -49,7 +47,7 @@ class PackagesRepoImpl implements PackagesRepo {
     //   versions: packageModel.versions,
     //   score: scoreModel,
     // );
-    return await _remoteDataSource.getPackageInfo(name);  
+    return await _remoteDataSource.getPackageInfo(name);
   }
 
   @override
@@ -70,6 +68,11 @@ class PackagesRepoImpl implements PackagesRepo {
   @override
   Future<List<Video>> getWidgetOfTheWeekVideos() async {
     return await _remoteDataSource.getWidgetOfTheWeekVideos();
+  }
+
+  @override
+  Future<List<Video>> searchVideos(String query) async {
+    return await _remoteDataSource.searchVideos(query);
   }
 
   @override

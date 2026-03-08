@@ -7,7 +7,11 @@ class InstallingTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text("",
-        style: const TextStyle(fontSize: 16, fontFamily: 'Roboto', color: Colors.white));
+    return Center(
+      child: Text(
+        "", // Placeholder
+        style: Theme.of(context).textTheme.bodyLarge,
+      ),
+    );
   }
 }

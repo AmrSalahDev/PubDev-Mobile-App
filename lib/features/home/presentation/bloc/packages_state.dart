@@ -11,6 +11,7 @@ class PackagesState extends Equatable {
   final List<Video> packageOfTheWeekVideos;
   final List<Video> observableVideos;
   final List<Video> widgetOfTheWeekVideos;
+  final List<Video> packageVideos;
   final List<String> packageSuggestions;
   final bool hasError;
   final String errorMessage;
@@ -22,6 +23,7 @@ class PackagesState extends Equatable {
   final bool isPackageOfTheWeekVideosLoading;
   final bool isObservableVideosLoading;
   final bool isWidgetOfTheWeekVideosLoading;
+  final bool isPackageVideosLoading;
 
   const PackagesState({
     this.favorites = const [],
@@ -43,6 +45,8 @@ class PackagesState extends Equatable {
     this.isPackageOfTheWeekVideosLoading = false,
     this.isObservableVideosLoading = false,
     this.isWidgetOfTheWeekVideosLoading = false,
+    this.packageVideos = const [],
+    this.isPackageVideosLoading = false,
   });
 
   PackagesState copyWith({
@@ -64,6 +68,8 @@ class PackagesState extends Equatable {
     bool? isPackageOfTheWeekVideosLoading,
     bool? isObservableVideosLoading,
     bool? isWidgetOfTheWeekVideosLoading,
+    List<Video>? packageVideos,
+    bool? isPackageVideosLoading,
     List<String>? packageSuggestions,
   }) {
     return PackagesState(
@@ -79,12 +85,21 @@ class PackagesState extends Equatable {
       isTopDartLoading: isTopDartLoading ?? this.isTopDartLoading,
       packageInfo: packageInfo ?? this.packageInfo,
       isPackageInfoLoading: isPackageInfoLoading ?? this.isPackageInfoLoading,
-      packageOfTheWeekVideos: packageOfTheWeekVideos ?? this.packageOfTheWeekVideos,
+      packageOfTheWeekVideos:
+          packageOfTheWeekVideos ?? this.packageOfTheWeekVideos,
       observableVideos: observableVideos ?? this.observableVideos,
-      widgetOfTheWeekVideos: widgetOfTheWeekVideos ?? this.widgetOfTheWeekVideos,
-      isPackageOfTheWeekVideosLoading: isPackageOfTheWeekVideosLoading ?? this.isPackageOfTheWeekVideosLoading,
-      isObservableVideosLoading: isObservableVideosLoading ?? this.isObservableVideosLoading,
-      isWidgetOfTheWeekVideosLoading: isWidgetOfTheWeekVideosLoading ?? this.isWidgetOfTheWeekVideosLoading,
+      widgetOfTheWeekVideos:
+          widgetOfTheWeekVideos ?? this.widgetOfTheWeekVideos,
+      isPackageOfTheWeekVideosLoading:
+          isPackageOfTheWeekVideosLoading ??
+          this.isPackageOfTheWeekVideosLoading,
+      isObservableVideosLoading:
+          isObservableVideosLoading ?? this.isObservableVideosLoading,
+      isWidgetOfTheWeekVideosLoading:
+          isWidgetOfTheWeekVideosLoading ?? this.isWidgetOfTheWeekVideosLoading,
+      packageVideos: packageVideos ?? this.packageVideos,
+      isPackageVideosLoading:
+          isPackageVideosLoading ?? this.isPackageVideosLoading,
       packageSuggestions: packageSuggestions ?? this.packageSuggestions,
     );
   }
@@ -109,6 +124,8 @@ class PackagesState extends Equatable {
     isPackageOfTheWeekVideosLoading,
     isObservableVideosLoading,
     isWidgetOfTheWeekVideosLoading,
+    packageVideos,
+    isPackageVideosLoading,
     packageSuggestions,
   ];
 }

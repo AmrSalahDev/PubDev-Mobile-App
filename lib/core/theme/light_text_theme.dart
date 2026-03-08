@@ -1,38 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-TextTheme lightTextTheme(BuildContext context) {
-  final base = Theme.of(context).textTheme;
-  final colorScheme = Theme.of(context).colorScheme;
+TextTheme lightTextTheme(ColorScheme colorScheme) {
+  final base = ThemeData.light().textTheme;
 
   return base.copyWith(
     // Display
     displayLarge: base.displayLarge?.copyWith(
       fontSize: 48.sp,
+      fontWeight: FontWeight.bold,
       color: colorScheme.onSurface,
+      letterSpacing: -1.0,
     ),
     displayMedium: base.displayMedium?.copyWith(
       fontSize: 40.sp,
+      fontWeight: FontWeight.bold,
       color: colorScheme.onSurface,
+      letterSpacing: -0.8,
     ),
     displaySmall: base.displaySmall?.copyWith(
       fontSize: 32.sp,
+      fontWeight: FontWeight.bold,
       color: colorScheme.onSurface,
+      letterSpacing: -0.5,
     ),
 
     // Headline
     headlineMedium: base.headlineMedium?.copyWith(
       fontSize: 24.sp,
+      fontWeight: FontWeight.w600,
       color: colorScheme.onSurface,
     ),
     headlineSmall: base.headlineSmall?.copyWith(
       fontSize: 20.sp,
+      fontWeight: FontWeight.w600,
       color: colorScheme.onSurface,
     ),
 
     // Title
     titleLarge: base.titleLarge?.copyWith(
       fontSize: 18.sp,
+      fontWeight: FontWeight.bold,
+      color: colorScheme.onSurface,
+    ),
+    titleMedium: base.titleMedium?.copyWith(
+      fontSize: 16.sp,
+      fontWeight: FontWeight.w600,
+      color: colorScheme.onSurface,
+    ),
+    titleSmall: base.titleSmall?.copyWith(
+      fontSize: 14.sp,
+      fontWeight: FontWeight.w600,
       color: colorScheme.onSurface,
     ),
 
@@ -47,7 +65,24 @@ TextTheme lightTextTheme(BuildContext context) {
     ),
     bodySmall: base.bodySmall?.copyWith(
       fontSize: 12.sp,
+      color: colorScheme.onSurfaceVariant,
+    ),
+
+    // Label
+    labelLarge: base.labelLarge?.copyWith(
+      fontSize: 14.sp,
+      fontWeight: FontWeight.w500,
       color: colorScheme.onSurface,
+    ),
+    labelMedium: base.labelMedium?.copyWith(
+      fontSize: 12.sp,
+      fontWeight: FontWeight.w500,
+      color: colorScheme.onSurfaceVariant,
+    ),
+    labelSmall: base.labelSmall?.copyWith(
+      fontSize: 10.sp,
+      fontWeight: FontWeight.w500,
+      color: colorScheme.onSurfaceVariant,
     ),
   );
 }

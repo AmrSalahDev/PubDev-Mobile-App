@@ -40,6 +40,8 @@ import 'package:pub_dev_packages_app/features/home/domain/usecases/get_trending_
     as _i763;
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_widget_of_the_week_usecase.dart'
     as _i706;
+import 'package:pub_dev_packages_app/features/home/domain/usecases/search_videos_usecase.dart'
+    as _i253;
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_bloc.dart'
     as _i921;
 import 'package:pub_dev_packages_app/features/search/data/remote/search_remote_datasource.dart'
@@ -112,8 +114,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i706.GetWidgetOfTheWeekVideosUsecase>(
       () => _i706.GetWidgetOfTheWeekVideosUsecase(gh<_i197.PackagesRepo>()),
     );
-    gh.lazySingleton<_i502.SearchPackagesUsecase>(
-      () => _i502.SearchPackagesUsecase(gh<_i655.SearchRepo>()),
+    gh.lazySingleton<_i253.SearchVideosUsecase>(
+      () => _i253.SearchVideosUsecase(gh<_i197.PackagesRepo>()),
     );
     gh.factory<_i921.PackagesBloc>(
       () => _i921.PackagesBloc(
@@ -128,7 +130,11 @@ extension GetItInjectableX on _i174.GetIt {
         getWidgetOfTheWeekVideosUsecase:
             gh<_i706.GetWidgetOfTheWeekVideosUsecase>(),
         getPackageSuggestionsUseCase: gh<_i591.GetPackageSuggestionsUseCase>(),
+        searchVideosUsecase: gh<_i253.SearchVideosUsecase>(),
       ),
+    );
+    gh.lazySingleton<_i502.SearchPackagesUsecase>(
+      () => _i502.SearchPackagesUsecase(gh<_i655.SearchRepo>()),
     );
     gh.factory<_i896.SearchBloc>(
       () => _i896.SearchBloc(

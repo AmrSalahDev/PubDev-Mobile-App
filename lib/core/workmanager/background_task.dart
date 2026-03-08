@@ -1,7 +1,7 @@
 import 'package:workmanager/workmanager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pub_api_client/pub_api_client.dart';
-import 'notification_service.dart';
+import '../services/notification_service.dart';
 
 const fetchBackgroundTask = "fetch_new_packages";
 

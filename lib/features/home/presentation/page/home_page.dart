@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> { 
+class _HomePageState extends State<HomePage> {
   final _advancedDrawerController = AdvancedDrawerController();
 
   @override
@@ -240,7 +240,6 @@ class _HomeSection extends StatelessWidget {
   final bool isEmpty;
   final Widget content;
   final String buttonTitle;
-  final bool showSection;
   final VoidCallback? onButtonTap;
 
   const _HomeSection({
@@ -252,44 +251,38 @@ class _HomeSection extends StatelessWidget {
     required this.content,
     required this.buttonTitle,
     this.onButtonTap,
-    this.showSection = true,
   });
 
   @override
   Widget build(BuildContext context) {
-    return showSection
-        ? SliverPadding(
-            padding: EdgeInsets.only(bottom: 16.h),
-            sliver: SliverMainAxisGroup(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: VisibilityDetector(
-                    key: Key(sectionKey),
-                    onVisibilityChanged: (info) {
-                      if (info.visibleFraction > 0.7 && isEmpty) {
-                        onVisible();
-                      }
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(bottom: 8.h),
-                      child: SectionHeader(title: title, subtitle: subtitle),
-                    ),
-                  ),
-                ),
-
-                SliverToBoxAdapter(child: content),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 4.h),
-                    child: ViewAllButton(
-                      title: buttonTitle,
-                      onTap: onButtonTap,
-                    ),
-                  ),
-                ),
-              ],
+    return SliverPadding(
+      padding: EdgeInsets.only(bottom: 16.h),
+      sliver: SliverMainAxisGroup(
+        slivers: [
+          SliverToBoxAdapter(
+            child: VisibilityDetector(
+              key: Key(sectionKey),
+              onVisibilityChanged: (info) {
+                if (info.visibleFraction > 0.7 && isEmpty) {
+                  onVisible();
+                }
+              },
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 8.h),
+                child: SectionHeader(title: title, subtitle: subtitle),
+              ),
             ),
-          )
-        : SliverToBoxAdapter();
+          ),
+
+          SliverToBoxAdapter(child: content),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.only(top: 4.h),
+              child: ViewAllButton(title: buttonTitle, onTap: onButtonTap),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

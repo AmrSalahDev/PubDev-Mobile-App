@@ -32,7 +32,7 @@ class SearchPackageTile extends StatelessWidget {
             16.verticalSpace,
             SearchPackageInfo(packageInfo: packageInfo),
             12.verticalSpace,
-            ScoreTags(packageInfo: packageInfo),
+            PackageTags(packageInfo: packageInfo),
           ],
         ),
       ),

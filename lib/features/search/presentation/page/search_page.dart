@@ -123,8 +123,10 @@ class _SearchPageState extends State<SearchPage> {
             child: BlocBuilder<SearchBloc, SearchState>(
               builder: (context, state) {
                 if (state is SearchLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(color: Color(0xFF4EAFF7)),
+                  return Center(
+                    child: CircularProgressIndicator(
+                      color: colorScheme.primary,
+                    ),
                   );
                 }
 
@@ -132,7 +134,7 @@ class _SearchPageState extends State<SearchPage> {
                   return Center(
                     child: Text(
                       state.message,
-                      style: const TextStyle(color: Colors.redAccent),
+                      style: TextStyle(color: colorScheme.error),
                     ),
                   );
                 }
@@ -153,11 +155,11 @@ class _SearchPageState extends State<SearchPage> {
                               : state.packages.length + 1,
                           itemBuilder: (context, index) {
                             if (index >= state.packages.length) {
-                              return const Padding(
-                                padding: EdgeInsets.all(32.0),
+                              return Padding(
+                                padding: const EdgeInsets.all(32.0),
                                 child: Center(
                                   child: CircularProgressIndicator(
-                                    color: Color(0xFF4EAFF7),
+                                    color: colorScheme.primary,
                                   ),
                                 ),
                               );

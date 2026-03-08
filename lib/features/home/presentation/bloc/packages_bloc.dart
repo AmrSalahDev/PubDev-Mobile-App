@@ -9,8 +9,9 @@ import 'package:pub_dev_packages_app/features/home/domain/usecases/get_top_flutt
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_trending_packages_usecase.dart';
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_package_of_the_week_videos_usecase.dart';
 import 'package:pub_dev_packages_app/features/home/domain/usecases/get_widget_of_the_week_usecase.dart';
-import 'packages_event.dart';
-import 'packages_state.dart';
+import 'package:pub_dev_packages_app/features/home/domain/usecases/search_videos_usecase.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_event.dart';
+import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_state.dart';
 
 @injectable
 class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
@@ -23,6 +24,7 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
   final GetObservableVideosUsecase getObservableVideosUsecase;
   final GetWidgetOfTheWeekVideosUsecase getWidgetOfTheWeekVideosUsecase;
   final GetPackageSuggestionsUseCase getPackageSuggestionsUseCase;
+  final SearchVideosUsecase searchVideosUsecase;
 
   PackagesBloc({
     required this.getFavoritesPackagesUsecase,
@@ -34,6 +36,7 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
     required this.getObservableVideosUsecase,
     required this.getWidgetOfTheWeekVideosUsecase,
     required this.getPackageSuggestionsUseCase,
+    required this.searchVideosUsecase,
   }) : super(const PackagesState()) {
     on<LoadFavoritesEvent>(_onLoadFavorites);
     on<LoadTrendingEvent>(_onLoadTrending);
@@ -44,6 +47,30 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
     on<LoadPackageOfTheWeekVideosEvent>(_onLoadPackageOfTheWeekVideos);
     on<LoadObservableVideosEvent>(_onLoadObservableVideos);
     on<LoadWidgetOfTheWeekVideosEvent>(_onLoadWidgetOfTheWeekVideos);
+    on<SearchPackageVideosEvent>(_onSearchPackageVideos);
+  }
+
+  Future<void> _onSearchPackageVideos(
+    SearchPackageVideosEvent event,
+    Emitter<PackagesState> emit,
+  ) async {
+    emit(state.copyWith(isPackageVideosLoading: true, packageVideos: []));
+    try {
+      final videos = await searchVideosUsecase.call(
+        "Flutter ${event.packageName} tutorial",
+      );
+      emit(
+        state.copyWith(packageVideos: videos, isPackageVideosLoading: false),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          hasError: true,
+          errorMessage: e.toString(),
+          isPackageVideosLoading: false,
+        ),
+      );
+    }
   }
 
   Future<void> _onLoadWidgetOfTheWeekVideos(
@@ -148,7 +175,6 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
     emit(state.copyWith(isTrendingLoading: true));
     try {
       final trendingPackages = await getTrendingPackagesUsecase.call(page: 1);
-
       emit(
         state.copyWith(trending: trendingPackages, isTrendingLoading: false),
       );
@@ -172,7 +198,6 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
       final topFlutterPackages = await getTopFlutterPackagesUsecase.call(
         page: 1,
       );
-
       emit(
         state.copyWith(
           topFlutter: topFlutterPackages,
@@ -197,7 +222,6 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
     emit(state.copyWith(isTopDartLoading: true));
     try {
       final topDartPackages = await getTopDartPackagesUsecase.call(page: 1);
-
       emit(state.copyWith(topDart: topDartPackages, isTopDartLoading: false));
     } catch (e) {
       emit(
@@ -222,7 +246,6 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
         isTopDartLoading: true,
       ),
     );
-
     await Future.wait([
       _onLoadFavorites(LoadFavoritesEvent(), emit),
       _onLoadTrending(LoadTrendingEvent(), emit),
@@ -230,101 +253,4 @@ class PackagesBloc extends Bloc<PackagesEvent, PackagesState> {
       _onLoadTopDart(LoadTopDartEvent(), emit),
     ]);
   }
-
-  // Future<void> _onLoadPackages(
-  //   LoadPackages event,
-  //   Emitter<PackagesState> emit,
-  // ) async {
-  //   if (state is PackagesInitial) {
-  //     emit(PackagesLoading());
-  //     await _fetchAllSections(emit);
-  //   }
-  // }
-
-  // Future<void> _onRefreshPackages(
-  //   RefreshPackages event,
-  //   Emitter<PackagesState> emit,
-  // ) async {
-  //   emit(PackagesLoading());
-  //   await _fetchAllSections(emit);
-  // }
-
-  // Future<void> _onSearchPackages(
-  //   SearchPackages event,
-  //   Emitter<PackagesState> emit,
-  // ) async {
-  //   if (state is! PackagesLoaded) return;
-  //   final current = state as PackagesLoaded;
-
-  //   if (event.query.trim().isEmpty) {
-  //     emit(
-  //       current.copyWith(
-  //         isSearching: false,
-  //         searchResults: [],
-  //         searchQuery: '',
-  //       ),
-  //     );
-  //     return;
-  //   }
-
-  //   emit(current.copyWith(isSearching: true, searchQuery: event.query));
-
-  //   try {
-  //     final names = await apiClient.searchPackages(event.query);
-  //     final pkgs = await _fetchDetails(names.take(20).toList());
-  //     emit(current.copyWith(searchResults: pkgs, searchQuery: event.query));
-  //   } catch (e) {
-  //     // keep showing old results on error
-  //   }
-  // }
-
-  // Future<void> _fetchAllSections(Emitter<PackagesState> emit) async {
-  //   try {
-  //     // Fetch all lists concurrently
-  //     final results = await Future.wait([
-  //       apiClient.getFlutterFavorites(),
-  //       apiClient.getTrendingPackages(),
-  //       apiClient.getTopFlutterPackages(),
-  //       apiClient.getTopDartPackages(),
-  //     ]);
-
-  //     final favoriteNames = results[0].take(8).toList();
-  //     final trendingNames = results[1].take(4).toList();
-  //     final topFlutterNames = results[2].take(4).toList();
-  //     final topDartNames = results[3].take(4).toList();
-
-  //     // Fetch package details for all sections concurrently
-  //     final detailResults = await Future.wait([
-  //       _fetchDetails(favoriteNames),
-  //       _fetchDetails(trendingNames),
-  //       _fetchDetails(topFlutterNames),
-  //       _fetchDetails(topDartNames),
-  //     ]);
-
-  //     emit(
-  //       PackagesLoaded(
-  //         favorites: detailResults[0],
-  //         trending: detailResults[1],
-  //         topFlutter: detailResults[2],
-  //         topDart: detailResults[3],
-  //       ),
-  //     );
-  //   } catch (e) {
-  //     emit(PackagesError(message: e.toString()));
-  //   }
-  // }
-
-  // Future<List<PubDevPackage>> _fetchDetails(List<String> names) async {
-  //   final List<PubDevPackage> packages = [];
-  //   for (final name in names) {
-  //     try {
-  //       final details = await apiClient.getPackageDetails(name);
-  //       packages.add(details);
-  //     } catch (e) {
-  //       // ignore: avoid_print
-  //       print('Failed to load details for $name: $e');
-  //     }
-  //   }
-  //   return packages;
-  // }
 }

@@ -18,10 +18,8 @@ class AppLocalizations {
   static AppLocalizations? _current;
 
   static AppLocalizations get current {
-    assert(
-      _current != null,
-      'No instance of AppLocalizations was loaded. Try to initialize the AppLocalizations delegate before accessing AppLocalizations.current.',
-    );
+    assert(_current != null,
+        'No instance of AppLocalizations was loaded. Try to initialize the AppLocalizations delegate before accessing AppLocalizations.current.');
     return _current!;
   }
 
@@ -43,10 +41,8 @@ class AppLocalizations {
 
   static AppLocalizations of(BuildContext context) {
     final instance = AppLocalizations.maybeOf(context);
-    assert(
-      instance != null,
-      'No instance of AppLocalizations present in the widget tree. Did you add AppLocalizations.delegate in localizationsDelegates?',
-    );
+    assert(instance != null,
+        'No instance of AppLocalizations present in the widget tree. Did you add AppLocalizations.delegate in localizationsDelegates?');
     return instance!;
   }
 
@@ -156,7 +152,12 @@ class AppLocalizations {
 
   /// `View all`
   String get viewAll {
-    return Intl.message('View all', name: 'viewAll', desc: '', args: []);
+    return Intl.message(
+      'View all',
+      name: 'viewAll',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `The official package repository for `
@@ -171,22 +172,42 @@ class AppLocalizations {
 
   /// ` and `
   String get and {
-    return Intl.message(' and ', name: 'and', desc: '', args: []);
+    return Intl.message(
+      ' and ',
+      name: 'and',
+      desc: '',
+      args: [],
+    );
   }
 
   /// ` apps.`
   String get apps {
-    return Intl.message(' apps.', name: 'apps', desc: '', args: []);
+    return Intl.message(
+      ' apps.',
+      name: 'apps',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Flutter`
   String get flutter {
-    return Intl.message('Flutter', name: 'flutter', desc: '', args: []);
+    return Intl.message(
+      'Flutter',
+      name: 'flutter',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Dart`
   String get dart {
-    return Intl.message('Dart', name: 'dart', desc: '', args: []);
+    return Intl.message(
+      'Dart',
+      name: 'dart',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Package of the week`
@@ -271,37 +292,72 @@ class AppLocalizations {
 
   /// `LIKES`
   String get likes {
-    return Intl.message('LIKES', name: 'likes', desc: '', args: []);
+    return Intl.message(
+      'LIKES',
+      name: 'likes',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `POINTS`
   String get points {
-    return Intl.message('POINTS', name: 'points', desc: '', args: []);
+    return Intl.message(
+      'POINTS',
+      name: 'points',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `DOWNLOADS`
   String get downloads {
-    return Intl.message('DOWNLOADS', name: 'downloads', desc: '', args: []);
+    return Intl.message(
+      'DOWNLOADS',
+      name: 'downloads',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `DEFAULT`
   String get defaultt {
-    return Intl.message('DEFAULT', name: 'defaultt', desc: '', args: []);
+    return Intl.message(
+      'DEFAULT',
+      name: 'defaultt',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `POPULARITY`
   String get popularity {
-    return Intl.message('POPULARITY', name: 'popularity', desc: '', args: []);
+    return Intl.message(
+      'POPULARITY',
+      name: 'popularity',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `UPDATED`
   String get updated {
-    return Intl.message('UPDATED', name: 'updated', desc: '', args: []);
+    return Intl.message(
+      'UPDATED',
+      name: 'updated',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `CREATED`
   String get created {
-    return Intl.message('CREATED', name: 'created', desc: '', args: []);
+    return Intl.message(
+      'CREATED',
+      name: 'created',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `NEWEST PACKAGE`
@@ -316,12 +372,22 @@ class AppLocalizations {
 
   /// `RESULTS`
   String get results {
-    return Intl.message('RESULTS', name: 'results', desc: '', args: []);
+    return Intl.message(
+      'RESULTS',
+      name: 'results',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `packages`
   String get packages {
-    return Intl.message('packages', name: 'packages', desc: '', args: []);
+    return Intl.message(
+      'packages',
+      name: 'packages',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Search for "firebase_auth"`
@@ -426,7 +492,12 @@ class AppLocalizations {
 
   /// `SORT BY `
   String get sortBy {
-    return Intl.message('SORT BY ', name: 'sortBy', desc: '', args: []);
+    return Intl.message(
+      'SORT BY ',
+      name: 'sortBy',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `default ranking`
@@ -491,17 +562,272 @@ class AppLocalizations {
 
   /// `downloads`
   String get sortDownloads {
-    return Intl.message('downloads', name: 'sortDownloads', desc: '', args: []);
+    return Intl.message(
+      'downloads',
+      name: 'sortDownloads',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `trending`
   String get sortTrending {
-    return Intl.message('trending', name: 'sortTrending', desc: '', args: []);
+    return Intl.message(
+      'trending',
+      name: 'sortTrending',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Search for`
   String get searchFor {
-    return Intl.message('Search for', name: 'searchFor', desc: '', args: []);
+    return Intl.message(
+      'Search for',
+      name: 'searchFor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable Background Processing`
+  String get autoStartTitle {
+    return Intl.message(
+      'Enable Background Processing',
+      name: 'autoStartTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `To ensure you receive timely notifications for new packages, please disable battery optimizations and enable auto-start if prompted.`
+  String get autoStartBody {
+    return Intl.message(
+      'To ensure you receive timely notifications for new packages, please disable battery optimizations and enable auto-start if prompted.',
+      name: 'autoStartBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your device has additional battery optimizations. Please follow the steps to disable them.`
+  String get manBatteryTitle {
+    return Intl.message(
+      'Your device has additional battery optimizations. Please follow the steps to disable them.',
+      name: 'manBatteryTitle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Follow the steps and disable the optimizations to allow smooth functioning of background tasks.`
+  String get manBatteryBody {
+    return Intl.message(
+      'Follow the steps and disable the optimizations to allow smooth functioning of background tasks.',
+      name: 'manBatteryBody',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Published`
+  String get published {
+    return Intl.message(
+      'Published',
+      name: 'published',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Copied!`
+  String get copied {
+    return Intl.message(
+      'Copied!',
+      name: 'copied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tutorials & Guides`
+  String get tutorialsAndGuides {
+    return Intl.message(
+      'Tutorials & Guides',
+      name: 'tutorialsAndGuides',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No tutorials found for this package`
+  String get noTutorialsFound {
+    return Intl.message(
+      'No tutorials found for this package',
+      name: 'noTutorialsFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} VIDEOS`
+  String videosCount(Object count) {
+    return Intl.message(
+      '$count VIDEOS',
+      name: 'videosCount',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Weekly Downloads`
+  String get weeklyDownloads {
+    return Intl.message(
+      'Weekly Downloads',
+      name: 'weeklyDownloads',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Could not find sparkline data`
+  String get errorSparklineData {
+    return Intl.message(
+      'Could not find sparkline data',
+      name: 'errorSparklineData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No README found`
+  String get noReadmeFound {
+    return Intl.message(
+      'No README found',
+      name: 'noReadmeFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This package hasn't provided a README file yet.`
+  String get noReadmeProvided {
+    return Intl.message(
+      'This package hasn\'t provided a README file yet.',
+      name: 'noReadmeProvided',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Visit Repository`
+  String get visitRepository {
+    return Intl.message(
+      'Visit Repository',
+      name: 'visitRepository',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Readme`
+  String get readme {
+    return Intl.message(
+      'Readme',
+      name: 'readme',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changelog`
+  String get changelog {
+    return Intl.message(
+      'Changelog',
+      name: 'changelog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Example`
+  String get example {
+    return Intl.message(
+      'Example',
+      name: 'example',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Videos`
+  String get videos {
+    return Intl.message(
+      'Videos',
+      name: 'videos',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Installing`
+  String get installing {
+    return Intl.message(
+      'Installing',
+      name: 'installing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Versions`
+  String get versions {
+    return Intl.message(
+      'Versions',
+      name: 'versions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Scores`
+  String get scores {
+    return Intl.message(
+      'Scores',
+      name: 'scores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changelog data coming soon`
+  String get changelogDataComingSoon {
+    return Intl.message(
+      'Changelog data coming soon',
+      name: 'changelogDataComingSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Versions data coming soon`
+  String get versionsDataComingSoon {
+    return Intl.message(
+      'Versions data coming soon',
+      name: 'versionsDataComingSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `LATEST`
+  String get latest {
+    return Intl.message(
+      'LATEST',
+      name: 'latest',
+      desc: '',
+      args: [],
+    );
   }
 }
 
@@ -509,7 +835,9 @@ class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
   const AppLocalizationDelegate();
 
   List<Locale> get supportedLocales {
-    return const <Locale>[Locale.fromSubtags(languageCode: 'en')];
+    return const <Locale>[
+      Locale.fromSubtags(languageCode: 'en'),
+    ];
   }
 
   @override

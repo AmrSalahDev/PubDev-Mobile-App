@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pub_dev_packages_app/features/home/domain/entities/package_entity.dart';
 
-class ScoreTags extends StatelessWidget {
+class PackageTags extends StatelessWidget {
   final PackageEntity packageInfo;
-  const ScoreTags({super.key, required this.packageInfo});
+  const PackageTags({super.key, required this.packageInfo});
 
   @override
   Widget build(BuildContext context) {
@@ -12,10 +12,10 @@ class ScoreTags extends StatelessWidget {
       children: [
         if (packageInfo.score.sdks != null &&
             packageInfo.score.sdks!.isNotEmpty)
-          ScoreTag(label: 'SDK'.toUpperCase(), values: packageInfo.score.sdks!),
+          PackageTag(label: 'SDK'.toUpperCase(), values: packageInfo.score.sdks!),
         if (packageInfo.score.platforms != null &&
             packageInfo.score.platforms!.isNotEmpty)
-          ScoreTag(
+          PackageTag(
             label: 'Platform'.toUpperCase(),
             values: packageInfo.score.platforms!,
           ),
@@ -24,10 +24,10 @@ class ScoreTags extends StatelessWidget {
   }
 }
 
-class ScoreTag extends StatelessWidget {
+class PackageTag extends StatelessWidget {
   final String label;
   final List<String> values;
-  const ScoreTag({super.key, required this.label, required this.values});
+  const PackageTag({super.key, required this.label, required this.values});
 
   @override
   Widget build(BuildContext context) {

@@ -38,8 +38,8 @@ class ColorName {
   /// Color: #5BB4F8
   static const Color linkColor = Color(0xFF5BB4F8);
 
-  /// Color: #DCDCDC
-  static const Color onBackground = Color(0xFFDCDCDC);
+  /// Color: #FFFFFF
+  static const Color onBackground = Color(0xFFFFFFFF);
 
   /// Color: #FFFFFF
   static const Color onError = Color(0xFFFFFFFF);
@@ -50,8 +50,8 @@ class ColorName {
   /// Color: #FFFFFF
   static const Color onSecondary = Color(0xFFFFFFFF);
 
-  /// Color: #DCDCDC
-  static const Color onSurface = Color(0xFFDCDCDC);
+  /// Color: #FFFFFF
+  static const Color onSurface = Color(0xFFFFFFFF);
 
   /// Color: #B0BEC5
   static const Color onSurfaceVariant = Color(0xFFB0BEC5);

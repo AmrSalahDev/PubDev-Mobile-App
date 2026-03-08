@@ -4,9 +4,9 @@
     <color name="secondary">#1C2834</color>
     <color name="tertiary">#4EAFF7</color>
     <color name="surface">#12202F</color>
-    <color name="onSurface">#DCDCDC</color>
+    <color name="onSurface">#FFFFFF</color>
     <color name="background">#12202F</color>
-    <color name="onBackground">#DCDCDC</color>
+    <color name="onBackground">#FFFFFF</color>
     <color name="error">#FF0000</color>
     <color name="errorContainer">#FF0000</color>
     <color name="outline">#263545</color>
@@ -21,6 +21,7 @@
     <color name="surfaceContainer">#FF1C2834</color>
     <color name="surfaceContainerHigh">#35404d</color>
     <color name="linkColor">#5BB4F8</color>
+    
     <color name="light_base_shimmer_color">#E0E0E0</color>
     <color name="light_highlightShimmerColor">#F5F5F5</color>
 

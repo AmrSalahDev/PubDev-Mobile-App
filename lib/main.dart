@@ -1,6 +1,4 @@
-
 import 'package:device_preview_plus/device_preview_plus.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,9 +9,11 @@ import 'package:pub_dev_packages_app/core/routes/app_router.dart';
 import 'package:pub_dev_packages_app/core/theme/app_colors.dart';
 import 'package:pub_dev_packages_app/core/theme/dark_app_theme.dart';
 import 'package:pub_dev_packages_app/core/theme/light_app_theme.dart';
+import 'package:pub_dev_packages_app/core/utils/app_utils.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
-import 'core/services/background_task.dart';
+import 'core/workmanager/background_task.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +31,11 @@ void main() async {
       builder: (context) => const PubDevApp(),
     ),
   );
+
+  // Request battery exemption after the app has fully rendered its first frames
+  Future.delayed(const Duration(seconds: 3), () {
+    requestBatteryExemptions();
+  });
 }
 
 class PubDevApp extends StatelessWidget {
@@ -46,10 +51,10 @@ class PubDevApp extends StatelessWidget {
         routerConfig: AppRouter.router,
         title: 'Pub.dev',
         locale: DevicePreview.locale(context),
-    
+
         builder: (context, child) {
           final mediaQuery = MediaQuery.of(context);
-    
+
           return MediaQuery(
             data: mediaQuery.copyWith(
               textScaler: TextScaler.linear(

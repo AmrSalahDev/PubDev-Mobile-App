@@ -29,4 +29,11 @@ class LoadObservableVideosEvent extends PackagesEvent {}
 
 class LoadWidgetOfTheWeekVideosEvent extends PackagesEvent {}
 
+class SearchPackageVideosEvent extends PackagesEvent {
+  final String packageName;
 
+  const SearchPackageVideosEvent(this.packageName);
+
+  @override
+  List<Object> get props => [packageName];
+}

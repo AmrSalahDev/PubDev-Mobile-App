@@ -11,7 +11,6 @@ ThemeData lightTheme(BuildContext context) {
     tertiary: LightColorScheme.tertiary,
     surface: LightColorScheme.surface,
     surfaceContainer: LightColorScheme.surfaceContainer,
-    background: LightColorScheme.background,
     error: LightColorScheme.error,
     errorContainer: LightColorScheme.errorContainer,
     outline: LightColorScheme.outline,
@@ -22,18 +21,16 @@ ThemeData lightTheme(BuildContext context) {
     onTertiary: LightColorScheme.onTertiary,
     onSurface: LightColorScheme.onSurface,
     onSurfaceVariant: LightColorScheme.onSurfaceVariant,
-    onBackground: LightColorScheme.onBackground,
     onError: LightColorScheme.onError,
     shadow: LightColorScheme.shadow,
     surfaceContainerHigh: LightColorScheme.surfaceContainerHigh,
-
   );
 
   return ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
     colorScheme: colorScheme,
-    textTheme: lightTextTheme(context),
+    textTheme: lightTextTheme(colorScheme),
     scaffoldBackgroundColor: LightColorScheme.surface,
     tabBarTheme: TabBarThemeData(
       indicatorColor: LightColorScheme.primary,
@@ -52,6 +49,12 @@ ThemeData lightTheme(BuildContext context) {
       foregroundColor: LightColorScheme.onSurface,
       surfaceTintColor: LightColorScheme.surface,
       elevation: 0,
+      centerTitle: true,
+      titleTextStyle: TextStyle(
+        color: LightColorScheme.onSurface,
+        fontSize: 18.sp,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -96,6 +99,10 @@ ThemeData lightTheme(BuildContext context) {
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(28.r),
         borderSide: BorderSide.none,
+      ),
+      hintStyle: TextStyle(
+        color: LightColorScheme.onSurfaceVariant,
+        fontSize: 14.sp,
       ),
     ),
 

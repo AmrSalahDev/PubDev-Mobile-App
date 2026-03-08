@@ -23,7 +23,7 @@ class LightColorScheme {
   static const Color onTertiary = ColorName.onTertiary;
   static const Color onSurfaceVariant = ColorName.onSurfaceVariant;
   static const Color onError = ColorName.onError;
-  static const Color shadow = ColorName.shadow; 
+  static const Color shadow = ColorName.shadow;
   static const Color surfaceContainer = ColorName.surfaceContainer;
   static const Color surfaceContainerHigh = ColorName.surfaceContainerHigh;
 }

@@ -12,5 +12,6 @@ abstract class PackagesRepo {
   Future<List<Video>> getPackageOfTheWeekVideos();
   Future<List<Video>> getObservableVideos();
   Future<List<Video>> getWidgetOfTheWeekVideos();
+  Future<List<Video>> searchVideos(String query);
   List<String> getPackageSuggestions();
 }

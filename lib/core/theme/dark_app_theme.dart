@@ -11,7 +11,6 @@ ThemeData darkTheme(BuildContext context) {
     tertiary: DarkColorScheme.tertiary,
     surface: DarkColorScheme.surface,
     surfaceContainer: DarkColorScheme.surfaceContainer,
-    background: DarkColorScheme.background,
     error: DarkColorScheme.error,
     errorContainer: DarkColorScheme.errorContainer,
     outline: DarkColorScheme.outline,
@@ -22,7 +21,6 @@ ThemeData darkTheme(BuildContext context) {
     onTertiary: DarkColorScheme.onTertiary,
     onSurface: DarkColorScheme.onSurface,
     onSurfaceVariant: DarkColorScheme.onSurfaceVariant,
-    onBackground: DarkColorScheme.onBackground,
     onError: DarkColorScheme.onError,
     shadow: DarkColorScheme.shadow,
   );
@@ -31,7 +29,7 @@ ThemeData darkTheme(BuildContext context) {
     useMaterial3: true,
     brightness: Brightness.dark,
     colorScheme: colorScheme,
-    textTheme: darkTextTheme(context),
+    textTheme: darkTextTheme(colorScheme),
     scaffoldBackgroundColor: DarkColorScheme.surface,
     tabBarTheme: TabBarThemeData(
       indicatorColor: DarkColorScheme.primary,
@@ -50,6 +48,12 @@ ThemeData darkTheme(BuildContext context) {
       foregroundColor: DarkColorScheme.onSurface,
       surfaceTintColor: DarkColorScheme.surface,
       elevation: 0,
+      centerTitle: true,
+      titleTextStyle: TextStyle(
+        color: DarkColorScheme.onSurface,
+        fontSize: 18.sp,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -73,7 +77,7 @@ ThemeData darkTheme(BuildContext context) {
     ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: LightColorScheme.surfaceContainerHigh,
+      fillColor: DarkColorScheme.surfaceContainerHigh,
       contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(28.r),
@@ -94,6 +98,10 @@ ThemeData darkTheme(BuildContext context) {
       focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(28.r),
         borderSide: BorderSide.none,
+      ),
+      hintStyle: TextStyle(
+        color: DarkColorScheme.onSurfaceVariant,
+        fontSize: 14.sp,
       ),
     ),
 

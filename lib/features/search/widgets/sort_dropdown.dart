@@ -71,7 +71,7 @@ class SortDropdown extends StatelessWidget {
                   TextSpan(
                     text: getDropdownText(order).toUpperCase(),
                     style: textTheme.bodyMedium?.copyWith(
-                      color: const Color(0xFF4EAFF7),
+                      color: colorScheme.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

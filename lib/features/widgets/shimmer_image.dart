@@ -1,4 +1,4 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pub_dev_packages_app/features/widgets/shimmer_box.dart';
 
@@ -36,7 +36,7 @@ class ShimmerImage extends StatelessWidget {
           width: width,
           borderRadius: borderRadius,
         ),
-        errorWidget: (context, url, error) => ShimmerBox(
+        errorBuilder: (context, url, error) => ShimmerBox(
           height: height,
           width: width,
           borderRadius: borderRadius,

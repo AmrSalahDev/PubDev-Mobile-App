@@ -20,119 +20,133 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(count) => "${count} VIDEOS";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "and": MessageLookupByLibrary.simpleMessage(" and "),
-    "apps": MessageLookupByLibrary.simpleMessage(" apps."),
-    "couldNotLaunchVideo": MessageLookupByLibrary.simpleMessage(
-      "Could not launch video",
-    ),
-    "created": MessageLookupByLibrary.simpleMessage("CREATED"),
-    "dart": MessageLookupByLibrary.simpleMessage("Dart"),
-    "defaultt": MessageLookupByLibrary.simpleMessage("DEFAULT"),
-    "downloads": MessageLookupByLibrary.simpleMessage("DOWNLOADS"),
-    "flutter": MessageLookupByLibrary.simpleMessage("Flutter"),
-    "flutterFavorites": MessageLookupByLibrary.simpleMessage(
-      "Flutter Favorites",
-    ),
-    "flutterFavoritesSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Some of the packages that demonstrate the highest levels of quality,\nselected by the Flutter Ecosystem Committee",
-    ),
-    "likes": MessageLookupByLibrary.simpleMessage("LIKES"),
-    "newestPackage": MessageLookupByLibrary.simpleMessage("NEWEST PACKAGE"),
-    "observableFlutter": MessageLookupByLibrary.simpleMessage(
-      "Observable Flutter",
-    ),
-    "observableFlutterSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Observable Flutter is a series of quick, animated videos, each of which covers a particular package",
-    ),
-    "officialPackageRepository": MessageLookupByLibrary.simpleMessage(
-      "The official package repository for ",
-    ),
-    "packageOfTheWeek": MessageLookupByLibrary.simpleMessage(
-      "Package of the week",
-    ),
-    "packageOfTheWeekSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Package of the week is a series of quick, animated videos, each of which covers a particular package",
-    ),
-    "packages": MessageLookupByLibrary.simpleMessage("packages"),
-    "points": MessageLookupByLibrary.simpleMessage("POINTS"),
-    "popularity": MessageLookupByLibrary.simpleMessage("POPULARITY"),
-    "results": MessageLookupByLibrary.simpleMessage("RESULTS"),
-    "searchFor": MessageLookupByLibrary.simpleMessage("Search for"),
-    "searchForDio": MessageLookupByLibrary.simpleMessage("Search for \"dio\""),
-    "searchForFirebaseAuth": MessageLookupByLibrary.simpleMessage(
-      "Search for \"firebase_auth\"",
-    ),
-    "searchForFlutterSvg": MessageLookupByLibrary.simpleMessage(
-      "Search for \"flutter_svg\"",
-    ),
-    "searchForGetIt": MessageLookupByLibrary.simpleMessage(
-      "Search for \"get_it\"",
-    ),
-    "searchForHttp": MessageLookupByLibrary.simpleMessage(
-      "Search for \"http\"",
-    ),
-    "searchForImagePicker": MessageLookupByLibrary.simpleMessage(
-      "Search for \"image_picker\"",
-    ),
-    "searchForPathProvider": MessageLookupByLibrary.simpleMessage(
-      "Search for \"path_provider\"",
-    ),
-    "searchForProvider": MessageLookupByLibrary.simpleMessage(
-      "Search for \"provider\"",
-    ),
-    "searchForSharedPreferences": MessageLookupByLibrary.simpleMessage(
-      "Search for \"shared_preferences\"",
-    ),
-    "searchForUrlLauncher": MessageLookupByLibrary.simpleMessage(
-      "Search for \"url_launcher\"",
-    ),
-    "searchPackages": MessageLookupByLibrary.simpleMessage("Search packages"),
-    "sortBy": MessageLookupByLibrary.simpleMessage("SORT BY "),
-    "sortDefaultRanking": MessageLookupByLibrary.simpleMessage(
-      "default ranking",
-    ),
-    "sortDownloads": MessageLookupByLibrary.simpleMessage("downloads"),
-    "sortMostLikes": MessageLookupByLibrary.simpleMessage("most likes"),
-    "sortMostPubPoints": MessageLookupByLibrary.simpleMessage(
-      "most pub points",
-    ),
-    "sortNewestPackage": MessageLookupByLibrary.simpleMessage("newest package"),
-    "sortOverallScore": MessageLookupByLibrary.simpleMessage("overall score"),
-    "sortRecentlyUpdated": MessageLookupByLibrary.simpleMessage(
-      "recently updated",
-    ),
-    "sortTrending": MessageLookupByLibrary.simpleMessage("trending"),
-    "supportedByGoogle": MessageLookupByLibrary.simpleMessage(
-      "Supported by Google",
-    ),
-    "topDartPackages": MessageLookupByLibrary.simpleMessage(
-      "Top Dart packages",
-    ),
-    "topDartPackagesSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Some of the top packages for any Dart-based app or program",
-    ),
-    "topFlutterPackages": MessageLookupByLibrary.simpleMessage(
-      "Top Flutter packages",
-    ),
-    "topFlutterPackagesSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Some of the top packages that extend Flutter with new features",
-    ),
-    "trendingPackages": MessageLookupByLibrary.simpleMessage(
-      "Trending packages",
-    ),
-    "trendingPackagesSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Top trending packages in the last 30 days",
-    ),
-    "updated": MessageLookupByLibrary.simpleMessage("UPDATED"),
-    "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
-    "viewPlaylist": MessageLookupByLibrary.simpleMessage("View Playlist"),
-    "widgetOfTheWeek": MessageLookupByLibrary.simpleMessage(
-      "Widget of the week",
-    ),
-    "widgetOfTheWeekSubtitle": MessageLookupByLibrary.simpleMessage(
-      "Widget of the week is a series of quick, animated videos, each of which covers a particular widget",
-    ),
-  };
+        "and": MessageLookupByLibrary.simpleMessage(" and "),
+        "apps": MessageLookupByLibrary.simpleMessage(" apps."),
+        "autoStartBody": MessageLookupByLibrary.simpleMessage(
+            "To ensure you receive timely notifications for new packages, please disable battery optimizations and enable auto-start if prompted."),
+        "autoStartTitle": MessageLookupByLibrary.simpleMessage(
+            "Enable Background Processing"),
+        "changelog": MessageLookupByLibrary.simpleMessage("Changelog"),
+        "changelogDataComingSoon":
+            MessageLookupByLibrary.simpleMessage("Changelog data coming soon"),
+        "copied": MessageLookupByLibrary.simpleMessage("Copied!"),
+        "couldNotLaunchVideo":
+            MessageLookupByLibrary.simpleMessage("Could not launch video"),
+        "created": MessageLookupByLibrary.simpleMessage("CREATED"),
+        "dart": MessageLookupByLibrary.simpleMessage("Dart"),
+        "defaultt": MessageLookupByLibrary.simpleMessage("DEFAULT"),
+        "downloads": MessageLookupByLibrary.simpleMessage("DOWNLOADS"),
+        "errorSparklineData": MessageLookupByLibrary.simpleMessage(
+            "Could not find sparkline data"),
+        "example": MessageLookupByLibrary.simpleMessage("Example"),
+        "flutter": MessageLookupByLibrary.simpleMessage("Flutter"),
+        "flutterFavorites":
+            MessageLookupByLibrary.simpleMessage("Flutter Favorites"),
+        "flutterFavoritesSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Some of the packages that demonstrate the highest levels of quality,\nselected by the Flutter Ecosystem Committee"),
+        "installing": MessageLookupByLibrary.simpleMessage("Installing"),
+        "latest": MessageLookupByLibrary.simpleMessage("LATEST"),
+        "likes": MessageLookupByLibrary.simpleMessage("LIKES"),
+        "manBatteryBody": MessageLookupByLibrary.simpleMessage(
+            "Follow the steps and disable the optimizations to allow smooth functioning of background tasks."),
+        "manBatteryTitle": MessageLookupByLibrary.simpleMessage(
+            "Your device has additional battery optimizations. Please follow the steps to disable them."),
+        "newestPackage": MessageLookupByLibrary.simpleMessage("NEWEST PACKAGE"),
+        "noReadmeFound":
+            MessageLookupByLibrary.simpleMessage("No README found"),
+        "noReadmeProvided": MessageLookupByLibrary.simpleMessage(
+            "This package hasn\'t provided a README file yet."),
+        "noTutorialsFound": MessageLookupByLibrary.simpleMessage(
+            "No tutorials found for this package"),
+        "observableFlutter":
+            MessageLookupByLibrary.simpleMessage("Observable Flutter"),
+        "observableFlutterSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Observable Flutter is a series of quick, animated videos, each of which covers a particular package"),
+        "officialPackageRepository": MessageLookupByLibrary.simpleMessage(
+            "The official package repository for "),
+        "packageOfTheWeek":
+            MessageLookupByLibrary.simpleMessage("Package of the week"),
+        "packageOfTheWeekSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Package of the week is a series of quick, animated videos, each of which covers a particular package"),
+        "packages": MessageLookupByLibrary.simpleMessage("packages"),
+        "points": MessageLookupByLibrary.simpleMessage("POINTS"),
+        "popularity": MessageLookupByLibrary.simpleMessage("POPULARITY"),
+        "published": MessageLookupByLibrary.simpleMessage("Published"),
+        "readme": MessageLookupByLibrary.simpleMessage("Readme"),
+        "results": MessageLookupByLibrary.simpleMessage("RESULTS"),
+        "scores": MessageLookupByLibrary.simpleMessage("Scores"),
+        "searchFor": MessageLookupByLibrary.simpleMessage("Search for"),
+        "searchForDio":
+            MessageLookupByLibrary.simpleMessage("Search for \"dio\""),
+        "searchForFirebaseAuth": MessageLookupByLibrary.simpleMessage(
+            "Search for \"firebase_auth\""),
+        "searchForFlutterSvg":
+            MessageLookupByLibrary.simpleMessage("Search for \"flutter_svg\""),
+        "searchForGetIt":
+            MessageLookupByLibrary.simpleMessage("Search for \"get_it\""),
+        "searchForHttp":
+            MessageLookupByLibrary.simpleMessage("Search for \"http\""),
+        "searchForImagePicker":
+            MessageLookupByLibrary.simpleMessage("Search for \"image_picker\""),
+        "searchForPathProvider": MessageLookupByLibrary.simpleMessage(
+            "Search for \"path_provider\""),
+        "searchForProvider":
+            MessageLookupByLibrary.simpleMessage("Search for \"provider\""),
+        "searchForSharedPreferences": MessageLookupByLibrary.simpleMessage(
+            "Search for \"shared_preferences\""),
+        "searchForUrlLauncher":
+            MessageLookupByLibrary.simpleMessage("Search for \"url_launcher\""),
+        "searchPackages":
+            MessageLookupByLibrary.simpleMessage("Search packages"),
+        "sortBy": MessageLookupByLibrary.simpleMessage("SORT BY "),
+        "sortDefaultRanking":
+            MessageLookupByLibrary.simpleMessage("default ranking"),
+        "sortDownloads": MessageLookupByLibrary.simpleMessage("downloads"),
+        "sortMostLikes": MessageLookupByLibrary.simpleMessage("most likes"),
+        "sortMostPubPoints":
+            MessageLookupByLibrary.simpleMessage("most pub points"),
+        "sortNewestPackage":
+            MessageLookupByLibrary.simpleMessage("newest package"),
+        "sortOverallScore":
+            MessageLookupByLibrary.simpleMessage("overall score"),
+        "sortRecentlyUpdated":
+            MessageLookupByLibrary.simpleMessage("recently updated"),
+        "sortTrending": MessageLookupByLibrary.simpleMessage("trending"),
+        "supportedByGoogle":
+            MessageLookupByLibrary.simpleMessage("Supported by Google"),
+        "topDartPackages":
+            MessageLookupByLibrary.simpleMessage("Top Dart packages"),
+        "topDartPackagesSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Some of the top packages for any Dart-based app or program"),
+        "topFlutterPackages":
+            MessageLookupByLibrary.simpleMessage("Top Flutter packages"),
+        "topFlutterPackagesSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Some of the top packages that extend Flutter with new features"),
+        "trendingPackages":
+            MessageLookupByLibrary.simpleMessage("Trending packages"),
+        "trendingPackagesSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Top trending packages in the last 30 days"),
+        "tutorialsAndGuides":
+            MessageLookupByLibrary.simpleMessage("Tutorials & Guides"),
+        "updated": MessageLookupByLibrary.simpleMessage("UPDATED"),
+        "versions": MessageLookupByLibrary.simpleMessage("Versions"),
+        "versionsDataComingSoon":
+            MessageLookupByLibrary.simpleMessage("Versions data coming soon"),
+        "videos": MessageLookupByLibrary.simpleMessage("Videos"),
+        "videosCount": m0,
+        "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
+        "viewPlaylist": MessageLookupByLibrary.simpleMessage("View Playlist"),
+        "visitRepository":
+            MessageLookupByLibrary.simpleMessage("Visit Repository"),
+        "weeklyDownloads":
+            MessageLookupByLibrary.simpleMessage("Weekly Downloads"),
+        "widgetOfTheWeek":
+            MessageLookupByLibrary.simpleMessage("Widget of the week"),
+        "widgetOfTheWeekSubtitle": MessageLookupByLibrary.simpleMessage(
+            "Widget of the week is a series of quick, animated videos, each of which covers a particular widget")
+      };
 }

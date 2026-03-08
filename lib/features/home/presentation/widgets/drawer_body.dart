@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart' hide DrawerHeader;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pub_dev_packages_app/core/assets_gen/assets.gen.dart';
-import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/drawer_header.dart';
 import 'package:pub_dev_packages_app/features/home/presentation/widgets/drawer_item.dart';
 
@@ -25,10 +23,6 @@ class DrawerBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icons = Assets.icons;
-    final strings = AppLocalizations.of(context);
-    final colorScheme = Theme.of(context).colorScheme;
-
     final List<MenuItem> menuItems = [
       // MenuItem(title: strings.editProfile, icon: icons.edit.path, onTap: () {}),
       // MenuItem(title: strings.network, icon: icons.network.path, onTap: () {}),
