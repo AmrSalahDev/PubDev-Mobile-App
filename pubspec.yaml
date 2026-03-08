@@ -52,6 +52,7 @@ dependencies:
   disable_battery_optimization: ^1.1.2
   html: ^0.15.6
   cached_network_image_ce: ^4.6.2
+  change_app_package_name: ^1.5.0
   #git2dart: ^0.4.0
 
 dev_dependencies:

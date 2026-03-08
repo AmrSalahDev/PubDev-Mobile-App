@@ -1,4 +1,4 @@
-package com.example.pub_dev_packages_app
+package com.blackcode.pubdev
 
 import io.flutter.embedding.android.FlutterActivity
 
