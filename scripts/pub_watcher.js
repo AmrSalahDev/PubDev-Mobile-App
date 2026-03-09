@@ -5,7 +5,7 @@ const fs = require("fs");
 /**
  * Pub.dev Watcher Script
  * ----------------------
- * This script is designed to run via GitHub Actions every 15 minutes.
+ * This script is designed to run via GitHub Actions every 5 minutes.
  * It checks the pub.dev API for new packages and sends an FCM notification
  * using the Firebase Admin SDK.
  * 
@@ -41,8 +41,11 @@ async function checkNewPackages() {
       return;
     }
 
-    const latestPackageId = response.data.packages[0].package;
-    console.log(`Current latest package on pub.dev: ${latestPackageId}`);
+    const packages = response.data.packages;
+    if (!packages || packages.length === 0) {
+      console.log("No packages found on pub.dev");
+      return;
+    }
 
     // 3. Load the last seen package from our local cache file
     let lastSeenId = "";
@@ -54,39 +57,50 @@ async function checkNewPackages() {
       } catch (e) {
         console.warn("Could not parse cache file, treating as first run.");
       }
-    } else {
-      console.log("No cache file found, creating one now.");
     }
 
-    // 4. Compare and notify if a new package exists
-    if (latestPackageId !== lastSeenId) {
-      console.log(`🚀 New package detected! Sending notification for ${latestPackageId}...`);
-      
-      const message = {
-        notification: {
-          title: "New Package Published!",
-          body: `${latestPackageId} has just been released on pub.dev.`,
-        },
-        topic: "new_packages", // All Flutter apps subscribe to this topic
-        data: {
-          package_id: latestPackageId,
-          click_action: "FLUTTER_NOTIFICATION_CLICK"
-        }
-      };
+    // 4. Find all packages published since the last seen one
+    // We check the top 10 most recent packages
+    const newPackages = [];
+    for (let i = 0; i < Math.min(packages.length, 10); i++) {
+        if (packages[i].package === lastSeenId) break;
+        newPackages.push(packages[i]);
+    }
 
-      // Send the FCM message via Firebase Admin SDK
-      const responseFCM = await admin.messaging().send(message);
-      console.log(`Notification sent successfully. FCM Response: ${responseFCM}`);
+    if (newPackages.length > 0) {
+      console.log(`🚀 Found ${newPackages.length} new packages!`);
+
+      // 5. Send notification for each new package (limit to 5 to avoid spam)
+      const notifyCount = Math.min(newPackages.length, 5);
       
-      // 5. Update our local cache file so we don't notify for the same package again
+      for (let i = 0; i < notifyCount; i++) {
+        const pkg = newPackages[i];
+        console.log(`Notifying for ${pkg.package}...`);
+        
+        const message = {
+          notification: {
+            title: "New Package Published!",
+            body: `${pkg.package} has just been released on pub.dev.`,
+          },
+          topic: "new_packages",
+          data: {
+            package_id: pkg.package,
+            click_action: "FLUTTER_NOTIFICATION_CLICK"
+          }
+        };
+
+        await admin.messaging().send(message);
+      }
+      
+      // 6. Update our local cache file with the absolute latest one
       fs.writeFileSync(cacheFile, JSON.stringify({ 
-        id: latestPackageId, 
+        id: packages[0].package, 
         timestamp: new Date().toISOString() 
       }, null, 2));
       
-      console.log("Task completed: Cache updated.");
+      console.log(`Task completed: Sent ${notifyCount} notifications.`);
     } else {
-      console.log("No new packages since last check. Staying quiet.");
+      console.log("No new packages since last check.");
     }
   } catch (error) {
     console.error("Error in watcher script:", error.message);
