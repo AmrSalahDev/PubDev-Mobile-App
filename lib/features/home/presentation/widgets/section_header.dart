@@ -19,7 +19,10 @@ class SectionHeader extends StatelessWidget {
           Text(
             title,
             textAlign: TextAlign.start,
-            style: textTheme.displaySmall?.copyWith(color: colorScheme.primary),
+            style: textTheme.headlineLarge?.copyWith(
+              fontWeight: FontWeight.w500,
+              color: colorScheme.primary,
+            ),
           ),
           8.verticalSpace,
           Text(

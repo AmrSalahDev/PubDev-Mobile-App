@@ -12,6 +12,7 @@ import 'package:pub_dev_packages_app/features/package_detail/presentation/tabs/r
 import 'package:pub_dev_packages_app/features/package_detail/presentation/tabs/scores_tab.dart';
 import 'package:pub_dev_packages_app/features/package_detail/presentation/tabs/versions_tab.dart';
 import 'package:pub_dev_packages_app/features/package_detail/presentation/tabs/videos_tab.dart';
+import 'package:pub_dev_packages_app/features/package_detail/presentation/tabs/github_health_tab.dart';
 import 'package:pub_dev_packages_app/features/package_detail/presentation/widgets/package_details_header.dart';
 
 class PackageDetailPage extends StatefulWidget {
@@ -30,7 +31,7 @@ class _PackageDetailPageState extends State<PackageDetailPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 7, vsync: this);
+    _tabController = TabController(length: 8, vsync: this);
 
     context.read<PackagesBloc>().add(
       LoadPackageInfoEvent(widget.packageInfo.name),
@@ -76,6 +77,7 @@ class _PackageDetailPageState extends State<PackageDetailPage>
                       Tab(text: AppLocalizations.of(context).installing),
                       Tab(text: AppLocalizations.of(context).versions),
                       Tab(text: AppLocalizations.of(context).scores),
+                      Tab(text: AppLocalizations.of(context).githubHealth),
                     ],
                   ),
                   _buildTabContent(pkg),
@@ -110,6 +112,7 @@ class _PackageDetailPageState extends State<PackageDetailPage>
           InstallingTab(packageInfo: packageInfo),
           VersionsTab(packageInfo: packageInfo),
           ScoresTab(packageInfo: packageInfo),
+          GithubHealthTab(packageInfo: packageInfo),
         ],
       ),
     );

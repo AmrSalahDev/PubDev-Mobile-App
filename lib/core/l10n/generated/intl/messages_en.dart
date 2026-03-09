@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "changelog": MessageLookupByLibrary.simpleMessage("Changelog"),
         "changelogDataComingSoon":
             MessageLookupByLibrary.simpleMessage("Changelog data coming soon"),
+        "commitActivity":
+            MessageLookupByLibrary.simpleMessage("Commit Activity"),
         "copied": MessageLookupByLibrary.simpleMessage("Copied!"),
         "couldNotLaunchVideo":
             MessageLookupByLibrary.simpleMessage("Could not launch video"),
@@ -43,18 +45,32 @@ class MessageLookup extends MessageLookupByLibrary {
         "errorSparklineData": MessageLookupByLibrary.simpleMessage(
             "Could not find sparkline data"),
         "example": MessageLookupByLibrary.simpleMessage("Example"),
+        "excellent": MessageLookupByLibrary.simpleMessage("Excellent"),
+        "fair": MessageLookupByLibrary.simpleMessage("Fair"),
         "flutter": MessageLookupByLibrary.simpleMessage("Flutter"),
         "flutterFavorites":
             MessageLookupByLibrary.simpleMessage("Flutter Favorites"),
         "flutterFavoritesSubtitle": MessageLookupByLibrary.simpleMessage(
             "Some of the packages that demonstrate the highest levels of quality,\nselected by the Flutter Ecosystem Committee"),
+        "githubHealth": MessageLookupByLibrary.simpleMessage("GitHub Health"),
+        "githubHealthNotAvailable":
+            MessageLookupByLibrary.simpleMessage("GitHub Data Not Available"),
+        "good": MessageLookupByLibrary.simpleMessage("Good"),
+        "healthScore": MessageLookupByLibrary.simpleMessage("Health Score"),
         "installing": MessageLookupByLibrary.simpleMessage("Installing"),
+        "last6Months": MessageLookupByLibrary.simpleMessage("Last 6 Months"),
+        "lastCommitDate":
+            MessageLookupByLibrary.simpleMessage("LAST COMMIT DATE"),
         "latest": MessageLookupByLibrary.simpleMessage("LATEST"),
         "likes": MessageLookupByLibrary.simpleMessage("LIKES"),
+        "maintenanceAndCommunity": MessageLookupByLibrary.simpleMessage(
+            "Maintenance & Community Activity"),
         "manBatteryBody": MessageLookupByLibrary.simpleMessage(
             "Follow the steps and disable the optimizations to allow smooth functioning of background tasks."),
         "manBatteryTitle": MessageLookupByLibrary.simpleMessage(
             "Your device has additional battery optimizations. Please follow the steps to disable them."),
+        "needsAttention":
+            MessageLookupByLibrary.simpleMessage("Needs Attention"),
         "newestPackage": MessageLookupByLibrary.simpleMessage("NEWEST PACKAGE"),
         "noReadmeFound":
             MessageLookupByLibrary.simpleMessage("No README found"),
@@ -68,6 +84,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Observable Flutter is a series of quick, animated videos, each of which covers a particular package"),
         "officialPackageRepository": MessageLookupByLibrary.simpleMessage(
             "The official package repository for "),
+        "openIssues": MessageLookupByLibrary.simpleMessage("OPEN ISSUES"),
+        "openPrs": MessageLookupByLibrary.simpleMessage("OPEN PRS"),
         "packageOfTheWeek":
             MessageLookupByLibrary.simpleMessage("Package of the week"),
         "packageOfTheWeekSubtitle": MessageLookupByLibrary.simpleMessage(
@@ -116,8 +134,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortRecentlyUpdated":
             MessageLookupByLibrary.simpleMessage("recently updated"),
         "sortTrending": MessageLookupByLibrary.simpleMessage("trending"),
+        "status": MessageLookupByLibrary.simpleMessage("Status"),
         "supportedByGoogle":
             MessageLookupByLibrary.simpleMessage("Supported by Google"),
+        "today": MessageLookupByLibrary.simpleMessage("Today"),
         "topDartPackages":
             MessageLookupByLibrary.simpleMessage("Top Dart packages"),
         "topDartPackagesSubtitle": MessageLookupByLibrary.simpleMessage(

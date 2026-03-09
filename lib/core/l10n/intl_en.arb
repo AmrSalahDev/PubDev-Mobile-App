@@ -76,5 +76,20 @@
   "scores": "Scores",
   "changelogDataComingSoon": "Changelog data coming soon",
   "versionsDataComingSoon": "Versions data coming soon",
-  "latest": "LATEST"
+  "latest": "LATEST",
+  "githubHealth": "GitHub Health",
+  "healthScore": "Health Score",
+  "maintenanceAndCommunity": "Maintenance & Community Activity",
+  "status": "Status",
+  "excellent": "Excellent",
+  "good": "Good",
+  "fair": "Fair",
+  "needsAttention": "Needs Attention",
+  "openIssues": "OPEN ISSUES",
+  "openPrs": "OPEN PRS",
+  "lastCommitDate": "LAST COMMIT DATE",
+  "today": "Today",
+  "commitActivity": "Commit Activity",
+  "last6Months": "Last 6 Months",
+  "githubHealthNotAvailable": "GitHub Data Not Available"
 }

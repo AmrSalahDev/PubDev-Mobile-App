@@ -103,7 +103,7 @@ class _YoutubeTutorialCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final display = createDisplay(length: 3, decimal: 1, separator: ',');
-    final uploadDate = TimeAgoHelper.format(video.uploadDate!);
+    final uploadDate = TimeAgoHelper.format(video.uploadDate ?? DateTime.now());
     final duration = formatVideoDuration(video.duration);
 
     return Column(

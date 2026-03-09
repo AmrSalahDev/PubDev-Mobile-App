@@ -44,6 +44,16 @@ import 'package:pub_dev_packages_app/features/home/domain/usecases/search_videos
     as _i253;
 import 'package:pub_dev_packages_app/features/home/presentation/bloc/packages_bloc.dart'
     as _i921;
+import 'package:pub_dev_packages_app/features/package_detail/data/datasets/remote/github_health_remote_data_source.dart'
+    as _i154;
+import 'package:pub_dev_packages_app/features/package_detail/data/repos/github_health_repository_impl.dart'
+    as _i152;
+import 'package:pub_dev_packages_app/features/package_detail/domain/repos/github_health_repository.dart'
+    as _i460;
+import 'package:pub_dev_packages_app/features/package_detail/domain/usecases/get_github_health_usecase.dart'
+    as _i932;
+import 'package:pub_dev_packages_app/features/package_detail/presentation/bloc/github_health/github_health_bloc.dart'
+    as _i193;
 import 'package:pub_dev_packages_app/features/search/data/remote/search_remote_datasource.dart'
     as _i532;
 import 'package:pub_dev_packages_app/features/search/data/repos/search_repo_impl.dart'
@@ -71,6 +81,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i519.Client>(() => registerModule.httpClient);
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
     gh.lazySingleton<_i844.ToastService>(() => _i844.ToastService());
+    gh.lazySingleton<_i154.GithubHealthRemoteDataSource>(
+      () => _i154.GithubHealthRemoteDataSourceImpl(gh<_i993.Talker>()),
+    );
     gh.lazySingleton<_i532.SearchRemoteDataSource>(
       () => _i532.SearchRemoteDataSourceImpl(gh<_i479.PubClient>()),
     );
@@ -79,6 +92,11 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i479.PubClient>(),
         gh<_i993.Talker>(),
         gh<_i361.Dio>(),
+      ),
+    );
+    gh.lazySingleton<_i460.GithubHealthRepository>(
+      () => _i152.GithubHealthRepositoryImpl(
+        gh<_i154.GithubHealthRemoteDataSource>(),
       ),
     );
     gh.lazySingleton<_i655.SearchRepo>(
@@ -136,11 +154,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i502.SearchPackagesUsecase>(
       () => _i502.SearchPackagesUsecase(gh<_i655.SearchRepo>()),
     );
+    gh.lazySingleton<_i932.GetGithubHealthUsecase>(
+      () => _i932.GetGithubHealthUsecase(gh<_i460.GithubHealthRepository>()),
+    );
     gh.factory<_i896.SearchBloc>(
       () => _i896.SearchBloc(
         gh<_i502.SearchPackagesUsecase>(),
         gh<_i289.GetPackageInfoUsecase>(),
       ),
+    );
+    gh.factory<_i193.GithubHealthBloc>(
+      () => _i193.GithubHealthBloc(gh<_i932.GetGithubHealthUsecase>()),
     );
     return this;
   }

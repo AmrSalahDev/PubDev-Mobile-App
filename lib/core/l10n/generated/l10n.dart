@@ -829,6 +829,156 @@ class AppLocalizations {
       args: [],
     );
   }
+
+  /// `GitHub Health`
+  String get githubHealth {
+    return Intl.message(
+      'GitHub Health',
+      name: 'githubHealth',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Health Score`
+  String get healthScore {
+    return Intl.message(
+      'Health Score',
+      name: 'healthScore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maintenance & Community Activity`
+  String get maintenanceAndCommunity {
+    return Intl.message(
+      'Maintenance & Community Activity',
+      name: 'maintenanceAndCommunity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Status`
+  String get status {
+    return Intl.message(
+      'Status',
+      name: 'status',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Excellent`
+  String get excellent {
+    return Intl.message(
+      'Excellent',
+      name: 'excellent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Good`
+  String get good {
+    return Intl.message(
+      'Good',
+      name: 'good',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fair`
+  String get fair {
+    return Intl.message(
+      'Fair',
+      name: 'fair',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Needs Attention`
+  String get needsAttention {
+    return Intl.message(
+      'Needs Attention',
+      name: 'needsAttention',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OPEN ISSUES`
+  String get openIssues {
+    return Intl.message(
+      'OPEN ISSUES',
+      name: 'openIssues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OPEN PRS`
+  String get openPrs {
+    return Intl.message(
+      'OPEN PRS',
+      name: 'openPrs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `LAST COMMIT DATE`
+  String get lastCommitDate {
+    return Intl.message(
+      'LAST COMMIT DATE',
+      name: 'lastCommitDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today`
+  String get today {
+    return Intl.message(
+      'Today',
+      name: 'today',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Commit Activity`
+  String get commitActivity {
+    return Intl.message(
+      'Commit Activity',
+      name: 'commitActivity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last 6 Months`
+  String get last6Months {
+    return Intl.message(
+      'Last 6 Months',
+      name: 'last6Months',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `GitHub Data Not Available`
+  String get githubHealthNotAvailable {
+    return Intl.message(
+      'GitHub Data Not Available',
+      name: 'githubHealthNotAvailable',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {
