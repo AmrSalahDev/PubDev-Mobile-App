@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "520631734325",
+    "project_id": "pub-dev-packages-bk",
+    "storage_bucket": "pub-dev-packages-bk.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520631734325:android:b1d096fbf12333cd62e17c",
+        "android_client_info": {
+          "package_name": "com.blackcode.pubdev"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChxX0fkrw4zihTcu6Bz0ivwZF3TpJB-Ow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

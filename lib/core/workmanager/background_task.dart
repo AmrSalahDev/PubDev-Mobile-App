@@ -53,13 +53,14 @@ void callbackDispatcher() {
 
 class BackgroundTaskManager {
   static Future<void> init() async {
-    await Workmanager().initialize(callbackDispatcher);
-
-    await Workmanager().registerPeriodicTask(
-      "1",
-      fetchBackgroundTask,
-      frequency: const Duration(minutes: 15),
-      constraints: Constraints(networkType: NetworkType.connected),
-    );
+    // Moved to FCM for better reliability
+    // await Workmanager().initialize(callbackDispatcher);
+    //
+    // await Workmanager().registerPeriodicTask(
+    //   "1",
+    //   fetchBackgroundTask,
+    //   frequency: const Duration(minutes: 15),
+    //   constraints: Constraints(networkType: NetworkType.connected),
+    // );
   }
 }

@@ -1,0 +1,58 @@
+name: Pub.dev Automatic Watcher
+
+on:
+  schedule:
+    # Runs every 5 minutes in GitHub's free cloud environment
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    # Allows you to click 'Run workflow' in the GitHub UI to test it immediately
+
+jobs:
+  watcher:
+    name: Check for New Packages
+    runs-on: ubuntu-latest
+
+    # Needs permissions to commit back to the repository (for last_package.json)
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          # Use fetch-depth 0 to allow git pushing later
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+
+      - name: Install Node Dependencies
+        # Only install the light-weight dependencies needed by the watcher script
+        run: |
+          cd scripts
+          npm install firebase-admin axios
+
+      - name: Run Watcher Script
+        # All secret variables should be stored in GitHub Repository Secrets
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node scripts/pub_watcher.js
+
+      - name: Save Cache and Push
+        # If the watcher script updated last_package.json, we need to commit
+        # and push it back to the repo so we know where we left off.
+        run: |
+          git config --global user.name 'GitHub Actions Bot'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+          # Only add and commit if the file actually changed
+          if [[ `git status --porcelain scripts/last_package.json` ]]; then
+            git add scripts/last_package.json
+            git commit -m "chore: update last seen package [skip ci]"
+            git push origin main
+            echo "Cache file updated and pushed successfully."
+          else
+            echo "No changes in cache file. Skipping commit."
+          fi
