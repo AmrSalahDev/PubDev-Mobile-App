@@ -32,7 +32,7 @@ void main() async {
 
   initDependencies();
 
-  await BackgroundTaskManager.init();
+  //await BackgroundTaskManager.init();
 
   await getIt<NotificationService>().init();
 

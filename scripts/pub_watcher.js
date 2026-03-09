@@ -9,7 +9,6 @@ const fs = require("fs");
  * It checks the pub.dev API for new packages and sends an FCM notification
  * using the Firebase Admin SDK.
  * 
- * NO CREDIT CARD REQUIRED for this approach.
  */
 
 // 1. Initialize Firebase Admin SDK
