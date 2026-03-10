@@ -6,7 +6,7 @@
     <color name="surface">#12202F</color>
     <color name="onSurface">#FFFFFF</color>
     <color name="background">#12202F</color>
-    <color name="onBackground">#FFFFFF</color>
+    <color name="onBackground">#FFFFFF</color> 
     <color name="error">#FF0000</color>
     <color name="errorContainer">#FF0000</color>
     <color name="outline">#263545</color>

@@ -49,6 +49,7 @@ dependencies:
   github: ^9.25.0
   firebase_core: ^4.5.0
   firebase_messaging: ^16.1.2
+  flutter_native_splash: ^2.4.7
   #git2dart: ^0.4.0
 
 dev_dependencies:

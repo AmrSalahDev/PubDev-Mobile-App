@@ -16,9 +16,11 @@ import 'package:pub_dev_packages_app/core/services/fcm_service.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   await Firebase.initializeApp();
 
@@ -38,6 +40,8 @@ void main() async {
       builder: (context) => const PubDevApp(),
     ),
   );
+
+  FlutterNativeSplash.remove();
 }
 
 class PubDevApp extends StatelessWidget {
