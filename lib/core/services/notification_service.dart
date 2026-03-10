@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pub_dev_packages_app/core/routes/app_router.dart';
@@ -18,12 +19,30 @@ class NotificationService {
     await _notificationsPlugin.initialize(
       settings: initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
-        if (response.payload != null && response.payload!.isNotEmpty) {
-          AppRouter.router.push(AppPaths.packageDetail, extra: response.payload!);
-        }
+        _handleNotificationClick(response.payload);
       },
     );
+
+    // Handle initial notification if app was closed
+    final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+        await _notificationsPlugin.getNotificationAppLaunchDetails();
+    if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+      final response = notificationAppLaunchDetails!.notificationResponse;
+      if (response != null) {
+        _handleNotificationClick(response.payload);
+      }
+    }
   }
+
+  void _handleNotificationClick(String? payload) {
+    debugPrint('Notification clicked with payload: $payload');
+    if (payload != null && payload.isNotEmpty) {
+      AppRouter.router.push(AppPaths.packageDetail, extra: payload);
+    } else {
+      debugPrint('Notification clicked but payload is null or empty');
+    }
+  }
+
 
   Future<void> showNotification({
     required int id,
@@ -56,5 +75,4 @@ class NotificationService {
       payload: payload,
     );
   }
-
 }

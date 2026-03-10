@@ -21,4 +21,6 @@ const String widgetOfTheWeekPlaylistUrl =
 
 const String dartUrl = "https://dart.dev/";
 const String flutterUrl = "https://flutter.dev/";
+const String highestLevelsOfQuality =
+    "https://docs.flutter.dev/packages-and-plugins/favorites";
 

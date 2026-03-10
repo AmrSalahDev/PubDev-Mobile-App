@@ -49,6 +49,8 @@ class _PackageDetailPageState extends State<PackageDetailPage>
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    final strings = AppLocalizations.of(context);
 
     return BlocBuilder<PackagesBloc, PackagesState>(
       builder: (context, state) {
@@ -56,13 +58,13 @@ class _PackageDetailPageState extends State<PackageDetailPage>
           return const Center(child: CircularProgressIndicator());
         }
         if (!state.isPackageInfoLoading && state.packageInfo != null) {
-          final pkg = state.packageInfo!;
+          final packageInfo = state.packageInfo!;
           return Scaffold(
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: Column(
                 children: [
-                  PackageDetailsHeader(packageInfo: pkg),
+                  PackageDetailsHeader(packageInfo: packageInfo),
                   TabBar(
                     controller: _tabController,
                     isScrollable: true,
@@ -72,17 +74,40 @@ class _PackageDetailPageState extends State<PackageDetailPage>
                     dividerColor: Colors.transparent,
                     indicatorColor: colorScheme.primary,
                     tabs: [
-                      Tab(text: AppLocalizations.of(context).readme),
-                      Tab(text: AppLocalizations.of(context).changelog),
-                      Tab(text: AppLocalizations.of(context).example),
-                      Tab(text: AppLocalizations.of(context).videos),
-                      Tab(text: AppLocalizations.of(context).installing),
-                      Tab(text: AppLocalizations.of(context).versions),
-                      Tab(text: AppLocalizations.of(context).scores),
-                      Tab(text: AppLocalizations.of(context).githubHealth),
+                      Tab(text: strings.readme),
+                      Tab(text: strings.changelog),
+                      Tab(text: strings.example),
+                      Tab(text: strings.videos),
+                      Tab(text: strings.installing),
+                      Tab(text: strings.versions),
+                      Tab(text: strings.scores),
+                      Tab(text: strings.githubHealth),
                     ],
                   ),
-                  _buildTabContent(pkg),
+                  Expanded(
+                    child: TabBarView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      controller: _tabController,
+                      children: [
+                        ReadmeTab(packageInfo: packageInfo),
+                        // Changelog is missing data in entity, using placeholder
+                        Center(
+                          child: Text(
+                            strings.changelogDataComingSoon,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ),
+                        ExampleTab(packageInfo: packageInfo),
+                        VideosTab(packageInfo: packageInfo),
+                        InstallingTab(packageInfo: packageInfo),
+                        VersionsTab(packageInfo: packageInfo),
+                        ScoresTab(packageInfo: packageInfo),
+                        GithubHealthTab(packageInfo: packageInfo),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -90,33 +115,6 @@ class _PackageDetailPageState extends State<PackageDetailPage>
         }
         return const SizedBox.shrink();
       },
-    );
-  }
-
-  Widget _buildTabContent(PackageEntity packageInfo) {
-    return Expanded(
-      child: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _tabController,
-        children: [
-          ReadmeTab(packageInfo: packageInfo),
-          // Changelog is missing data in entity, using placeholder
-          Center(
-            child: Text(
-              AppLocalizations.of(context).changelogDataComingSoon,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ),
-          ExampleTab(packageInfo: packageInfo),
-          VideosTab(packageInfo: packageInfo),
-          InstallingTab(packageInfo: packageInfo),
-          VersionsTab(packageInfo: packageInfo),
-          ScoresTab(packageInfo: packageInfo),
-          GithubHealthTab(packageInfo: packageInfo),
-        ],
-      ),
     );
   }
 
