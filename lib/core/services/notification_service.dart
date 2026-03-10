@@ -1,12 +1,12 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pub_dev_packages_app/core/routes/app_router.dart';
+import 'package:pub_dev_packages_app/core/routes/app_paths.dart';
 
 @LazySingleton()
 class NotificationService {
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
 
   Future<void> init() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -18,38 +18,20 @@ class NotificationService {
     await _notificationsPlugin.initialize(
       settings: initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
-        // Handle notification tapped logic here
+        if (response.payload != null && response.payload!.isNotEmpty) {
+          AppRouter.router.push(AppPaths.packageDetail, extra: response.payload!);
+        }
       },
     );
-
-    // FCM Permissions
-    await _fcm.requestPermission(alert: true, badge: true, sound: true);
-
-    // Print FCM Token for debugging
-    final token = await _fcm.getToken();
-    print("FCM Token: $token");
-
-    // Handle Foreground Messages
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (message.notification != null) {
-        showNotification(
-          id: message.hashCode,
-          title: message.notification!.title ?? '',
-          body: message.notification!.body ?? '',
-        );
-      }
-    });
-
-    // Subscribe to topics
-    await _fcm.subscribeToTopic('new_packages');
   }
 
   Future<void> showNotification({
     required int id,
     required String title,
     required String body,
+    String? payload,
   }) async {
-    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
           'new_packages_channel',
           'New Packages',
@@ -58,9 +40,11 @@ class NotificationService {
           importance: Importance.max,
           priority: Priority.high,
           ticker: 'ticker',
+          showWhen: true,
+          when: DateTime.now().millisecondsSinceEpoch,
         );
 
-    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+    NotificationDetails platformChannelSpecifics = NotificationDetails(
       android: androidPlatformChannelSpecifics,
     );
 
@@ -69,7 +53,8 @@ class NotificationService {
       title: title,
       body: body,
       notificationDetails: platformChannelSpecifics,
-      payload: 'item x',
+      payload: payload,
     );
   }
+
 }

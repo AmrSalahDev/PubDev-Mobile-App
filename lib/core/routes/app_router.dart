@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pub_dev_packages_app/core/di/di.dart';
@@ -35,10 +36,22 @@ class AppRouter {
       ),
       GoRoute(
         path: AppPaths.packageDetail,
-        builder: (context, state) => BlocProvider(
-          create: (context) => getIt<PackagesBloc>(),
-          child: PackageDetailPage(packageInfo: state.extra as PackageEntity),
-        ),
+        builder: (context, state) {
+          final extra = state.extra;
+          
+          if (extra is PackageEntity) {
+            return BlocProvider(
+              create: (context) => getIt<PackagesBloc>(),
+              child: PackageDetailPage(packageInfo: extra),
+            );
+          } else if (extra is String) {
+            return BlocProvider(
+              create: (context) => getIt<PackagesBloc>(),
+              child: PackageDetailPage(packageName: extra),
+            );
+          }
+          return const SizedBox.shrink();
+        },
       ),
     ],
   );

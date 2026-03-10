@@ -16,9 +16,10 @@ import 'package:pub_dev_packages_app/features/package_detail/presentation/tabs/g
 import 'package:pub_dev_packages_app/features/package_detail/presentation/widgets/package_details_header.dart';
 
 class PackageDetailPage extends StatefulWidget {
-  final PackageEntity packageInfo;
+  final PackageEntity? packageInfo;
+  final String? packageName;
 
-  const PackageDetailPage({super.key, required this.packageInfo});
+  const PackageDetailPage({super.key, this.packageInfo, this.packageName});
 
   @override
   State<PackageDetailPage> createState() => _PackageDetailPageState();
@@ -33,9 +34,10 @@ class _PackageDetailPageState extends State<PackageDetailPage>
     super.initState();
     _tabController = TabController(length: 8, vsync: this);
 
-    context.read<PackagesBloc>().add(
-      LoadPackageInfoEvent(widget.packageInfo.name),
-    );
+    final name = widget.packageName ?? widget.packageInfo?.name;
+    if (name != null) {
+      context.read<PackagesBloc>().add(LoadPackageInfoEvent(name));
+    }
   }
 
   @override

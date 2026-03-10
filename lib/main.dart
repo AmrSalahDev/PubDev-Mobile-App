@@ -9,32 +9,25 @@ import 'package:pub_dev_packages_app/core/routes/app_router.dart';
 import 'package:pub_dev_packages_app/core/theme/app_colors.dart';
 import 'package:pub_dev_packages_app/core/theme/dark_app_theme.dart';
 import 'package:pub_dev_packages_app/core/theme/light_app_theme.dart';
-import 'package:pub_dev_packages_app/core/utils/app_utils.dart';
 import 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
-import 'core/workmanager/background_task.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pub_dev_packages_app/core/services/notification_service.dart';
+import 'package:pub_dev_packages_app/core/services/fcm_service.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-@pragma('vm:entry-point')
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  // Handle background message
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
 
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
   initDependencies();
 
-  //await BackgroundTaskManager.init();
-
   await getIt<NotificationService>().init();
+  await getIt<FCMService>().init();
 
   Bloc.observer = TalkerBlocObserver();
 
@@ -45,11 +38,6 @@ void main() async {
       builder: (context) => const PubDevApp(),
     ),
   );
-
-  // Request battery exemption after the app has fully rendered its first frames
-  Future.delayed(const Duration(seconds: 3), () {
-    requestBatteryExemptions();
-  });
 }
 
 class PubDevApp extends StatelessWidget {
