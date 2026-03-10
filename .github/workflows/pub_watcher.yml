@@ -12,6 +12,9 @@ jobs:
     name: Check for New Packages
     runs-on: ubuntu-latest
 
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
     # Needs permissions to commit back to the repository (for last_package.json)
     permissions:
       contents: write
