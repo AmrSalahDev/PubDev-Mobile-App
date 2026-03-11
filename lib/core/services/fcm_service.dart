@@ -11,7 +11,7 @@ import 'package:pub_dev_packages_app/core/di/di.dart';
 class FCMService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   final Talker talker;
- 
+
   FCMService(this.talker);
 
   Future<void> init() async {
@@ -30,9 +30,6 @@ class FCMService {
 
       String title = data['title'] ?? 'New Package';
       String body = data['body'] ?? '';
-
-      talker.log('FCM message title: $title');
-      talker.log('FCM message body: $body');
 
       // Show notification if we have a notification or package data
       if (message.notification != null || packageName != null) {
@@ -72,7 +69,7 @@ class FCMService {
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  
+
   // Extract data from the message
   final data = message.data;
   final String title = data['title'] ?? 'New Package';

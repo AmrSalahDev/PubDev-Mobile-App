@@ -23,9 +23,6 @@ class NotificationService {
     await _notificationsPlugin.initialize(
       settings: initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
-        talker.log('Action ID: ${response.actionId}');
-        talker.log('Notification ID: ${response.id}');
-
         if (response.actionId == 'dismiss') {
           talker.log('Notification dismissed via action button');
           if (response.id != null) {
