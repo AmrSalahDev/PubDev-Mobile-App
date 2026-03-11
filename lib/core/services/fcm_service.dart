@@ -25,10 +25,11 @@ class FCMService {
     // Handle Foreground Messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       talker.log('FCM message received: ${message.data}');
-      final String? packageName = message.data['package_id'];
+      final data = message.data;
+      final String? packageName = data['package_id'];
 
-      String title = message.notification?.title ?? 'New Package';
-      String body = message.notification?.body ?? '';
+      String title = data['title'] ?? 'New Package';
+      String body = data['body'] ?? '';
 
       talker.log('FCM message title: $title');
       talker.log('FCM message body: $body');
@@ -71,5 +72,21 @@ class FCMService {
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-  // Handle background message
+  
+  // Extract data from the message
+  final data = message.data;
+  final String title = data['title'] ?? 'New Package';
+  final String body = data['body'] ?? '';
+  final String? packageId = data['package_id'];
+
+  if (packageId != null) {
+    // We create a local instance of NotificationService since GetIt might not be ready in the background isolate
+    final notificationService = NotificationService(Talker());
+    await notificationService.showNotification(
+      id: message.hashCode,
+      title: title,
+      body: body,
+      payload: packageId,
+    );
+  }
 }

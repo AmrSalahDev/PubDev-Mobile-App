@@ -76,15 +76,12 @@ async function checkNewPackages() {
         console.warn(`Could not fetch description for ${pkg.package}`);
       }
 
-      // Create the message format for Firebase
       return {
-        notification: {
-          title: "New Package Published!",
-          body: `${pkg.package}`,
-        },
         topic: "new_packages",
         data: {
-          package_name: pkg.package,
+          title: "New Package Published!",
+          body: `${pkg.package}`,
+          package_id: pkg.package,
           description: description,
           click_action: "FLUTTER_NOTIFICATION_CLICK"
         }
