@@ -46,15 +46,18 @@ Whether you're looking for the newest trending packages or checking the health o
 ## 🎯 Key Features
 
 ### 🔍 Package Discovery
+
 - **Smart Search** - Quickly find any package on pub.dev with an optimized search interface.
 - **Trending & New** - Stay updated with the latest and most popular packages in the ecosystem.
 - **Detailed Package Info** - View full READMEs, scores, versions, and dependencies with high-fidelity rendering.
 
 ### 🔔 Notifications & Tracking
+
 - **New Package Alerts** - Receive FCM push notifications when new exciting packages are released 🔔.
 - **Dependency Health** - Monitor the health and scores of your favorite packages directly in the app.
 
 ### 🎨 User Experience & Design
+
 - **Modern & Premium UI** - A polished design language that feels native to both Android and iOS 💎.
 - **Responsive Layout** - Adapts perfectly to various screen sizes using `flutter_screenutil` 📱.
 - **Offline First** - Basic caching of package details for quick access without internet 🗄️.
@@ -67,16 +70,19 @@ Whether you're looking for the newest trending packages or checking the health o
 This project follows **Clean Architecture** principles to ensure a highly scalable, maintainable, and testable codebase.
 
 ### 1. 📂 Presentation Layer
+
 - **Widgets & Pages**: Pure UI components built with Flutter.
 - **BLoC / Cubit**: Handles state management and interacts with Domain usecases.
 - **Routing**: Managed via `go_router` for declarative navigation.
 
 ### 2. 🧠 Domain Layer (Pure Dart)
+
 - **Entities**: Core data models.
 - **Use Cases**: Specific business logic units.
 - **Repositories (Interfaces)**: Defines contracts for data operations.
 
 ### 3. 💾 Data Layer
+
 - **Repositories (Implementations)**: Connects the domain to the data sources.
 - **Data Sources**: Handles API calls (via `dio` & `pub_api_client`) and local storage (`shared_preferences`).
 - **Models**: DTOs for JSON serialization.
@@ -100,13 +106,14 @@ lib/
 To run this app locally:
 
 ```bash
-git clone https://github.com/AmrSalahDev/pub_dev_packages_app.git
-cd pub_dev_packages_app
+git clone https://github.com/AmrSalahDev/pub_dev_app.git
+cd pub_dev_app
 flutter pub get
 flutter run
 ```
 
 ### ✅ Prerequisites
+
 - 🐦 Flutter SDK ^3.11.0
 - 🎯 Dart SDK ^3.11.0
 - 📱 Android Studio / Xcode
@@ -116,24 +123,35 @@ flutter run
 ## 📦 Dependencies Used
 
 ### 🏗️ Architecture & State Management
+
 - `flutter_bloc` - Predictable state management 🧩.
 - `get_it` & `injectable` - Service locator and dependency injection 💉.
 - `go_router` - Declarative routing 🛣️.
 - `equatable` - Simplify object equality ⚖️.
 
 ### 🌐 Networking & Data
+
 - `pub_api_client` - Official pub.dev API client 📦.
 - `dio` - Powerful HTTP client for auxiliary requests 📡.
 - `firebase_messaging` - Real-time push notifications 🔔.
 - `shared_preferences` - Local persistent storage 💾.
 
 ### 🎨 UI & UX
+
 - `flutter_screenutil` - Responsive design scaling 📱.
 - `markdown_widget` - High-quality README rendering 📖.
 - `flutter_svg` - Vector asset support 🖼️.
 - `shimmer` - Premium loading states ✨.
 - `toastification` - Sleek user notifications 🔔.
 - `talker` - Advanced logging and debugging tool 📝.
+
+---
+
+## ⭐ Star History
+
+If you like this project, please give it a star ⭐
+
+[![Star History Chart](https://api.star-history.com/svg?repos=AmrSalahDev/pub_dev_app&type=Date)](https://star-history.com/#AmrSalahDev/pub_dev_app&Date)
 
 ---
 
