@@ -76,6 +76,20 @@ async function checkNewPackages() {
         const pkg = newPackages[i];
         console.log(`Notifying for ${pkg.package}...`);
         
+        let description = "";
+        try {
+          // Fetch detailed info to get the description
+          const detailResponse = await axios.get(`https://pub.dev/api/packages/${pkg.package}`);
+          description = detailResponse.data.latest.pubspec.description || "";
+          
+          // Truncate description if it's too long
+          if (description.length > 200) {
+            description = description.substring(0, 197) + "...";
+          }
+        } catch (e) {
+          console.warn(`Could not fetch description for ${pkg.package}: ${e.message}`);
+        }
+
         const message = {
           notification: {
             title: "New Package Published!",
@@ -83,7 +97,8 @@ async function checkNewPackages() {
           },
           topic: "new_packages",
           data: {
-            package_id: pkg.package,
+            package_name: pkg.package,
+            description: description,
             click_action: "FLUTTER_NOTIFICATION_CLICK"
           }
         };

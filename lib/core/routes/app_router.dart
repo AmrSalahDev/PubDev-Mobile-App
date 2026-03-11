@@ -12,6 +12,7 @@ import 'app_paths.dart';
 
 class AppRouter {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
   static final GoRouter router = GoRouter(
     navigatorKey: navigatorKey,
     initialLocation: AppPaths.home,
@@ -40,8 +41,7 @@ class AppRouter {
         path: AppPaths.packageDetail,
         builder: (context, state) {
           final extra = state.extra;
-          debugPrint('Building packageDetail route with extra: $extra');
-
+      
           if (extra is PackageEntity) {
             return BlocProvider(
               create: (context) => getIt<PackagesBloc>(),
@@ -53,7 +53,7 @@ class AppRouter {
               child: PackageDetailPage(packageName: extra),
             );
           }
-          return const Scaffold(body: Center(child: Text('Package not found')));
+          return const SizedBox.shrink();
         },
       ),
     ],

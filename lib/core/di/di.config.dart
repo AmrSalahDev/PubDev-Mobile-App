@@ -83,16 +83,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i479.PubClient>(() => registerModule.pubClient);
     gh.lazySingleton<_i519.Client>(() => registerModule.httpClient);
     gh.lazySingleton<_i361.Dio>(() => registerModule.dio);
-    gh.lazySingleton<_i862.FCMService>(() => _i862.FCMService());
-    gh.lazySingleton<_i444.NotificationService>(
-      () => _i444.NotificationService(),
-    );
     gh.lazySingleton<_i844.ToastService>(() => _i844.ToastService());
     gh.lazySingleton<_i154.GithubHealthRemoteDataSource>(
       () => _i154.GithubHealthRemoteDataSourceImpl(gh<_i993.Talker>()),
     );
     gh.lazySingleton<_i532.SearchRemoteDataSource>(
       () => _i532.SearchRemoteDataSourceImpl(gh<_i479.PubClient>()),
+    );
+    gh.lazySingleton<_i862.FCMService>(
+      () => _i862.FCMService(gh<_i993.Talker>()),
+    );
+    gh.lazySingleton<_i444.NotificationService>(
+      () => _i444.NotificationService(gh<_i993.Talker>()),
     );
     gh.lazySingleton<_i268.PackagesRemoteDataSource>(
       () => _i268.PackagesRemoteDataSourceImpl(

@@ -1,15 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pub_dev_packages_app/core/routes/app_paths.dart';
 import 'package:pub_dev_packages_app/core/routes/app_router.dart';
+import 'package:talker/talker.dart';
 import 'notification_service.dart';
 import 'package:pub_dev_packages_app/core/di/di.dart';
 
-@LazySingleton()
+@lazySingleton
 class FCMService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  final Talker talker;
+
+  FCMService(this.talker);
 
   Future<void> init() async {
     // FCM Permissions
@@ -17,18 +20,41 @@ class FCMService {
 
     // Print FCM Token for debugging
     final token = await _fcm.getToken();
-    print("FCM Token: $token");
+    talker.log("FCM Token: $token");
 
     // Handle Foreground Messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      if (message.notification != null) {
-        final String? packageName = message.data['package_name'] ??
-            message.data['packageName'] ??
-            message.data['package'];
+      talker.log('FCM message received: ${message.data}');
+      final String? packageName = message.data['package_id'];
+
+      final String? packageDescription = message.data['description'] ??
+          message.data['package_description'] ??
+          message.data['desc'] ??
+          message.data['summary'];
+
+      String title = message.notification?.title ?? 'New Package';
+      String body = message.notification?.body ?? '';
+
+      // Enhance title with package name if it's generic
+      if (packageName != null && title == 'New Package') {
+        title = "New Package: $packageName";
+      }
+
+      if (packageDescription != null && packageDescription.isNotEmpty) {
+        // Append description if available
+        if (body.isEmpty) {
+          body = packageDescription;
+        } else if (!body.contains(packageDescription)) {
+          body = "$body\n$packageDescription";
+        }
+      }
+
+      // Show notification if we have a notification or package data
+      if (message.notification != null || packageName != null) {
         getIt<NotificationService>().showNotification(
           id: message.hashCode,
-          title: message.notification!.title ?? '',
-          body: message.notification!.body ?? '',
+          title: title,
+          body: body,
           payload: packageName,
         );
       }
@@ -49,16 +75,14 @@ class FCMService {
   }
 
   void _handleMessage(RemoteMessage message) {
-    debugPrint('FCM message tapped: ${message.data}');
-    final packageName = message.data['package_name'] ??
-        message.data['packageName'] ??
-        message.data['package'];
+    talker.log('FCM message tapped: ${message.data}');
+    final packageName = message.data['package_id'];
 
     if (packageName != null) {
-      debugPrint('Navigating to packageDetail with packageName: $packageName');
+      talker.log('Navigating to packageDetail with packageName: $packageName');
       AppRouter.router.push(AppPaths.packageDetail, extra: packageName);
     } else {
-      debugPrint('No package name found in FCM message data');
+      talker.log('No package name found in FCM message data');
     }
   }
 

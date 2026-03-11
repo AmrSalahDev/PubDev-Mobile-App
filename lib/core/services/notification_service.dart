@@ -1,13 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 import 'package:pub_dev_packages_app/core/routes/app_router.dart';
 import 'package:pub_dev_packages_app/core/routes/app_paths.dart';
+import 'package:talker/talker.dart';
 
-@LazySingleton()
+@lazySingleton
 class NotificationService {
   final FlutterLocalNotificationsPlugin _notificationsPlugin =
       FlutterLocalNotificationsPlugin();
+  final Talker talker;
+
+  NotificationService(this.talker);
 
   Future<void> init() async {
     const AndroidInitializationSettings initializationSettingsAndroid =
@@ -34,12 +37,12 @@ class NotificationService {
     }
   }
 
-  void _handleNotificationClick(String? payload) {
-    debugPrint('Notification clicked with payload: $payload');
-    if (payload != null && payload.isNotEmpty) {
-      AppRouter.router.push(AppPaths.packageDetail, extra: payload);
+  void _handleNotificationClick(String? packageName) {
+    talker.log('Notification clicked with payload: $packageName');
+    if (packageName != null && packageName.isNotEmpty) {
+      AppRouter.router.push(AppPaths.packageDetail, extra: packageName);
     } else {
-      debugPrint('Notification clicked but payload is null or empty');
+      talker.log('Notification clicked but payload is null or empty');
     }
   }
 
@@ -61,6 +64,10 @@ class NotificationService {
           ticker: 'ticker',
           showWhen: true,
           when: DateTime.now().millisecondsSinceEpoch,
+          styleInformation: BigTextStyleInformation(
+            body,
+            contentTitle: title,
+          ),
         );
 
     NotificationDetails platformChannelSpecifics = NotificationDetails(
