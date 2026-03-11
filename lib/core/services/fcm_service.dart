@@ -11,7 +11,7 @@ import 'package:pub_dev_packages_app/core/di/di.dart';
 class FCMService {
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   final Talker talker;
-
+ 
   FCMService(this.talker);
 
   Future<void> init() async {

@@ -80,7 +80,7 @@ async function checkNewPackages() {
       return {
         notification: {
           title: "New Package Published!",
-          body: `${pkg.package} has just been released on pub.dev.`,
+          body: `${pkg.package}`,
         },
         topic: "new_packages",
         data: {
