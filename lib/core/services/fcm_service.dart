@@ -27,23 +27,11 @@ class FCMService {
       talker.log('FCM message received: ${message.data}');
       final String? packageName = message.data['package_id'];
 
-      final String? packageDescription = message.data['description'];
-
       String title = message.notification?.title ?? 'New Package';
       String body = message.notification?.body ?? '';
 
       talker.log('FCM message title: $title');
       talker.log('FCM message body: $body');
-      talker.log('FCM message packageDescription: $packageDescription');
-
-      if (packageDescription != null && packageDescription.isNotEmpty) {
-        // Append description if available
-        if (body.isEmpty) {
-          body = packageDescription;
-        } else if (!body.contains(packageDescription)) {
-          body = "$body\n$packageDescription";
-        }
-      }
 
       // Show notification if we have a notification or package data
       if (message.notification != null || packageName != null) {
