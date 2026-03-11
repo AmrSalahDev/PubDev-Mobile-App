@@ -87,7 +87,7 @@ class NotificationService {
           ticker: 'ticker',
           showWhen: true,
           when: DateTime.now().millisecondsSinceEpoch,
-          styleInformation: BigTextStyleInformation(body, contentTitle: title),
+        
           playSound: true,
           sound: RawResourceAndroidNotificationSound('new_package_notification'),
           actions: <AndroidNotificationAction>[
