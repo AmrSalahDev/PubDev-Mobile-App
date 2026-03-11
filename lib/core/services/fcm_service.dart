@@ -27,13 +27,14 @@ class FCMService {
       talker.log('FCM message received: ${message.data}');
       final String? packageName = message.data['package_id'];
 
-      final String? packageDescription = message.data['description'] ??
-          message.data['package_description'] ??
-          message.data['desc'] ??
-          message.data['summary'];
+      final String? packageDescription = message.data['description'];
 
       String title = message.notification?.title ?? 'New Package';
       String body = message.notification?.body ?? '';
+
+      talker.log('FCM message title: $title');
+      talker.log('FCM message body: $body');
+      talker.log('FCM message packageDescription: $packageDescription');
 
       if (packageDescription != null && packageDescription.isNotEmpty) {
         // Append description if available
@@ -77,7 +78,6 @@ class FCMService {
       talker.log('No package name found in FCM message data');
     }
   }
-
 }
 
 @pragma('vm:entry-point')

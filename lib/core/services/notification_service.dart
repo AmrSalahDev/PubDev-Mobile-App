@@ -1,5 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
+import 'package:pub_dev_packages_app/core/l10n/generated/l10n.dart';
 import 'package:pub_dev_packages_app/core/routes/app_router.dart';
 import 'package:pub_dev_packages_app/core/routes/app_paths.dart';
 import 'package:talker/talker.dart';
@@ -22,8 +23,19 @@ class NotificationService {
     await _notificationsPlugin.initialize(
       settings: initializationSettings,
       onDidReceiveNotificationResponse: (NotificationResponse response) {
+        talker.log('Action ID: ${response.actionId}');
+        talker.log('Notification ID: ${response.id}');
+
+        if (response.actionId == 'dismiss') {
+          talker.log('Notification dismissed via action button');
+          if (response.id != null) {
+            _notificationsPlugin.cancel(id: response.id!);
+          }
+          return;
+        }
         _handleNotificationClick(response.payload);
       },
+      onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
     );
 
     // Handle initial notification if app was closed
@@ -32,6 +44,10 @@ class NotificationService {
     if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
       final response = notificationAppLaunchDetails!.notificationResponse;
       if (response != null) {
+        if (response.actionId == 'dismiss') {
+          talker.log('App launched via Dismiss action, doing nothing');
+          return;
+        }
         _handleNotificationClick(response.payload);
       }
     }
@@ -46,16 +62,26 @@ class NotificationService {
     }
   }
 
-
   Future<void> showNotification({
     required int id,
     required String title,
     required String body,
     String? payload,
   }) async {
+    String viewDetailsLabel = 'View Details';
+    String dismissLabel = 'Dismiss';
+
+    try {
+      viewDetailsLabel = AppLocalizations.current.viewDetails;
+      dismissLabel = AppLocalizations.current.dismiss;
+    } catch (_) {
+      // Fallback to hardcoded strings if AppLocalizations is not loaded
+      talker.log('Failed to load AppLocalizations, using default strings');
+    }
+
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         AndroidNotificationDetails(
-          'new_packages_channel',
+          'new_packages_channel_v3',
           'New Packages',
           channelDescription:
               'Notifications for newly published pub.dev packages',
@@ -64,10 +90,21 @@ class NotificationService {
           ticker: 'ticker',
           showWhen: true,
           when: DateTime.now().millisecondsSinceEpoch,
-          styleInformation: BigTextStyleInformation(
-            body,
-            contentTitle: title,
-          ),
+          styleInformation: BigTextStyleInformation(body, contentTitle: title),
+          playSound: true,
+          sound: RawResourceAndroidNotificationSound('new_package_notification'),
+          actions: <AndroidNotificationAction>[
+            AndroidNotificationAction(
+              'view_details',
+              viewDetailsLabel,
+              showsUserInterface: true,
+            ),
+            AndroidNotificationAction(
+              'dismiss',
+              dismissLabel,
+              cancelNotification: true,
+            ),
+          ],
         );
 
     NotificationDetails platformChannelSpecifics = NotificationDetails(
@@ -82,4 +119,11 @@ class NotificationService {
       payload: payload,
     );
   }
+}
+
+@pragma('vm:entry-point')
+void notificationTapBackground(NotificationResponse notificationResponse) {
+  // You don't need to put anything in here!
+  // Because you already set `cancelNotification: true` in your button,
+  // just having this function allows the system to finally close it.
 }

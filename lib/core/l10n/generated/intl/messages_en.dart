@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "created": MessageLookupByLibrary.simpleMessage("CREATED"),
         "dart": MessageLookupByLibrary.simpleMessage("Dart"),
         "defaultt": MessageLookupByLibrary.simpleMessage("DEFAULT"),
+        "dismiss": MessageLookupByLibrary.simpleMessage("Dismiss"),
         "downloads": MessageLookupByLibrary.simpleMessage("DOWNLOADS"),
         "errorSparklineData": MessageLookupByLibrary.simpleMessage(
             "Could not find sparkline data"),
@@ -159,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "videos": MessageLookupByLibrary.simpleMessage("Videos"),
         "videosCount": m0,
         "viewAll": MessageLookupByLibrary.simpleMessage("View all"),
+        "viewDetails": MessageLookupByLibrary.simpleMessage("View Details"),
         "viewPlaylist": MessageLookupByLibrary.simpleMessage("View Playlist"),
         "visitRepository":
             MessageLookupByLibrary.simpleMessage("Visit Repository"),

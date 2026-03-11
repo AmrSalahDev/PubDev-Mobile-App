@@ -91,5 +91,7 @@
   "today": "Today",
   "commitActivity": "Commit Activity",
   "last6Months": "Last 6 Months",
-  "githubHealthNotAvailable": "GitHub Data Not Available"
+  "githubHealthNotAvailable": "GitHub Data Not Available",
+  "viewDetails": "View Details",
+  "dismiss": "Dismiss"
 }
