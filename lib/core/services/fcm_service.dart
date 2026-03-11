@@ -35,11 +35,6 @@ class FCMService {
       String title = message.notification?.title ?? 'New Package';
       String body = message.notification?.body ?? '';
 
-      // Enhance title with package name if it's generic
-      if (packageName != null && title == 'New Package') {
-        title = "New Package: $packageName";
-      }
-
       if (packageDescription != null && packageDescription.isNotEmpty) {
         // Append description if available
         if (body.isEmpty) {
@@ -60,14 +55,13 @@ class FCMService {
       }
     });
 
-    // Handle Background & Terminated Message Taps
+    // Handle Foreground Message Taps
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
 
+    // Handle Terminated Message Taps
     final initialMessage = await _fcm.getInitialMessage();
     if (initialMessage != null) {
-      Future.delayed(const Duration(milliseconds: 500), () {
-        _handleMessage(initialMessage);
-      });
+      _handleMessage(initialMessage);
     }
 
     // Subscribe to topics
@@ -75,11 +69,9 @@ class FCMService {
   }
 
   void _handleMessage(RemoteMessage message) {
-    talker.log('FCM message tapped: ${message.data}');
     final packageName = message.data['package_id'];
 
     if (packageName != null) {
-      talker.log('Navigating to packageDetail with packageName: $packageName');
       AppRouter.router.push(AppPaths.packageDetail, extra: packageName);
     } else {
       talker.log('No package name found in FCM message data');

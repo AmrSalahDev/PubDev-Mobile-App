@@ -1,126 +1,110 @@
 const admin = require("firebase-admin");
 const axios = require("axios");
 const fs = require("fs");
-
-/**
- * Pub.dev Watcher Script
- * ----------------------
- * This script is designed to run via GitHub Actions every 5 minutes.
- * It checks the pub.dev API for new packages and sends an FCM notification
- * using the Firebase Admin SDK.
- * 
- */
+const path = require("path");
 
 // 1. Initialize Firebase Admin SDK
-// The service account JSON is passed from GitHub Secrets as an environment variable
 if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
   console.error("Missing FIREBASE_SERVICE_ACCOUNT environment variable.");
   process.exit(1);
 }
 
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
-
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
 
-const path = require("path");
 const cacheFile = path.join(__dirname, "last_package.json");
 
 async function checkNewPackages() {
   try {
     console.log("Checking pub.dev for new packages...");
     
-    // 2. Fetch the most recent packages from pub.dev API
+    // 2. Fetch the most recent packages
     const searchUrl = "https://pub.dev/api/search?q=&sort=created";
-    const response = await axios.get(searchUrl);
+    // We can pull "data" right out of the response to keep the code clean
+    const { data } = await axios.get(searchUrl);
     
-    if (!response.data || !response.data.packages || response.data.packages.length === 0) {
+    // Simpler check to make sure we have packages
+    if (!data?.packages?.length) {
       console.log("No packages found on pub.dev");
       return;
     }
 
-    const packages = response.data.packages;
-    if (!packages || packages.length === 0) {
-      console.log("No packages found on pub.dev");
-      return;
-    }
+    const packages = data.packages;
 
-    // 3. Load the last seen package from our local cache file
+    // 3. Load the last seen package (Warning: This file gets deleted on GitHub Actions!)
     let lastSeenId = "";
     if (fs.existsSync(cacheFile)) {
       try {
         const cacheContent = JSON.parse(fs.readFileSync(cacheFile, "utf8"));
         lastSeenId = cacheContent.id;
-        console.log(`Last seen package in cache: ${lastSeenId}`);
+        console.log(`Last seen package: ${lastSeenId}`);
       } catch (e) {
-        console.warn("Could not parse cache file, treating as first run.");
+        console.warn("Could not read old file, treating as first run.");
       }
     }
 
     // 4. Find all packages published since the last seen one
-    // We check the top 10 most recent packages
     const newPackages = [];
-    for (let i = 0; i < Math.min(packages.length, 10); i++) {
-        if (packages[i].package === lastSeenId) break;
-        newPackages.push(packages[i]);
+    for (const pkg of packages) {
+        if (pkg.package === lastSeenId) break;
+        newPackages.push(pkg);
     }
 
-    if (newPackages.length > 0) {
-      console.log(`🚀 Found ${newPackages.length} new packages!`);
-
-      // 5. Send notification for each new package (limit to 5 to avoid spam)
-      const notifyCount = Math.min(newPackages.length, 5);
-      
-      for (let i = 0; i < notifyCount; i++) {
-        const pkg = newPackages[i];
-        console.log(`Notifying for ${pkg.package}...`);
-        
-        let description = "";
-        try {
-          // Fetch detailed info to get the description
-          const detailResponse = await axios.get(`https://pub.dev/api/packages/${pkg.package}`);
-          description = detailResponse.data.latest.pubspec.description || "";
-          
-          // Truncate description if it's too long
-          if (description.length > 200) {
-            description = description.substring(0, 197) + "...";
-          }
-        } catch (e) {
-          console.warn(`Could not fetch description for ${pkg.package}: ${e.message}`);
-        }
-
-        const message = {
-          notification: {
-            title: "New Package Published!",
-            body: `${pkg.package} has just been released on pub.dev.`,
-          },
-          topic: "new_packages",
-          data: {
-            package_name: pkg.package,
-            description: description,
-            click_action: "FLUTTER_NOTIFICATION_CLICK"
-          }
-        };
-
-        await admin.messaging().send(message);
-      }
-      
-      // 6. Update our local cache file with the absolute latest one
-      fs.writeFileSync(cacheFile, JSON.stringify({ 
-        id: packages[0].package, 
-        timestamp: new Date().toISOString() 
-      }, null, 2));
-      
-      console.log(`Task completed: Sent ${notifyCount} notifications.`);
-    } else {
+    if (newPackages.length === 0) {
       console.log("No new packages since last check.");
+      return;
     }
+
+    console.log(`🚀 Found ${newPackages.length} new packages!`);
+
+    // Limit to 5 packages to avoid spam
+    const packagesToNotify = newPackages.slice(0, 5);
+    
+    // 5. Fetch all descriptions at the same time (Much faster!)
+    const messages = await Promise.all(packagesToNotify.map(async (pkg) => {
+      let description = "";
+      try {
+        const detailResponse = await axios.get(`https://pub.dev/api/packages/${pkg.package}`);
+        description = detailResponse.data.latest.pubspec.description || "";
+        
+        if (description.length > 200) {
+          description = description.substring(0, 197) + "...";
+        }
+      } catch (e) {
+        console.warn(`Could not fetch description for ${pkg.package}`);
+      }
+
+      // Create the message format for Firebase
+      return {
+        notification: {
+          title: "New Package Published!",
+          body: `${pkg.package} has just been released on pub.dev.`,
+        },
+        topic: "new_packages",
+        data: {
+          package_name: pkg.package,
+          description: description,
+          click_action: "FLUTTER_NOTIFICATION_CLICK"
+        }
+      };
+    }));
+
+    // 6. Send all messages to Firebase in one single batch
+    if (messages.length > 0) {
+      const response = await admin.messaging().sendEach(messages);
+      console.log(`Task completed: Sent ${response.successCount} notifications.`);
+    }
+    
+    // 7. Update local cache
+    fs.writeFileSync(cacheFile, JSON.stringify({ 
+      id: packages[0].package, 
+      timestamp: new Date().toISOString() 
+    }, null, 2));
+    
   } catch (error) {
-    console.error("Error in watcher script:", error.message);
-    if (error.response) {
-      console.error("API Response Error:", error.response.data);
-    }
+    console.error("Error in script:", error.message);
     process.exit(1);
   }
 }
