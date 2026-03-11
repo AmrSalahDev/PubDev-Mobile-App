@@ -106,8 +106,8 @@ lib/
 To run this app locally:
 
 ```bash
-git clone https://github.com/AmrSalahDev/pub_dev_app.git
-cd pub_dev_app
+git clone https://github.com/AmrSalahDev/PubDev-Mobile-App.git
+cd PubDev-Mobile-App
 flutter pub get
 flutter run
 ```
@@ -151,7 +151,7 @@ flutter run
 
 If you like this project, please give it a star ⭐
 
-[![Star History Chart](https://api.star-history.com/svg?repos=AmrSalahDev/pub_dev_app&type=Date)](https://star-history.com/#AmrSalahDev/pub_dev_app&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=AmrSalahDev/PubDev-Mobile-App&type=Date)](https://star-history.com/#AmrSalahDev/PubDev-Mobile-App&Date)
 
 ---
 
